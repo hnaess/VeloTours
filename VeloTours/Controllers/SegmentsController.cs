@@ -11,10 +11,11 @@ namespace VeloTours.Controllers
         //
         // GET: /Segments/
 
-        public ActionResult Index()
+        public ActionResult Segments(string athleteId, int segmentsId)
         {
+            ViewBag.AthledeId = athleteId;
+            ViewBag.SegmentsId = segmentsId;
             return View();
         }
-
     }
 }

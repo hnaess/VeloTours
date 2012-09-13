@@ -10,7 +10,7 @@ namespace VeloTours.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            ViewBag.Message = "Strava segments made into Tours";
 
             return View();
         }

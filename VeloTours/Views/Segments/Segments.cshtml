@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Segments";
+       //http://localhost:59172/Segments/Segments?AthleteId=123&SegmentsId=2
+}
+
+<h2>Index</h2>
+
+<ul> 
+   @for (int i=0; i < ViewBag.SegmentsId; i++) { 
+      <li>@ViewBag.Message</li> 
+   } 
+</ul>
+
+<p>Hello from our View Template!</p>
