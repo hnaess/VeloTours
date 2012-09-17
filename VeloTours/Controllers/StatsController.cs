@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace VeloTours.Controllers
 {
-    public class SegmentsController : Controller
+    public class StatsController : Controller
     {
         //
-        // GET: /Segments/
+        // GET: /Stats/
 
         public ActionResult Segments(string athleteId, int segmentsId)
         {
