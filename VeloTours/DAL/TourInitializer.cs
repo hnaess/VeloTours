@@ -7,9 +7,9 @@ using VeloTours.Models;
 
 namespace VeloTours.DAL
 {
-    public class SegmentsInitializer : DropCreateDatabaseIfModelChanges<SegmentsContext>
+    public class TourInitializer : DropCreateDatabaseIfModelChanges<TourContext>
     {
-        protected override void Seed(SegmentsContext context)
+        protected override void Seed(TourContext context)
         {
             var athletes = new List<Athlete>
             {
@@ -21,9 +21,9 @@ namespace VeloTours.DAL
 
             var countries = new List<Country>
             {
-                new Country { CountryCode = "NO", Name = "Norway", Active = true, },
-                new Country { CountryCode = "UK", Name = "United Kingdom", Active = false, },
-                new Country { CountryCode = "US", Name = "United States", Active = false, },
+                new Country { CountryID = "NO", Name = "Norway", Active = true, },
+                new Country { CountryID = "UK", Name = "United Kingdom", Active = false, },
+                new Country { CountryID = "US", Name = "United States", Active = false, },
             };
             countries.ForEach(s => context.Countries.Add(s));
             context.SaveChanges();
@@ -38,12 +38,12 @@ namespace VeloTours.DAL
 
             var segmentsArea = new List<SegmentArea>
             {
-                new SegmentArea { Region = regions[0], SegmentAreaID = 1, LastUpdated = DateTime.Now, Segments = 
+                new SegmentArea { Region = regions[0], SegmentAreaID = 1, Name = "Oslo klatrekong", LastUpdated = DateTime.Now, Segments = 
                     new List<Segment>
                     { 
-                        new Segment { SegmentId = 1942901 },
-                        new Segment { SegmentId = 660072 },
-                        new Segment { SegmentId = 632847 },
+                        new Segment { SegmentID = 1942901 },
+                        new Segment { SegmentID = 660072 },
+                        new Segment { SegmentID = 632847 },
                     }
                 }
             };

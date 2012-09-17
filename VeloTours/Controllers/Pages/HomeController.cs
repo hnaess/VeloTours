@@ -11,7 +11,6 @@ namespace VeloTours.Controllers
         public ActionResult Index()
         {
             ViewBag.Message = "Strava segments made into Tours";
-
             return View();
         }
 

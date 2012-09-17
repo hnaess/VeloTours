@@ -27,7 +27,7 @@ namespace VeloTours
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
 
-            Database.SetInitializer<SegmentsContext>(new SegmentsInitializer());
+            Database.SetInitializer<TourContext>(new TourInitializer());
         }
     }
 }
