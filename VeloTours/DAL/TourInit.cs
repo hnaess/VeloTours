@@ -11,14 +11,6 @@ namespace VeloTours.DAL
     {
         protected override void Seed(TourContext context)
         {
-            var athletes = new List<Athlete>
-            {
-                new Athlete { AthleteID = 352657, Name = "Henrik Næss", LastUpdated = DateTime.Now },
-                new Athlete { AthleteID = 354993, Name = "Fredrik Massey", LastUpdated = DateTime.Now },
-            };
-            athletes.ForEach(s => context.Athletes.Add(s));
-            context.SaveChanges();
-
             var countries = new List<Country>
             {
                 new Country { CountryID = "NO", Name = "Norway", Active = true, },
@@ -48,6 +40,14 @@ namespace VeloTours.DAL
                 }
             };
             segmentsArea.ForEach(s => context.SegmentArea.Add(s));
+            context.SaveChanges();
+
+            var athletes = new List<Athlete>
+            {
+                new Athlete { AthleteID = 352657, Name = "Henrik Næss", LastUpdated = DateTime.Now },
+                new Athlete { AthleteID = 354993, Name = "Fredrik Massey", LastUpdated = DateTime.Now },
+            };
+            athletes.ForEach(s => context.Athletes.Add(s));
             context.SaveChanges();
         }
     }

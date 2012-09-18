@@ -18,7 +18,7 @@ namespace VeloTours.Models
     public class Region
     {
         public int RegionID { get; set; }
-        
+
         public virtual Country Country { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
@@ -28,12 +28,13 @@ namespace VeloTours.Models
 
     public class SegmentArea
     {
+        [Key]
         public int SegmentAreaID { get; set; }
 
         public virtual Region Region { get; set; }
 
         public string Name { get; set; }
-        public virtual SegmentInfo SegmentInfo { get; set; }
+        //public virtual SegmentInfo SegmentInfo { get; set; }
 
         public virtual List<Segment> Segments { get; set; }
 
@@ -43,51 +44,56 @@ namespace VeloTours.Models
     public class Segment
     {
         /// <summary>Same as Strava Segment Id</summary>
+        [Key]
         public int SegmentID;
 
-        public virtual SegmentInfo SegmentInfo { get; set; }
+        //public virtual SegmentInfo SegmentInfo { get; set; }
     }
 
-    public class SegmentInfo
-    {
-        public int SegmentInfoID;
+    //public class SegmentInfo
+    //{
+    //    [Key]
+    //    public int SegmentInfoID;
 
-        public int Length { get; set; }
-        public int Riders { get; set; }
-        public int ElevGain { get; set; }
-        public int GradeType { get; set; }
-        
-        /// <summary>On SegmentArea then AvgGradeValue = Length * Distance</summary>
-        public double AvgGradeValue { get; set; }
+    //    public int Length { get; set; }
+    //    public int Riders { get; set; }
+    //    public int ElevGain { get; set; }
+    //    public int GradeType { get; set; }
 
-        public DateTime LastUpdated { get; set; }
-    }
+    //    /// <summary>On SegmentArea then AvgGradeValue = Length * Distance</summary>
+    //    public double AvgGradeValue { get; set; }
 
-    public class LeaderBoard
-    {
-        public int LeaderBoardID { get; set; }
+    //    public DateTime LastUpdated { get; set; }
+    //}
 
-        public virtual Statistic YellowYersey { get; set; }
-        public virtual Statistic GreenYersey { get; set; }
-        public virtual Statistic PKYersey { get; set; }
-    }
+    //public class LeaderBoard
+    //{
+    //    [Key]
+    //    public int LeaderBoardID { get; set; }
 
-    public class Statistic
-    {
-        public int StatisticID { get; set; }
-        
-        public virtual Athlete Athlete { get; set; }
-        public TimeSpan Duration { get; set; }
-        public int Points { get; set; }
-    }
+    //    public virtual Statistic YellowYersey { get; set; }
+    //    public virtual Statistic GreenYersey { get; set; }
+    //    public virtual Statistic PKYersey { get; set; }
+    //}
+
+    //public class Statistic
+    //{
+    //    [Key]
+    //    public int StatisticID { get; set; }
+
+    //    public virtual Athlete Athlete { get; set; }
+    //    public TimeSpan Duration { get; set; }
+    //    public int Points { get; set; }
+    //}
 
     public class Athlete
     {
+        [Key]
         public int AthleteID { get; set; }
 
         public string Name { get; set; }
         public bool privacy { get; set; }
-        
+
         public DateTime LastUpdated { get; set; }
     }
 

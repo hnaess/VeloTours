@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TourModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TourModelStoreContainer">
+    <EntitySet Name="Countries" EntityType="TourModel.Store.Countries" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Regions" EntityType="TourModel.Store.Regions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SegmentAreas" EntityType="TourModel.Store.SegmentAreas" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Segments" EntityType="TourModel.Store.Segments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SegmentInfos" EntityType="TourModel.Store.SegmentInfos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Grades" EntityType="TourModel.Store.Grades" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CountryRegion" Association="TourModel.Store.CountryRegion">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="Region" EntitySet="Regions" />
+    </AssociationSet>
+    <AssociationSet Name="RegionSegmentArea" Association="TourModel.Store.RegionSegmentArea">
+      <End Role="Region" EntitySet="Regions" />
+      <End Role="SegmentArea" EntitySet="SegmentAreas" />
+    </AssociationSet>
+    <AssociationSet Name="SegmentAreaSegment" Association="TourModel.Store.SegmentAreaSegment">
+      <End Role="SegmentArea" EntitySet="SegmentAreas" />
+      <End Role="Segment" EntitySet="Segments" />
+    </AssociationSet>
+    <AssociationSet Name="SegmentInfoGrade" Association="TourModel.Store.SegmentInfoGrade">
+      <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+      <End Role="Grade" EntitySet="Grades" />
+    </AssociationSet>
+    <AssociationSet Name="SegmentSegmentInfo" Association="TourModel.Store.SegmentSegmentInfo">
+      <End Role="Segment" EntitySet="Segments" />
+      <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+    </AssociationSet>
+    <AssociationSet Name="SegmentAreaSegmentInfo" Association="TourModel.Store.SegmentAreaSegmentInfo">
+      <End Role="SegmentArea" EntitySet="SegmentAreas" />
+      <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Countries">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Regions">
+    <Key>
+      <PropertyRef Name="RegionID" />
+    </Key>
+    <Property Name="RegionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SegmentAreas">
+    <Key>
+      <PropertyRef Name="SegmentAreaID" />
+    </Key>
+    <Property Name="SegmentAreaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RegionID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+    <Property Name="SegmentInfo_SegmentInfoID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Segments">
+    <Key>
+      <PropertyRef Name="SegmentID" />
+    </Key>
+    <Property Name="SegmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SegmentAreaID" Type="int" Nullable="false" />
+    <Property Name="SegmentInfo_SegmentInfoID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SegmentInfos">
+    <Key>
+      <PropertyRef Name="SegmentInfoID" />
+    </Key>
+    <Property Name="SegmentInfoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Length" Type="float" Nullable="true" />
+    <Property Name="Riders" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ElevGain" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Grades">
+    <Key>
+      <PropertyRef Name="GreadeID" />
+    </Key>
+    <Property Name="GreadeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Climb" Type="int" Nullable="false" />
+    <Property Name="Sprint" Type="int" Nullable="false" />
+    <Property Name="SegmentInfo_SegmentInfoID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CountryRegion">
+    <End Role="Country" Type="TourModel.Store.Countries" Multiplicity="1" />
+    <End Role="Region" Type="TourModel.Store.Regions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Region">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RegionSegmentArea">
+    <End Role="Region" Type="TourModel.Store.Regions" Multiplicity="1" />
+    <End Role="SegmentArea" Type="TourModel.Store.SegmentAreas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionID" />
+      </Principal>
+      <Dependent Role="SegmentArea">
+        <PropertyRef Name="RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SegmentAreaSegment">
+    <End Role="SegmentArea" Type="TourModel.Store.SegmentAreas" Multiplicity="1" />
+    <End Role="Segment" Type="TourModel.Store.Segments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SegmentArea">
+        <PropertyRef Name="SegmentAreaID" />
+      </Principal>
+      <Dependent Role="Segment">
+        <PropertyRef Name="SegmentAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SegmentInfoGrade">
+    <End Role="SegmentInfo" Type="TourModel.Store.SegmentInfos" Multiplicity="1" />
+    <End Role="Grade" Type="TourModel.Store.Grades" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SegmentInfo">
+        <PropertyRef Name="SegmentInfoID" />
+      </Principal>
+      <Dependent Role="Grade">
+        <PropertyRef Name="SegmentInfo_SegmentInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SegmentSegmentInfo">
+    <End Role="Segment" Type="TourModel.Store.Segments" Multiplicity="*" />
+    <End Role="SegmentInfo" Type="TourModel.Store.SegmentInfos" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="SegmentInfo">
+        <PropertyRef Name="SegmentInfoID" />
+      </Principal>
+      <Dependent Role="Segment">
+        <PropertyRef Name="SegmentInfo_SegmentInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SegmentAreaSegmentInfo">
+    <End Role="SegmentArea" Type="TourModel.Store.SegmentAreas" Multiplicity="*" />
+    <End Role="SegmentInfo" Type="TourModel.Store.SegmentInfos" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="SegmentInfo">
+        <PropertyRef Name="SegmentInfoID" />
+      </Principal>
+      <Dependent Role="SegmentArea">
+        <PropertyRef Name="SegmentInfo_SegmentInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TourModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="TourModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Countries" EntityType="TourModel.Country" />
+          <EntitySet Name="Regions" EntityType="TourModel.Region" />
+          <AssociationSet Name="CountryRegion" Association="TourModel.CountryRegion">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Region" EntitySet="Regions" />
+          </AssociationSet>
+          <EntitySet Name="SegmentAreas" EntityType="TourModel.SegmentArea" />
+          <AssociationSet Name="RegionSegmentArea" Association="TourModel.RegionSegmentArea">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="SegmentArea" EntitySet="SegmentAreas" />
+          </AssociationSet>
+          <EntitySet Name="Segments" EntityType="TourModel.Segment" />
+          <AssociationSet Name="SegmentAreaSegment" Association="TourModel.SegmentAreaSegment">
+            <End Role="SegmentArea" EntitySet="SegmentAreas" />
+            <End Role="Segment" EntitySet="Segments" />
+          </AssociationSet>
+          <EntitySet Name="SegmentInfos" EntityType="TourModel.SegmentInfo" />
+          <EntitySet Name="Grades" EntityType="TourModel.Grade" />
+          <AssociationSet Name="SegmentInfoGrade" Association="TourModel.SegmentInfoGrade">
+            <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+            <End Role="Grade" EntitySet="Grades" />
+          </AssociationSet>
+          <AssociationSet Name="SegmentSegmentInfo" Association="TourModel.SegmentSegmentInfo">
+            <End Role="Segment" EntitySet="Segments" />
+            <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+          </AssociationSet>
+          <AssociationSet Name="SegmentAreaSegmentInfo" Association="TourModel.SegmentAreaSegmentInfo">
+            <End Role="SegmentArea" EntitySet="SegmentAreas" />
+            <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Type="Int32" Name="CountryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Code" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Region" Relationship="TourModel.CountryRegion" FromRole="Country" ToRole="Region" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="RegionID" />
+          </Key>
+          <Property Type="Int32" Name="RegionID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CountryID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Country" Relationship="TourModel.CountryRegion" FromRole="Region" ToRole="Country" />
+          <NavigationProperty Name="SegmentArea" Relationship="TourModel.RegionSegmentArea" FromRole="Region" ToRole="SegmentArea" />
+        </EntityType>
+        <Association Name="CountryRegion">
+          <End Type="TourModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="TourModel.Region" Role="Region" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="Region">
+              <PropertyRef Name="CountryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SegmentArea">
+          <Key>
+            <PropertyRef Name="SegmentAreaID" />
+          </Key>
+          <Property Type="Int32" Name="SegmentAreaID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Region" Relationship="TourModel.RegionSegmentArea" FromRole="SegmentArea" ToRole="Region" />
+          <Property Type="Int32" Name="RegionID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
+          <NavigationProperty Name="Segment" Relationship="TourModel.SegmentAreaSegment" FromRole="SegmentArea" ToRole="Segment" />
+          <NavigationProperty Name="SegmentInfo" Relationship="TourModel.SegmentAreaSegmentInfo" FromRole="SegmentArea" ToRole="SegmentInfo" />
+        </EntityType>
+        <Association Name="RegionSegmentArea">
+          <End Type="TourModel.Region" Role="Region" Multiplicity="1" />
+          <End Type="TourModel.SegmentArea" Role="SegmentArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionID" />
+            </Principal>
+            <Dependent Role="SegmentArea">
+              <PropertyRef Name="RegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Segment">
+          <Key>
+            <PropertyRef Name="SegmentID" />
+          </Key>
+          <Property Type="Int32" Name="SegmentID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="SegmentArea" Relationship="TourModel.SegmentAreaSegment" FromRole="Segment" ToRole="SegmentArea" />
+          <Property Type="Int32" Name="SegmentAreaID" Nullable="false" />
+          <NavigationProperty Name="SegmentInfo" Relationship="TourModel.SegmentSegmentInfo" FromRole="Segment" ToRole="SegmentInfo" />
+        </EntityType>
+        <Association Name="SegmentAreaSegment">
+          <End Type="TourModel.SegmentArea" Role="SegmentArea" Multiplicity="1" />
+          <End Type="TourModel.Segment" Role="Segment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SegmentArea">
+              <PropertyRef Name="SegmentAreaID" />
+            </Principal>
+            <Dependent Role="Segment">
+              <PropertyRef Name="SegmentAreaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SegmentInfo">
+          <Key>
+            <PropertyRef Name="SegmentInfoID" />
+          </Key>
+          <Property Type="Int32" Name="SegmentInfoID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Double" Name="Length" Nullable="true" />
+          <Property Type="String" Name="Riders" Nullable="true" />
+          <Property Type="Int32" Name="ElevGain" Nullable="true" />
+          <NavigationProperty Name="Grade" Relationship="TourModel.SegmentInfoGrade" FromRole="SegmentInfo" ToRole="Grade" />
+          <NavigationProperty Name="SegmentArea" Relationship="TourModel.SegmentAreaSegmentInfo" FromRole="SegmentInfo" ToRole="SegmentArea" />
+        </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="GreadeID" />
+          </Key>
+          <Property Type="Int32" Name="GreadeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="Climb" Nullable="false" />
+          <Property Type="Int32" Name="Sprint" Nullable="false" />
+          <NavigationProperty Name="SegmentInfo" Relationship="TourModel.SegmentInfoGrade" FromRole="Grade" ToRole="SegmentInfo" />
+        </EntityType>
+        <Association Name="SegmentInfoGrade">
+          <End Type="TourModel.SegmentInfo" Role="SegmentInfo" Multiplicity="1" />
+          <End Type="TourModel.Grade" Role="Grade" Multiplicity="0..1" />
+        </Association>
+        <Association Name="SegmentSegmentInfo">
+          <End Type="TourModel.Segment" Role="Segment" Multiplicity="0..1" />
+          <End Type="TourModel.SegmentInfo" Role="SegmentInfo" Multiplicity="1" />
+        </Association>
+        <Association Name="SegmentAreaSegmentInfo">
+          <End Type="TourModel.SegmentArea" Role="SegmentArea" Multiplicity="0..1" />
+          <End Type="TourModel.SegmentInfo" Role="SegmentInfo" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TourModelStoreContainer" CdmEntityContainer="TourModelContainer">
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="IsTypeOf(TourModel.Country)">
+        <MappingFragment StoreEntitySet="Countries">
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Regions">
+      <EntityTypeMapping TypeName="IsTypeOf(TourModel.Region)">
+        <MappingFragment StoreEntitySet="Regions">
+          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SegmentAreas">
+      <EntityTypeMapping TypeName="IsTypeOf(TourModel.SegmentArea)">
+        <MappingFragment StoreEntitySet="SegmentAreas">
+          <ScalarProperty Name="SegmentAreaID" ColumnName="SegmentAreaID" />
+          <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Segments">
+      <EntityTypeMapping TypeName="IsTypeOf(TourModel.Segment)">
+        <MappingFragment StoreEntitySet="Segments">
+          <ScalarProperty Name="SegmentID" ColumnName="SegmentID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SegmentAreaID" ColumnName="SegmentAreaID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SegmentInfos">
+      <EntityTypeMapping TypeName="IsTypeOf(TourModel.SegmentInfo)">
+        <MappingFragment StoreEntitySet="SegmentInfos">
+          <ScalarProperty Name="SegmentInfoID" ColumnName="SegmentInfoID" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Riders" ColumnName="Riders" />
+          <ScalarProperty Name="ElevGain" ColumnName="ElevGain" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Grades">
+      <EntityTypeMapping TypeName="IsTypeOf(TourModel.Grade)">
+        <MappingFragment StoreEntitySet="Grades">
+          <ScalarProperty Name="GreadeID" ColumnName="GreadeID" />
+          <ScalarProperty Name="Climb" ColumnName="Climb" />
+          <ScalarProperty Name="Sprint" ColumnName="Sprint" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="SegmentInfoGrade" TypeName="TourModel.SegmentInfoGrade" StoreEntitySet="Grades">
+      <EndProperty Name="SegmentInfo">
+        <ScalarProperty Name="SegmentInfoID" ColumnName="SegmentInfo_SegmentInfoID" />
+      </EndProperty>
+      <EndProperty Name="Grade">
+        <ScalarProperty Name="GreadeID" ColumnName="GreadeID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SegmentSegmentInfo" TypeName="TourModel.SegmentSegmentInfo" StoreEntitySet="Segments">
+      <EndProperty Name="SegmentInfo">
+        <ScalarProperty Name="SegmentInfoID" ColumnName="SegmentInfo_SegmentInfoID" />
+      </EndProperty>
+      <EndProperty Name="Segment">
+        <ScalarProperty Name="SegmentID" ColumnName="SegmentID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SegmentAreaSegmentInfo" TypeName="TourModel.SegmentAreaSegmentInfo" StoreEntitySet="SegmentAreas">
+      <EndProperty Name="SegmentInfo">
+        <ScalarProperty Name="SegmentInfoID" ColumnName="SegmentInfo_SegmentInfoID" />
+      </EndProperty>
+      <EndProperty Name="SegmentArea">
+        <ScalarProperty Name="SegmentAreaID" ColumnName="SegmentAreaID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
