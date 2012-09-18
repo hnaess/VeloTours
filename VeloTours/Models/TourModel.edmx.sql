@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 09/18/2012 13:28:41
+-- Date Created: 09/18/2012 14:41:32
 -- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
@@ -26,14 +26,20 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_SegmentAreaSegment]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Segments] DROP CONSTRAINT [FK_SegmentAreaSegment];
 GO
-IF OBJECT_ID(N'[dbo].[FK_SegmentInfoGrade]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Grades] DROP CONSTRAINT [FK_SegmentInfoGrade];
-GO
 IF OBJECT_ID(N'[dbo].[FK_SegmentSegmentInfo]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Segments] DROP CONSTRAINT [FK_SegmentSegmentInfo];
 GO
 IF OBJECT_ID(N'[dbo].[FK_SegmentAreaSegmentInfo]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[SegmentAreas] DROP CONSTRAINT [FK_SegmentAreaSegmentInfo];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StatisticAthlete]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Statistics] DROP CONSTRAINT [FK_StatisticAthlete];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SegmentInfoStatistic]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Statistics] DROP CONSTRAINT [FK_SegmentInfoStatistic];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SegmentInfoGrade]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SegmentInfos] DROP CONSTRAINT [FK_SegmentInfoGrade];
 GO
 
 -- --------------------------------------------------
@@ -54,6 +60,12 @@ IF OBJECT_ID(N'[dbo].[Segments]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[SegmentInfos]', 'U') IS NOT NULL
     DROP TABLE [dbo].[SegmentInfos];
+GO
+IF OBJECT_ID(N'[dbo].[Athletes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Athletes];
+GO
+IF OBJECT_ID(N'[dbo].[Statistics]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Statistics];
 GO
 IF OBJECT_ID(N'[dbo].[Grades]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Grades];
@@ -85,7 +97,6 @@ CREATE TABLE [dbo].[SegmentAreas] (
     [RegionID] int  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [LastUpdated] datetime  NOT NULL,
-    [Property1] nvarchar(max)  NOT NULL,
     [SegmentInfo_SegmentInfoID] int  NOT NULL
 );
 GO
@@ -102,18 +113,12 @@ GO
 -- Creating table 'SegmentInfos'
 CREATE TABLE [dbo].[SegmentInfos] (
     [SegmentInfoID] int IDENTITY(1,1) NOT NULL,
-    [Length] float  NULL,
-    [Riders] nvarchar(max)  NULL,
-    [ElevGain] int  NULL
-);
-GO
-
--- Creating table 'Grades'
-CREATE TABLE [dbo].[Grades] (
-    [GradeID] int IDENTITY(1,1) NOT NULL,
-    [Climb] int  NOT NULL,
-    [Sprint] int  NOT NULL,
-    [SegmentInfo_SegmentInfoID] int  NOT NULL
+    [Distance] float  NULL,
+    [ElevDifference] int  NULL,
+    [AvgGrade] float  NULL,
+    [Riders] int  NULL,
+    [Ridden] int  NULL,
+    [GradeGradeID] int  NOT NULL
 );
 GO
 
@@ -137,6 +142,14 @@ CREATE TABLE [dbo].[Statistics] (
     [SegmentSegmentID] int  NOT NULL,
     [SegmentInfoSegmentInfoID] int  NOT NULL,
     [Athlete_AthleteID] int  NOT NULL
+);
+GO
+
+-- Creating table 'Grades'
+CREATE TABLE [dbo].[Grades] (
+    [GradeID] int IDENTITY(1,1) NOT NULL,
+    [Climb] int  NOT NULL,
+    [Sprint] int  NOT NULL
 );
 GO
 
@@ -174,12 +187,6 @@ ADD CONSTRAINT [PK_SegmentInfos]
     PRIMARY KEY CLUSTERED ([SegmentInfoID] ASC);
 GO
 
--- Creating primary key on [GradeID] in table 'Grades'
-ALTER TABLE [dbo].[Grades]
-ADD CONSTRAINT [PK_Grades]
-    PRIMARY KEY CLUSTERED ([GradeID] ASC);
-GO
-
 -- Creating primary key on [AthleteID] in table 'Athletes'
 ALTER TABLE [dbo].[Athletes]
 ADD CONSTRAINT [PK_Athletes]
@@ -190,6 +197,12 @@ GO
 ALTER TABLE [dbo].[Statistics]
 ADD CONSTRAINT [PK_Statistics]
     PRIMARY KEY CLUSTERED ([StatisticID] ASC);
+GO
+
+-- Creating primary key on [GradeID] in table 'Grades'
+ALTER TABLE [dbo].[Grades]
+ADD CONSTRAINT [PK_Grades]
+    PRIMARY KEY CLUSTERED ([GradeID] ASC);
 GO
 
 -- --------------------------------------------------
@@ -236,20 +249,6 @@ ADD CONSTRAINT [FK_SegmentAreaSegment]
 CREATE INDEX [IX_FK_SegmentAreaSegment]
 ON [dbo].[Segments]
     ([SegmentAreaID]);
-GO
-
--- Creating foreign key on [SegmentInfo_SegmentInfoID] in table 'Grades'
-ALTER TABLE [dbo].[Grades]
-ADD CONSTRAINT [FK_SegmentInfoGrade]
-    FOREIGN KEY ([SegmentInfo_SegmentInfoID])
-    REFERENCES [dbo].[SegmentInfos]
-        ([SegmentInfoID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_SegmentInfoGrade'
-CREATE INDEX [IX_FK_SegmentInfoGrade]
-ON [dbo].[Grades]
-    ([SegmentInfo_SegmentInfoID]);
 GO
 
 -- Creating foreign key on [SegmentInfo_SegmentInfoID] in table 'Segments'
@@ -306,6 +305,20 @@ ADD CONSTRAINT [FK_SegmentInfoStatistic]
 CREATE INDEX [IX_FK_SegmentInfoStatistic]
 ON [dbo].[Statistics]
     ([SegmentInfoSegmentInfoID]);
+GO
+
+-- Creating foreign key on [GradeGradeID] in table 'SegmentInfos'
+ALTER TABLE [dbo].[SegmentInfos]
+ADD CONSTRAINT [FK_SegmentInfoGrade]
+    FOREIGN KEY ([GradeGradeID])
+    REFERENCES [dbo].[Grades]
+        ([GradeID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_SegmentInfoGrade'
+CREATE INDEX [IX_FK_SegmentInfoGrade]
+ON [dbo].[SegmentInfos]
+    ([GradeGradeID]);
 GO
 
 -- --------------------------------------------------

@@ -11,6 +11,8 @@
     <EntitySet Name="SegmentAreas" EntityType="TourModel.Store.SegmentAreas" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Segments" EntityType="TourModel.Store.Segments" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SegmentInfos" EntityType="TourModel.Store.SegmentInfos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Athletes" EntityType="TourModel.Store.Athletes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Statistics" EntityType="TourModel.Store.Statistics" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Grades" EntityType="TourModel.Store.Grades" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="CountryRegion" Association="TourModel.Store.CountryRegion">
       <End Role="Country" EntitySet="Countries" />
@@ -24,10 +26,6 @@
       <End Role="SegmentArea" EntitySet="SegmentAreas" />
       <End Role="Segment" EntitySet="Segments" />
     </AssociationSet>
-    <AssociationSet Name="SegmentInfoGrade" Association="TourModel.Store.SegmentInfoGrade">
-      <End Role="SegmentInfo" EntitySet="SegmentInfos" />
-      <End Role="Grade" EntitySet="Grades" />
-    </AssociationSet>
     <AssociationSet Name="SegmentSegmentInfo" Association="TourModel.Store.SegmentSegmentInfo">
       <End Role="Segment" EntitySet="Segments" />
       <End Role="SegmentInfo" EntitySet="SegmentInfos" />
@@ -35,6 +33,18 @@
     <AssociationSet Name="SegmentAreaSegmentInfo" Association="TourModel.Store.SegmentAreaSegmentInfo">
       <End Role="SegmentArea" EntitySet="SegmentAreas" />
       <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+    </AssociationSet>
+    <AssociationSet Name="StatisticAthlete" Association="TourModel.Store.StatisticAthlete">
+      <End Role="Statistic" EntitySet="Statistics" />
+      <End Role="Athlete" EntitySet="Athletes" />
+    </AssociationSet>
+    <AssociationSet Name="SegmentInfoStatistic" Association="TourModel.Store.SegmentInfoStatistic">
+      <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+      <End Role="Statistic" EntitySet="Statistics" />
+    </AssociationSet>
+    <AssociationSet Name="SegmentInfoGrade" Association="TourModel.Store.SegmentInfoGrade">
+      <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+      <End Role="Grade" EntitySet="Grades" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Countries">
@@ -77,18 +87,43 @@
       <PropertyRef Name="SegmentInfoID" />
     </Key>
     <Property Name="SegmentInfoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Length" Type="float" Nullable="true" />
-    <Property Name="Riders" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="ElevGain" Type="int" Nullable="true" />
+    <Property Name="Distance" Type="float" Nullable="true" />
+    <Property Name="ElevDifference" Type="int" Nullable="true" />
+    <Property Name="AvgGrade" Type="float" Nullable="true" />
+    <Property Name="Riders" Type="int" Nullable="true" />
+    <Property Name="Ridden" Type="int" Nullable="true" />
+    <Property Name="GradeGradeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Athletes">
+    <Key>
+      <PropertyRef Name="AthleteID" />
+    </Key>
+    <Property Name="AthleteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StravaID" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PrivacyMode" Type="int" Nullable="true" />
+    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Statistics">
+    <Key>
+      <PropertyRef Name="StatisticID" />
+    </Key>
+    <Property Name="StatisticID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Period" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="YerseyType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Duration" Type="time" Nullable="true" />
+    <Property Name="Points" Type="int" Nullable="false" />
+    <Property Name="SegmentSegmentID" Type="int" Nullable="false" />
+    <Property Name="SegmentInfoSegmentInfoID" Type="int" Nullable="false" />
+    <Property Name="Athlete_AthleteID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Grades">
     <Key>
-      <PropertyRef Name="GreadeID" />
+      <PropertyRef Name="GradeID" />
     </Key>
-    <Property Name="GreadeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GradeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Climb" Type="int" Nullable="false" />
     <Property Name="Sprint" Type="int" Nullable="false" />
-    <Property Name="SegmentInfo_SegmentInfoID" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="CountryRegion">
     <End Role="Country" Type="TourModel.Store.Countries" Multiplicity="1" />
@@ -126,18 +161,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="SegmentInfoGrade">
-    <End Role="SegmentInfo" Type="TourModel.Store.SegmentInfos" Multiplicity="1" />
-    <End Role="Grade" Type="TourModel.Store.Grades" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SegmentInfo">
-        <PropertyRef Name="SegmentInfoID" />
-      </Principal>
-      <Dependent Role="Grade">
-        <PropertyRef Name="SegmentInfo_SegmentInfoID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="SegmentSegmentInfo">
     <End Role="Segment" Type="TourModel.Store.Segments" Multiplicity="*" />
     <End Role="SegmentInfo" Type="TourModel.Store.SegmentInfos" Multiplicity="1" />
@@ -159,6 +182,42 @@
       </Principal>
       <Dependent Role="SegmentArea">
         <PropertyRef Name="SegmentInfo_SegmentInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StatisticAthlete">
+    <End Role="Statistic" Type="TourModel.Store.Statistics" Multiplicity="*" />
+    <End Role="Athlete" Type="TourModel.Store.Athletes" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Athlete">
+        <PropertyRef Name="AthleteID" />
+      </Principal>
+      <Dependent Role="Statistic">
+        <PropertyRef Name="Athlete_AthleteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SegmentInfoStatistic">
+    <End Role="SegmentInfo" Type="TourModel.Store.SegmentInfos" Multiplicity="1" />
+    <End Role="Statistic" Type="TourModel.Store.Statistics" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SegmentInfo">
+        <PropertyRef Name="SegmentInfoID" />
+      </Principal>
+      <Dependent Role="Statistic">
+        <PropertyRef Name="SegmentInfoSegmentInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SegmentInfoGrade">
+    <End Role="SegmentInfo" Type="TourModel.Store.SegmentInfos" Multiplicity="*" />
+    <End Role="Grade" Type="TourModel.Store.Grades" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Grade">
+        <PropertyRef Name="GradeID" />
+      </Principal>
+      <Dependent Role="SegmentInfo">
+        <PropertyRef Name="GradeGradeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -184,11 +243,6 @@
             <End Role="Segment" EntitySet="Segments" />
           </AssociationSet>
           <EntitySet Name="SegmentInfos" EntityType="TourModel.SegmentInfo" />
-          <EntitySet Name="Grades" EntityType="TourModel.Grade" />
-          <AssociationSet Name="SegmentInfoGrade" Association="TourModel.SegmentInfoGrade">
-            <End Role="SegmentInfo" EntitySet="SegmentInfos" />
-            <End Role="Grade" EntitySet="Grades" />
-          </AssociationSet>
           <AssociationSet Name="SegmentSegmentInfo" Association="TourModel.SegmentSegmentInfo">
             <End Role="Segment" EntitySet="Segments" />
             <End Role="SegmentInfo" EntitySet="SegmentInfos" />
@@ -196,6 +250,21 @@
           <AssociationSet Name="SegmentAreaSegmentInfo" Association="TourModel.SegmentAreaSegmentInfo">
             <End Role="SegmentArea" EntitySet="SegmentAreas" />
             <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+          </AssociationSet>
+          <EntitySet Name="Athletes" EntityType="TourModel.Athlete" />
+          <EntitySet Name="Statistics" EntityType="TourModel.Statistic" />
+          <AssociationSet Name="StatisticAthlete" Association="TourModel.StatisticAthlete">
+            <End Role="Statistic" EntitySet="Statistics" />
+            <End Role="Athlete" EntitySet="Athletes" />
+          </AssociationSet>
+          <AssociationSet Name="SegmentInfoStatistic" Association="TourModel.SegmentInfoStatistic">
+            <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+            <End Role="Statistic" EntitySet="Statistics" />
+          </AssociationSet>
+          <EntitySet Name="Grades" EntityType="TourModel.Grade" />
+          <AssociationSet Name="SegmentInfoGrade" Association="TourModel.SegmentInfoGrade">
+            <End Role="SegmentInfo" EntitySet="SegmentInfos" />
+            <End Role="Grade" EntitySet="Grades" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Country">
@@ -280,25 +349,16 @@
             <PropertyRef Name="SegmentInfoID" />
           </Key>
           <Property Type="Int32" Name="SegmentInfoID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Double" Name="Length" Nullable="true" />
-          <Property Type="String" Name="Riders" Nullable="true" />
-          <Property Type="Int32" Name="ElevGain" Nullable="true" />
-          <NavigationProperty Name="Grade" Relationship="TourModel.SegmentInfoGrade" FromRole="SegmentInfo" ToRole="Grade" />
+          <Property Type="Double" Name="Distance" Nullable="true" />
+          <Property Type="Int32" Name="ElevDifference" Nullable="true" />
           <NavigationProperty Name="SegmentArea" Relationship="TourModel.SegmentAreaSegmentInfo" FromRole="SegmentInfo" ToRole="SegmentArea" />
+          <NavigationProperty Name="Statistic" Relationship="TourModel.SegmentInfoStatistic" FromRole="SegmentInfo" ToRole="Statistic" />
+          <Property Type="Double" Name="AvgGrade" Nullable="true" />
+          <Property Type="Int32" Name="Riders" Nullable="true" />
+          <Property Type="Int32" Name="Ridden" Nullable="true" />
+          <NavigationProperty Name="Grade" Relationship="TourModel.SegmentInfoGrade" FromRole="SegmentInfo" ToRole="Grade" />
+          <Property Type="Int32" Name="GradeGradeID" Nullable="false" />
         </EntityType>
-        <EntityType Name="Grade">
-          <Key>
-            <PropertyRef Name="GreadeID" />
-          </Key>
-          <Property Type="Int32" Name="GreadeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="Climb" Nullable="false" />
-          <Property Type="Int32" Name="Sprint" Nullable="false" />
-          <NavigationProperty Name="SegmentInfo" Relationship="TourModel.SegmentInfoGrade" FromRole="Grade" ToRole="SegmentInfo" />
-        </EntityType>
-        <Association Name="SegmentInfoGrade">
-          <End Type="TourModel.SegmentInfo" Role="SegmentInfo" Multiplicity="1" />
-          <End Type="TourModel.Grade" Role="Grade" Multiplicity="0..1" />
-        </Association>
         <Association Name="SegmentSegmentInfo">
           <End Type="TourModel.Segment" Role="Segment" Multiplicity="0..1" />
           <End Type="TourModel.SegmentInfo" Role="SegmentInfo" Multiplicity="1" />
@@ -306,6 +366,68 @@
         <Association Name="SegmentAreaSegmentInfo">
           <End Type="TourModel.SegmentArea" Role="SegmentArea" Multiplicity="0..1" />
           <End Type="TourModel.SegmentInfo" Role="SegmentInfo" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Athlete">
+          <Key>
+            <PropertyRef Name="AthleteID" />
+          </Key>
+          <Property Type="Int32" Name="AthleteID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="StravaID" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="Int32" Name="PrivacyMode" Nullable="true" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
+          <NavigationProperty Name="Statistic" Relationship="TourModel.StatisticAthlete" FromRole="Athlete" ToRole="Statistic" />
+        </EntityType>
+        <EntityType Name="Statistic">
+          <Key>
+            <PropertyRef Name="StatisticID" />
+          </Key>
+          <Property Type="Int32" Name="StatisticID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Athlete" Relationship="TourModel.StatisticAthlete" FromRole="Statistic" ToRole="Athlete" />
+          <Property Type="String" Name="Period" Nullable="false" />
+          <Property Type="String" Name="YerseyType" Nullable="false" />
+          <Property Type="Time" Name="Duration" />
+          <Property Type="Int32" Name="Points" Nullable="false" />
+          <Property Type="Int32" Name="SegmentSegmentID" Nullable="false" />
+          <NavigationProperty Name="SegmentInfo" Relationship="TourModel.SegmentInfoStatistic" FromRole="Statistic" ToRole="SegmentInfo" />
+          <Property Type="Int32" Name="SegmentInfoSegmentInfoID" Nullable="false" />
+        </EntityType>
+        <Association Name="StatisticAthlete">
+          <End Type="TourModel.Statistic" Role="Statistic" Multiplicity="*" />
+          <End Type="TourModel.Athlete" Role="Athlete" Multiplicity="1" />
+        </Association>
+        <Association Name="SegmentInfoStatistic">
+          <End Type="TourModel.SegmentInfo" Role="SegmentInfo" Multiplicity="1" />
+          <End Type="TourModel.Statistic" Role="Statistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SegmentInfo">
+              <PropertyRef Name="SegmentInfoID" />
+            </Principal>
+            <Dependent Role="Statistic">
+              <PropertyRef Name="SegmentInfoSegmentInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="GradeID" />
+          </Key>
+          <Property Type="Int32" Name="GradeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="Climb" Nullable="false" />
+          <Property Type="Int32" Name="Sprint" Nullable="false" />
+          <NavigationProperty Name="SegmentInfo" Relationship="TourModel.SegmentInfoGrade" FromRole="Grade" ToRole="SegmentInfo" />
+        </EntityType>
+        <Association Name="SegmentInfoGrade">
+          <End Type="TourModel.SegmentInfo" Role="SegmentInfo" Multiplicity="*" />
+          <End Type="TourModel.Grade" Role="Grade" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="GradeID" />
+            </Principal>
+            <Dependent Role="SegmentInfo">
+              <PropertyRef Name="GradeGradeID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -354,29 +476,48 @@
       <EntityTypeMapping TypeName="IsTypeOf(TourModel.SegmentInfo)">
         <MappingFragment StoreEntitySet="SegmentInfos">
           <ScalarProperty Name="SegmentInfoID" ColumnName="SegmentInfoID" />
-          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="ElevDifference" ColumnName="ElevDifference" />
+          <ScalarProperty Name="AvgGrade" ColumnName="AvgGrade" />
           <ScalarProperty Name="Riders" ColumnName="Riders" />
-          <ScalarProperty Name="ElevGain" ColumnName="ElevGain" />
+          <ScalarProperty Name="Ridden" ColumnName="Ridden" />
+          <ScalarProperty Name="GradeGradeID" ColumnName="GradeGradeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Athletes">
+      <EntityTypeMapping TypeName="IsTypeOf(TourModel.Athlete)">
+        <MappingFragment StoreEntitySet="Athletes">
+          <ScalarProperty Name="AthleteID" ColumnName="AthleteID" />
+          <ScalarProperty Name="StravaID" ColumnName="StravaID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PrivacyMode" ColumnName="PrivacyMode" />
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Statistics">
+      <EntityTypeMapping TypeName="IsTypeOf(TourModel.Statistic)">
+        <MappingFragment StoreEntitySet="Statistics">
+          <ScalarProperty Name="StatisticID" ColumnName="StatisticID" />
+          <ScalarProperty Name="Period" ColumnName="Period" />
+          <ScalarProperty Name="YerseyType" ColumnName="YerseyType" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+          <ScalarProperty Name="SegmentSegmentID" ColumnName="SegmentSegmentID" />
+          <ScalarProperty Name="SegmentInfoSegmentInfoID" ColumnName="SegmentInfoSegmentInfoID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Grades">
       <EntityTypeMapping TypeName="IsTypeOf(TourModel.Grade)">
         <MappingFragment StoreEntitySet="Grades">
-          <ScalarProperty Name="GreadeID" ColumnName="GreadeID" />
+          <ScalarProperty Name="GradeID" ColumnName="GradeID" />
           <ScalarProperty Name="Climb" ColumnName="Climb" />
           <ScalarProperty Name="Sprint" ColumnName="Sprint" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="SegmentInfoGrade" TypeName="TourModel.SegmentInfoGrade" StoreEntitySet="Grades">
-      <EndProperty Name="SegmentInfo">
-        <ScalarProperty Name="SegmentInfoID" ColumnName="SegmentInfo_SegmentInfoID" />
-      </EndProperty>
-      <EndProperty Name="Grade">
-        <ScalarProperty Name="GreadeID" ColumnName="GreadeID" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="SegmentSegmentInfo" TypeName="TourModel.SegmentSegmentInfo" StoreEntitySet="Segments">
       <EndProperty Name="SegmentInfo">
         <ScalarProperty Name="SegmentInfoID" ColumnName="SegmentInfo_SegmentInfoID" />
@@ -391,6 +532,14 @@
       </EndProperty>
       <EndProperty Name="SegmentArea">
         <ScalarProperty Name="SegmentAreaID" ColumnName="SegmentAreaID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="StatisticAthlete" TypeName="TourModel.StatisticAthlete" StoreEntitySet="Statistics">
+      <EndProperty Name="Athlete">
+        <ScalarProperty Name="AthleteID" ColumnName="Athlete_AthleteID" />
+      </EndProperty>
+      <EndProperty Name="Statistic">
+        <ScalarProperty Name="StatisticID" ColumnName="StatisticID" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>

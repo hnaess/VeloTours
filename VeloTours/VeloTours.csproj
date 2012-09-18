@@ -169,14 +169,36 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Account\AccountController.cs" />
     <Compile Include="Controllers\Pages\HomeController.cs" />
-    <Compile Include="DAL\TourContext.cs" />
     <Compile Include="DAL\TourInit.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\Tour.cs" />
+    <Compile Include="Models\Athlete.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Country.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Grade.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Region.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Segment.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SegmentArea.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SegmentInfo.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Statistic.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TourModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -256,19 +278,16 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TourModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Models\TourModel.edmx.sql" />
     <Content Include="Models\TourModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TourModel.edmx</DependentUpon>
       <LastGenOutput>TourModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\TourModel.edmx.diagram">
       <DependentUpon>TourModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\TourModel.edmx.sql" />
     <Content Include="Models\TourModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TourModel.edmx</DependentUpon>
       <LastGenOutput>TourModel.cs</LastGenOutput>
+      <DependentUpon>TourModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.8.1.intellisense.js" />

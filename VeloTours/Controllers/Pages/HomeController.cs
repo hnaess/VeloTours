@@ -10,7 +10,7 @@ namespace VeloTours.Controllers
 {
     public class HomeController : Controller
     {
-        private TourContext db = new TourContext();
+        //private TourContext db = new TourContext();
 
         public ActionResult Index()
         {
@@ -22,11 +22,11 @@ namespace VeloTours.Controllers
         {
             //ViewBag.Message = "Your app description page.";
 
-            var data = from athlete in db.Athletes
-                       select new AthleteInfo()
-                       {
-                           AthleteCount = athlete.AthleteID
-                       };
+            //var data = from athlete in db.Athletes
+            //           select new AthleteInfo()
+            //           {
+            //               AthleteCount = athlete.AthleteID
+            //           };
 
             return View();
         }
@@ -40,8 +40,8 @@ namespace VeloTours.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
-            base.Dispose(disposing);
+            //db.Dispose();
+            //base.Dispose(disposing);
         }
     }
 }
