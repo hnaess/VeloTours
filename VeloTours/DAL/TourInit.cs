@@ -11,6 +11,31 @@ namespace VeloTours.DAL
     {
         protected override void Seed(TourModelContainer context)
         {
+            var countries = Countries(context);
+            var regions = RegionsInNorway(context, countries[0]);
+
+            var segmentInfo = OsloKlatreKonge(context, regions[0]);
+
+            Athletes(context);
+            Grades(context);
+        }
+
+        private static List<Region> RegionsInNorway(TourModelContainer context, Models.Country country)
+        {
+            var regions = new List<Region>
+            {
+                new Region { Country = country, Name = "Østlandet" },
+                new Region { Country = country, Name = "Sørlandet" },
+                new Region { Country = country, Name = "Midt-Norge" },
+                new Region { Country = country, Name = "Nord-Norge" },
+            };
+            regions.ForEach(s => context.Regions.Add(s));
+            context.SaveChanges();
+            return regions;
+        }
+
+        private static List<Country> Countries(TourModelContainer context)
+        {
             var countries = new List<Country>
             {
                 new Country { Code = "NO", Name = "Norway" },
@@ -19,43 +44,69 @@ namespace VeloTours.DAL
             };
             countries.ForEach(s => context.Countries.Add(s));
             context.SaveChanges();
+            
+            return countries;
+        }
 
-            var regions = new List<Region>
-            {
-                new Region { Country = countries[0], Name = "Østlandet" },
-                new Region { Country = countries[0], Name = "Sørlandet" },
-                new Region { Country = countries[0], Name = "Midt-Norge" },
-                new Region { Country = countries[0], Name = "Nord-Norge" },
-            };
-            regions.ForEach(s => context.Regions.Add(s));
-            context.SaveChanges();
-
+        private static List<SegmentInfo> OsloKlatreKonge(TourModelContainer context, Models.Region region)
+        {
             var segmentInfos = new List<SegmentInfo>
             {
                 new SegmentInfo { 
                     ElevDifference = 372,
                     Distance = 5.6,
                     AvgGrade = 6.7,
+                    Riders = 627,
+                    Ridden = 2952,
+                },
+                new SegmentInfo { 
+                    ElevDifference = 122,
+                    Distance = 1.8,
+                    AvgGrade = 6.7,
                     Riders = 767,
+                    Ridden = 8132,
+                },
+                new SegmentInfo { 
+                    ElevDifference = 91,
+                    Distance = 2.0,
+                    AvgGrade = 4.6,
+                    Riders = 705,
+                    Ridden = 4872,
+                },
+
+                new SegmentInfo { 
+                    ElevDifference = 585,
+                    Distance = 9.4,
+                    AvgGrade = 6.25,
+                    Riders = 0, // ?
+                    Ridden = 0, // ?
+                },
+            };
+            segmentInfos.ForEach(s => context.SegmentInfos.Add(s));
+            context.SaveChanges();
+
+            var segments = new List<Segment>
+            {
+                new Segment { Name = "Kongsveien", StravaID = 632847, SegmentInfo = segmentInfos[0] },
+                new Segment { Name = "Klatringen til Tryvann fra Gressbanen", StravaID = 1942901, SegmentInfo = segmentInfos[1] },
+                new Segment { Name = "Grefsenkollen", StravaID = 660072, SegmentInfo = segmentInfos[0] },
+            };
+            segments.ForEach(s => context.Segments.Add(s));
+            context.SaveChanges();
+
+            var segmentAreas = new List<SegmentArea>
+            {
+                new SegmentArea { 
+                    Name = "Oslo klatrekonge",
+                    Region = region,
+                    Segment = segments,
+                    LastUpdated = DateTime.Now,
                 }
             };
+            segmentAreas.ForEach(s => context.SegmentAreas.Add(s));
+            context.SaveChanges();
 
-            //var segmentsArea = new List<SegmentArea>
-            //{
-            //    new SegmentArea { Region = regions[0], Name = "Oslo klatrekonge", LastUpdated = DateTime.Now, 
-            //        new List<Segment>
-            //        { 
-            //            new Segment { SegmentID = 1942901 },
-            //            new Segment { SegmentID = 660072 },
-            //            new Segment { SegmentID = 632847 },
-            //        }
-            //    }
-            //};
-            //segmentsArea.ForEach(s => context.SegmentArea.Add(s));
-            //context.SaveChanges();
-
-            Athletes(context);
-            Grades(context);
+            return segmentInfos;
         }
 
         private static void Grades(TourModelContainer context)

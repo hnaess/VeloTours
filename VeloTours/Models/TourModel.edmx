@@ -79,6 +79,7 @@
     </Key>
     <Property Name="SegmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StravaID" Type="int" Nullable="false" />
     <Property Name="SegmentAreaID" Type="int" Nullable="false" />
     <Property Name="SegmentInfo_SegmentInfoID" Type="int" Nullable="false" />
   </EntityType>
@@ -329,6 +330,7 @@
           <Property Type="Int32" Name="SegmentID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
           <NavigationProperty Name="SegmentArea" Relationship="TourModel.SegmentAreaSegment" FromRole="Segment" ToRole="SegmentArea" />
+          <Property Type="Int32" Name="StravaID" Nullable="false" />
           <Property Type="Int32" Name="SegmentAreaID" Nullable="false" />
           <NavigationProperty Name="SegmentInfo" Relationship="TourModel.SegmentSegmentInfo" FromRole="Segment" ToRole="SegmentInfo" />
         </EntityType>
@@ -468,6 +470,7 @@
         <MappingFragment StoreEntitySet="Segments">
           <ScalarProperty Name="SegmentID" ColumnName="SegmentID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="StravaID" ColumnName="StravaID" />
           <ScalarProperty Name="SegmentAreaID" ColumnName="SegmentAreaID" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -16,6 +16,7 @@ namespace VeloTours.Models
     {
         public int SegmentID { get; set; }
         public string Name { get; set; }
+        public int StravaID { get; set; }
         public int SegmentAreaID { get; set; }
     
         public virtual SegmentArea SegmentArea { get; set; }
