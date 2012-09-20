@@ -29,9 +29,9 @@ namespace VeloTours.Models
         public DbSet<Region> Regions { get; set; }
         public DbSet<SegmentArea> SegmentAreas { get; set; }
         public DbSet<Segment> Segments { get; set; }
-        public DbSet<SegmentInfo> SegmentInfos { get; set; }
-        public DbSet<Grade> Grades { get; set; }
         public DbSet<Athlete> Athletes { get; set; }
         public DbSet<Statistic> Statistics { get; set; }
+        public DbSet<LeaderBoard> LeadershipBoards { get; set; }
+        public DbSet<ResultPeriod> ResultPeriods { get; set; }
     }
 }

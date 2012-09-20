@@ -14,12 +14,24 @@ namespace VeloTours.Models
     
     public partial class Segment
     {
+        public Segment()
+        {
+            this.ResultPeriod = new HashSet<ResultPeriod>();
+        }
+    
         public int SegmentID { get; set; }
         public string Name { get; set; }
         public int StravaID { get; set; }
+        public int GradeType { get; set; }
+        public Nullable<double> Distance { get; set; }
+        public Nullable<int> ElevDifference { get; set; }
+        public Nullable<double> AvgGrade { get; set; }
+        public Nullable<int> NoRiders { get; set; }
+        public Nullable<int> NoRidden { get; set; }
+        public System.DateTime LastUpdated { get; set; }
         public int SegmentAreaID { get; set; }
     
         public virtual SegmentArea SegmentArea { get; set; }
-        public virtual SegmentInfo SegmentInfo { get; set; }
+        public virtual ICollection<ResultPeriod> ResultPeriod { get; set; }
     }
 }

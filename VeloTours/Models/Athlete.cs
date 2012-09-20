@@ -14,17 +14,10 @@ namespace VeloTours.Models
     
     public partial class Athlete
     {
-        public Athlete()
-        {
-            this.Statistic = new HashSet<Statistic>();
-        }
-    
         public int AthleteID { get; set; }
         public string StravaID { get; set; }
         public string Name { get; set; }
         public Nullable<int> PrivacyMode { get; set; }
         public System.DateTime LastUpdated { get; set; }
-    
-        public virtual ICollection<Statistic> Statistic { get; set; }
     }
 }

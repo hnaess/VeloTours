@@ -38,6 +38,14 @@ namespace VeloTours.Controllers
             return View();
         }
 
+        public ActionResult Update()
+        {
+            ViewBag.Message = "Update";
+
+            return View();
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             //db.Dispose();

@@ -17,15 +17,19 @@ namespace VeloTours.Models
         public SegmentArea()
         {
             this.Segment = new HashSet<Segment>();
+            this.ResultPeriod = new HashSet<ResultPeriod>();
         }
     
         public int SegmentAreaID { get; set; }
         public int RegionID { get; set; }
         public string Name { get; set; }
+        public Nullable<double> Distance { get; set; }
+        public Nullable<int> ElevDifference { get; set; }
+        public Nullable<double> AvgGrade { get; set; }
         public System.DateTime LastUpdated { get; set; }
     
         public virtual Region Region { get; set; }
         public virtual ICollection<Segment> Segment { get; set; }
-        public virtual SegmentInfo SegmentInfo { get; set; }
+        public virtual ICollection<ResultPeriod> ResultPeriod { get; set; }
     }
 }

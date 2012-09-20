@@ -174,26 +174,26 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Account\AccountModels.cs" />
     <Compile Include="Models\Athlete.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Country.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Grade.cs">
+    <Compile Include="Models\LeaderBoard.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Region.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ResultPeriod.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Segment.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SegmentArea.cs">
-      <DependentUpon>TourModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SegmentInfo.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Statistic.cs">
@@ -344,6 +344,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Home\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -370,7 +371,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>60574</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:59172/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

@@ -12,23 +12,24 @@ namespace VeloTours.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SegmentInfo
+    public partial class ResultPeriod
     {
-        public SegmentInfo()
+        public ResultPeriod()
         {
             this.Statistic = new HashSet<Statistic>();
+            this.LeaderBoard = new HashSet<LeaderBoard>();
         }
     
-        public int SegmentInfoID { get; set; }
-        public Nullable<double> Distance { get; set; }
-        public Nullable<int> ElevDifference { get; set; }
-        public Nullable<double> AvgGrade { get; set; }
-        public Nullable<int> Riders { get; set; }
-        public Nullable<int> Ridden { get; set; }
-        public int GradeGradeID { get; set; }
+        public int ResultPeriodID { get; set; }
+        public Nullable<int> SegmentID { get; set; }
+        public Nullable<int> SegmentAreaID { get; set; }
+        public string Name { get; set; }
+        public System.DateTime From { get; set; }
+        public System.DateTime To { get; set; }
     
-        public virtual SegmentArea SegmentArea { get; set; }
         public virtual ICollection<Statistic> Statistic { get; set; }
-        public virtual Grade Grade { get; set; }
+        public virtual ICollection<LeaderBoard> LeaderBoard { get; set; }
+        public virtual Segment Segment { get; set; }
+        public virtual SegmentArea SegmentArea { get; set; }
     }
 }

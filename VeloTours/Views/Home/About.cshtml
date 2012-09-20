@@ -1,6 +1,4 @@
-﻿@model IEnumerable<VeloTours.ViewModel.AthleteInfo>
-
-@{
+﻿@{
     ViewBag.Title = "About";
 }
 
@@ -20,15 +18,6 @@
     <p>
         Use this area to provide additional information.
     </p>
-
-    <ul>
-    @foreach (var item in Model)
-    {
-        <li>
-            @String.Format("{0}", item.AthleteCount)
-        </li>
-    }
-    </ul>
 
     <ul>
         <li>@Html.ActionLink("Home", "Index", "Home")</li>
