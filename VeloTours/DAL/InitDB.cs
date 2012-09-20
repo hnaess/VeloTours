@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Data.Entity;
 using VeloTours.Models;
 
 namespace VeloTours.DAL
 {
-    public class TourInitializer : DropCreateDatabaseIfModelChanges<TourModelContainer>
+    public class InitDB
     {
-        protected override void Seed(TourModelContainer context)
+        public static void Init(TourModelContainer context)
         {
             var athletes = Athletes(context);
 
@@ -56,7 +55,6 @@ namespace VeloTours.DAL
                 }
             };
             segments.ForEach(s => context.Segments.Add(s));
-            context.SaveChanges();
 
             var segmentAreas = new List<SegmentArea>
             {
@@ -121,6 +119,5 @@ namespace VeloTours.DAL
 
             return countries;
         }
-
     }
 }

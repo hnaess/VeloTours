@@ -168,8 +168,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Account\AccountController.cs" />
+    <Compile Include="Controllers\Pages\AdminController.cs" />
+    <Compile Include="Controllers\Pages\ProfileController.cs" />
     <Compile Include="Controllers\Pages\HomeController.cs" />
-    <Compile Include="DAL\TourInit.cs" />
+    <Compile Include="DAL\InitDB.cs" />
+    <Compile Include="DAL\TourInitializer.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -278,6 +281,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TourModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Models\TourModelnit.sql" />
     <Content Include="Models\TourModel.edmx.sql" />
     <Content Include="Models\TourModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -344,10 +348,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Home\Update.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Init.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

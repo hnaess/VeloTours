@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 09/19/2012 09:54:46
+-- Date Created: 09/20/2012 16:11:32
 -- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
@@ -23,11 +23,26 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_RegionSegmentArea]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[SegmentAreas] DROP CONSTRAINT [FK_RegionSegmentArea];
 GO
+IF OBJECT_ID(N'[dbo].[FK_StatisticAthlete]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Statistics] DROP CONSTRAINT [FK_StatisticAthlete];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AthleteLeaderboard]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LeadershipBoards] DROP CONSTRAINT [FK_AthleteLeaderboard];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ResultPeriodStatistic]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Statistics] DROP CONSTRAINT [FK_ResultPeriodStatistic];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ResultPeriodLeaderBoard]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LeadershipBoards] DROP CONSTRAINT [FK_ResultPeriodLeaderBoard];
+GO
 IF OBJECT_ID(N'[dbo].[FK_SegmentAreaSegment]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Segments] DROP CONSTRAINT [FK_SegmentAreaSegment];
 GO
-IF OBJECT_ID(N'[dbo].[FK_StatisticAthlete]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Statistics] DROP CONSTRAINT [FK_StatisticAthlete];
+IF OBJECT_ID(N'[dbo].[FK_SegmentResultPeriod]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ResultPeriods] DROP CONSTRAINT [FK_SegmentResultPeriod];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SegmentAreaResultPeriod]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ResultPeriods] DROP CONSTRAINT [FK_SegmentAreaResultPeriod];
 GO
 
 -- --------------------------------------------------
@@ -51,6 +66,12 @@ IF OBJECT_ID(N'[dbo].[Athletes]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Statistics]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Statistics];
+GO
+IF OBJECT_ID(N'[dbo].[LeadershipBoards]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LeadershipBoards];
+GO
+IF OBJECT_ID(N'[dbo].[ResultPeriods]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ResultPeriods];
 GO
 
 -- --------------------------------------------------
@@ -103,8 +124,7 @@ GO
 
 -- Creating table 'Athletes'
 CREATE TABLE [dbo].[Athletes] (
-    [AthleteID] int IDENTITY(1,1) NOT NULL,
-    [StravaID] nvarchar(max)  NULL,
+    [AthleteID] int  NOT NULL,
     [Name] nvarchar(max)  NULL,
     [PrivacyMode] int  NULL,
     [LastUpdated] datetime  NOT NULL

@@ -99,8 +99,7 @@
     <Key>
       <PropertyRef Name="AthleteID" />
     </Key>
-    <Property Name="AthleteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="StravaID" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="AthleteID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PrivacyMode" Type="int" Nullable="true" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
@@ -379,8 +378,7 @@
           <Key>
             <PropertyRef Name="AthleteID" />
           </Key>
-          <Property Type="Int32" Name="AthleteID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="StravaID" Nullable="true" />
+          <Property Type="Int32" Name="AthleteID" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="String" Name="Name" Nullable="true" />
           <Property Type="Int32" Name="PrivacyMode" Nullable="true" />
           <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
@@ -562,7 +560,6 @@
       <EntityTypeMapping TypeName="IsTypeOf(TourModel.Athlete)">
         <MappingFragment StoreEntitySet="Athletes">
           <ScalarProperty Name="AthleteID" ColumnName="AthleteID" />
-          <ScalarProperty Name="StravaID" ColumnName="StravaID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="PrivacyMode" ColumnName="PrivacyMode" />
           <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />

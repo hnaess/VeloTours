@@ -1,0 +1,28 @@
+﻿@model VeloTours.Models.Athlete
+
+@{
+    ViewBag.Title = "Settings";
+}
+
+<h2>My Settings</h2>
+
+<table>
+    <tr>
+        <td>Name:</td>
+        <td><%= model.Name(Model.Name) %></td>
+    </tr>
+    <tr>
+        <td>StravaID</td>
+        <td><%= model.Name(Model.AthleteID) %></td>
+    </tr>
+    <tr>
+        <td>Privacy Mode</td>
+        <td><%= model.Name(Model.PrivacyMode) %></td>
+    </tr>
+    <tr>
+        <td>Last updated</td>
+        <td><%= model.Name(Model.LastUpdated) %></td>
+    </tr>
+</table>
+
+@Html.ActionLink("Update name from Strava", "Update", new { id = ViewBag.StravaID })

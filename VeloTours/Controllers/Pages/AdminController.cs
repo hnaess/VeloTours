@@ -8,23 +8,19 @@ using VeloTours.ViewModel;
 
 namespace VeloTours.Controllers
 {
-    public class HomeController : Controller
+    public class AdminController : Controller
     {
+        private TourModelContainer db = new TourModelContainer();
+
         public ActionResult Index()
         {
             ViewBag.Message = "Strava segments made into Tours";
             return View();
         }
-
-        public ActionResult About()
+        
+        public ActionResult Init()
         {
-            ViewBag.Message = "Your app description page.";
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Admin - Init";
 
             return View();
         }
