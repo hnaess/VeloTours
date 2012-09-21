@@ -1,0 +1,50 @@
+﻿@model VeloTours.Models.SegmentArea
+@using VeloTours.Helpers;
+
+@{
+    ViewBag.Title = "Area";
+    
+}
+
+<h2>Resultboard for @Model.Name</h2>
+
+<p>Nam quis eros sit amet lectus accumsan faucibus aliquam et nisl. Cras at urna orci. Maecenas ullamcorper, justo at volutpat tincidunt, mi nunc molestie erat, et dapibus felis turpis id ligula. Aliquam posuere consequat mauris sit amet sollicitudin. Duis pretium nunc ut nibh semper nec facilisis nibh pretium. Suspendisse elementum tempus ipsum, ut scelerisque ante vulputate eget. Mauris magna diam, tincidunt nec aliquam vel, mattis bibendum tellus. Nullam placerat nibh vel felis vehicula consectetur. Etiam ut enim arcu. Vestibulum sed vehicula eros. Nulla sit amet dolor vel lectus porttitor dapibus.</p>
+
+<h3>Segments in the areas</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th class="right">Strava</th>
+            <th class="right">Distance</th>
+            <th class="right">#ridden</th>
+            <th class="right">#riders</th>
+            <th class="right">elevation diff</th>
+            <th class="right">grade</th>
+            <th class="right">grade-type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Segment)
+        {
+            <tr>
+                <td>@Html.ActionLink(item.Name, "Segment", new { id = item.SegmentID }) </td>
+                <td class="right">@Html.HtmlLink("http://strava.com/segments/" + item.StravaID, item.StravaID.ToString(), null)</td>
+                <td class="right">@item.Distance km</td>
+                <td class="right">@item.NoRidden</td>
+                <td class="right">@item.NoRiders</td>
+                <td class="right">@item.ElevDifference m.</td>
+                <td class="right">@item.AvgGrade %</td>
+                <td class="right">@item.GradeType</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<h2>Strava Segments for @Model.Name</h2>
+
+@foreach (var item in Model.Segment) {
+    <iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@item.StravaID/embed" width="450"></iframe>
+}
