@@ -27,7 +27,13 @@ namespace VeloTours
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
 
+            RegisterRoutes(RouteTable.Routes);
+
             //Database.SetInitializer<TourModelContainer>(new TourInitializer());
+        }
+
+        public static void RegisterRoutes(RouteCollection routes)
+        {
         }
     }
 }

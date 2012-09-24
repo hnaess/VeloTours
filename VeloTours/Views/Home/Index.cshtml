@@ -1,6 +1,10 @@
 ﻿@{
     ViewBag.Title = "VeloTours";
 }
+
+<link href="~/Content/bootstrap.css" rel="stylesheet">
+<link href="~/Content/bootstrap-responsive.css" rel="stylesheet">
+
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
@@ -16,7 +20,6 @@
         </div>
     </section>
 }
-<h3>We suggest the following:</h3>
 <ol class="round">
     <li class="one">
         <h5>How to use</h5>
@@ -27,7 +30,60 @@
     </li>
 
     <li class="two">
-        <h5>Country</h5>
-        Some text
+        <h5>Get started</h5>
+
+        If you're a Strava addict enter your Strava Id into the box below to get started or browse another user by entering his Strava ID
+
+        <br />
+        <a href="#myModal" role="button" data-toggle="modal">How to find out your Strava Id...</a>
+        <br />
+        <div class="modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h3 id="myModalLabel">Finding your Strava Id</h3>
+            </div>
+            <div class="modal-body">
+                <p>This can be done a couple of ways but the most reliable is to:</p>
+                <ul>
+                    <li>View your Strava Dashboard and click the <strong>"only my activty"</strong> link in the top right of the list. Or, if you've got Strava set up to log you in automatically then <strong><a target="_new" href="http://app.strava.com/dashboard?feed=profile">just click here to go straight to it</a></strong>.</li>
+                    <li><strong>Click on your name</strong> on the first ride shown in the list.</li>
+                    <li>Have a look in your broswer's address bar (usually at the top) and copy the number that appears at the end of the address (preceeded by "<strong>app.strava.com/athletes/</strong>").</li>
+                    <li>Paste this <strong>number</strong> (just the <strong>number</strong>, not the whole address, if you've got a username there instead then you need to follow the abbove instuctions a bit closer) into the "Strava Id" box below and you're good to go!</li>
+                </ul>
+                <p><strong>Note: The max Strava athlete id is currently around the 1140000 mark so if you're coming up with a number much higher than 1 million that then you've done something wrong in the above steps.</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+
+        <% using (Html.BeginForm()) { %>        
+        <input id="athleteID" type="text" />
+        <button name="button" value="Change">Change user</button>
+        <% } %>
+
+        <p>
+            <b>To give you an idea what this site is about, here is a link to my data:</b>
+        </p>
+        <table id="segmentTable" class="table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Segments</th>
+                    <th>KOM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.ActionLink("Henrik N.", "ShowOriginalAuthor", new { Athlete = 352657 });</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
+
     </li>
 </ol>
+
+<script src="~/Scripts/jquery-1.8.1.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>

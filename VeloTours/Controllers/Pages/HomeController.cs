@@ -12,26 +12,49 @@ namespace VeloTours.Controllers
     {
         private TourModelContainer db = new TourModelContainer();
         
-        public ActionResult Index()
+        public ActionResult Index(int? athlete)
         {
             ViewBag.Message = "Strava segments made into Tours";
+            ViewBag.Athlete = athlete;
 
             VeloTours.DAL.InitDB.CreateAndInitIfEmpty(db);
 
             return View();
         }
 
-        public ActionResult About()
+        [HttpPost]
+        public ActionResult Index(int athlete)
+        {
+            try
+            {
+                return RedirectToAction("Index", "Segment", new { Athlete = athlete });
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult About(int? athlete)
         {
             ViewBag.Message = "Your app description page.";
+            ViewBag.Athlete = athlete;
+
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Contact(int? athlete)
         {
             ViewBag.Message = "Your contact page.";
+            ViewBag.Athlete = athlete;
 
             return View();
+        }
+
+        public ActionResult ShowOriginalAuthor(int athlete)
+        {
+            ViewBag.Athlete = athlete;
+            return RedirectToAction("Index", "Segment", new { Athlete = athlete });
         }
     }
 }
