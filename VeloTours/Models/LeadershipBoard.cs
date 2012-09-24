@@ -15,24 +15,30 @@ namespace VeloTours.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Country
+public partial class LeadershipBoard
 {
 
-    public Country()
-    {
+    public int LeaderBoardID { get; set; }
 
-        this.Regions = new HashSet<Region>();
+    public int ResultPeriodID { get; set; }
 
-    }
+    public int AthleteID { get; set; }
+
+    public string Rank { get; set; }
+
+    public string Duration { get; set; }
+
+    public string GreenPoints { get; set; }
+
+    public string PolkaDotPoints { get; set; }
+
+    public string NoSegmentsRidden { get; set; }
 
 
-    public int CountryID { get; set; }
 
-    public string Name { get; set; }
+    public virtual Athlete Athlete { get; set; }
 
-
-
-    public virtual ICollection<Region> Regions { get; set; }
+    public virtual ResultPeriod ResultPeriods { get; set; }
 
 }
 

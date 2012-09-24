@@ -12,23 +12,30 @@ namespace VeloTours.Controllers.Pages
     {
         private TourModelContainer db = new TourModelContainer();
 
-        public String Index(int id)
+        public ActionResult Segment(int segment, int athlete)
         {
-            return "TODO" + id;
+            Segment segmentObj = db.Segments.Find(segment);
+            ViewBag.Segment = segment;
+            ViewBag.Athlete = athlete;
+            
+            return View(segmentObj);
         }
 
-        public ActionResult Segment(int id)
+        public ActionResult Area(int area, int athlete)
         {
-            Segment segment = db.Segments.Find(id);
-            return View(segment);
-        }
-
-        public ActionResult Area(int id)
-        {
-            SegmentArea segmentArea = db.SegmentAreas.Find(id);
+            SegmentArea segmentArea = db.SegmentAreas.Find(area);
+            ViewBag.Area = area;
+            ViewBag.Athlete = athlete;
+            
             return View(segmentArea);
         }
 
-        // <iframe allowtransparency="true" frameborder="0" height="405" scrolling="no" src="http://app.strava.com/segments/632847/embed" width="590"></iframe>
+        public ActionResult Index(int athlete)
+        {
+            List<Country> countries = db.Countries.ToList();
+            ViewBag.Athlete = athlete;
+
+            return View(countries);
+        }
     }
 }

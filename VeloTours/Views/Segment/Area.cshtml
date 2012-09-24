@@ -3,14 +3,17 @@
 
 @{
     ViewBag.Title = "Area";
-    
 }
+
+<script src="~/Scripts/jquery-1.8.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.popover-1.1.0.js" type="text/javascript"></script>
 
 <h2>Resultboard for @Model.Name</h2>
 
 <p>Nam quis eros sit amet lectus accumsan faucibus aliquam et nisl. Cras at urna orci. Maecenas ullamcorper, justo at volutpat tincidunt, mi nunc molestie erat, et dapibus felis turpis id ligula. Aliquam posuere consequat mauris sit amet sollicitudin. Duis pretium nunc ut nibh semper nec facilisis nibh pretium. Suspendisse elementum tempus ipsum, ut scelerisque ante vulputate eget. Mauris magna diam, tincidunt nec aliquam vel, mattis bibendum tellus. Nullam placerat nibh vel felis vehicula consectetur. Etiam ut enim arcu. Vestibulum sed vehicula eros. Nulla sit amet dolor vel lectus porttitor dapibus.</p>
 
 <h3>Segments in the areas</h3>
+
 <table>
     <thead>
         <tr>
@@ -25,11 +28,12 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Segment)
+        @foreach (var item in Model.Segments)
         {
             <tr>
                 <td>@Html.ActionLink(item.Name, "Segment", new { id = item.SegmentID }) </td>
-                <td class="right">@Html.HtmlLink("http://strava.com/segments/" + item.StravaID, item.StravaID.ToString(), null)</td>
+                <td id="segmentID" class="right">@item.SegmentID</td>
+                @*<td class="right">@Html.HtmlLink("http://strava.com/segments/" + item.SegmentID, item.SegmentID.ToString(), null)</td>*@
                 <td class="right">@item.Distance km</td>
                 <td class="right">@item.NoRidden</td>
                 <td class="right">@item.NoRiders</td>
@@ -42,9 +46,28 @@
 </table>
 
 
-
 <h2>Strava Segments for @Model.Name</h2>
 
-@foreach (var item in Model.Segment) {
-    <iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@item.StravaID/embed" width="450"></iframe>
+@foreach (var item in Model.Segments) {
+    <iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@item.SegmentID/embed" width="450"></iframe>
 }
+
+<p>
+    Go back to @Html.ActionLink("overview", "/", new { athlete = ViewBag.Athlete })
+</p>
+
+<a href="#" id="ex2" data-segmentID="123">Please, let me speak!</a>
+
+<script type="text/javascript">
+    /* <![CDATA[ */
+    jQuery(document).ready(function ($) {
+        $("#ex1").popover({
+            trigger: 'click'
+        });
+        $("#ex2").popover({
+            title: "Hello",
+            content: "Finally, I can speak!" + $("
+        });
+    });
+        /* ]]> */
+</script>

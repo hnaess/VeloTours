@@ -6,58 +6,88 @@
     <edmx:StorageModels>
     <Schema Namespace="TourModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="TourModelStoreContainer">
+    <EntitySet Name="Athletes" EntityType="TourModel.Store.Athletes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Countries" EntityType="TourModel.Store.Countries" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LeadershipBoards" EntityType="TourModel.Store.LeadershipBoards" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Regions" EntityType="TourModel.Store.Regions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ResultPeriods" EntityType="TourModel.Store.ResultPeriods" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SegmentAreas" EntityType="TourModel.Store.SegmentAreas" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Segments" EntityType="TourModel.Store.Segments" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Athletes" EntityType="TourModel.Store.Athletes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Statistics" EntityType="TourModel.Store.Statistics" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="LeadershipBoards" EntityType="TourModel.Store.LeadershipBoards" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ResultPeriods" EntityType="TourModel.Store.ResultPeriods" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="CountryRegion" Association="TourModel.Store.CountryRegion">
-      <End Role="Country" EntitySet="Countries" />
-      <End Role="Region" EntitySet="Regions" />
-    </AssociationSet>
-    <AssociationSet Name="RegionSegmentArea" Association="TourModel.Store.RegionSegmentArea">
-      <End Role="Region" EntitySet="Regions" />
-      <End Role="SegmentArea" EntitySet="SegmentAreas" />
+    <EntitySet Name="SegmentAreasSegments" EntityType="TourModel.Store.SegmentAreasSegments" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="AthleteLeaderboard" Association="TourModel.Store.AthleteLeaderboard">
+      <End Role="Athletes" EntitySet="Athletes" />
+      <End Role="LeadershipBoards" EntitySet="LeadershipBoards" />
     </AssociationSet>
     <AssociationSet Name="StatisticAthlete" Association="TourModel.Store.StatisticAthlete">
-      <End Role="Statistic" EntitySet="Statistics" />
-      <End Role="Athlete" EntitySet="Athletes" />
+      <End Role="Athletes" EntitySet="Athletes" />
+      <End Role="Statistics" EntitySet="Statistics" />
     </AssociationSet>
-    <AssociationSet Name="AthleteLeaderboard" Association="TourModel.Store.AthleteLeaderboard">
-      <End Role="Athlete" EntitySet="Athletes" />
-      <End Role="Leaderboard" EntitySet="LeadershipBoards" />
-    </AssociationSet>
-    <AssociationSet Name="ResultPeriodStatistic" Association="TourModel.Store.ResultPeriodStatistic">
-      <End Role="ResultPeriod" EntitySet="ResultPeriods" />
-      <End Role="Statistic" EntitySet="Statistics" />
+    <AssociationSet Name="CountryRegion" Association="TourModel.Store.CountryRegion">
+      <End Role="Countries" EntitySet="Countries" />
+      <End Role="Regions" EntitySet="Regions" />
     </AssociationSet>
     <AssociationSet Name="ResultPeriodLeaderBoard" Association="TourModel.Store.ResultPeriodLeaderBoard">
-      <End Role="ResultPeriod" EntitySet="ResultPeriods" />
-      <End Role="LeaderBoard" EntitySet="LeadershipBoards" />
+      <End Role="ResultPeriods" EntitySet="ResultPeriods" />
+      <End Role="LeadershipBoards" EntitySet="LeadershipBoards" />
     </AssociationSet>
-    <AssociationSet Name="SegmentAreaSegment" Association="TourModel.Store.SegmentAreaSegment">
-      <End Role="SegmentArea" EntitySet="SegmentAreas" />
-      <End Role="Segment" EntitySet="Segments" />
+    <AssociationSet Name="RegionSegmentArea" Association="TourModel.Store.RegionSegmentArea">
+      <End Role="Regions" EntitySet="Regions" />
+      <End Role="SegmentAreas" EntitySet="SegmentAreas" />
     </AssociationSet>
-    <AssociationSet Name="SegmentResultPeriod" Association="TourModel.Store.SegmentResultPeriod">
-      <End Role="Segment" EntitySet="Segments" />
-      <End Role="ResultPeriod" EntitySet="ResultPeriods" />
+    <AssociationSet Name="ResultPeriodStatistic" Association="TourModel.Store.ResultPeriodStatistic">
+      <End Role="ResultPeriods" EntitySet="ResultPeriods" />
+      <End Role="Statistics" EntitySet="Statistics" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SegmentAreasSegments_SegmentAreas" Association="TourModel.Store.FK_SegmentAreasSegments_SegmentAreas">
+      <End Role="SegmentAreas" EntitySet="SegmentAreas" />
+      <End Role="SegmentAreasSegments" EntitySet="SegmentAreasSegments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SegmentAreasSegments_Segments" Association="TourModel.Store.FK_SegmentAreasSegments_Segments">
+      <End Role="Segments" EntitySet="Segments" />
+      <End Role="SegmentAreasSegments" EntitySet="SegmentAreasSegments" />
     </AssociationSet>
     <AssociationSet Name="SegmentAreaResultPeriod" Association="TourModel.Store.SegmentAreaResultPeriod">
       <End Role="SegmentArea" EntitySet="SegmentAreas" />
       <End Role="ResultPeriod" EntitySet="ResultPeriods" />
     </AssociationSet>
+    <AssociationSet Name="SegmentResultPeriod" Association="TourModel.Store.SegmentResultPeriod">
+      <End Role="Segment" EntitySet="Segments" />
+      <End Role="ResultPeriod" EntitySet="ResultPeriods" />
+    </AssociationSet>
+    <AssociationSet Name="RegionResultPeriod" Association="TourModel.Store.RegionResultPeriod">
+      <End Role="Region" EntitySet="Regions" />
+      <End Role="ResultPeriod" EntitySet="ResultPeriods" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Athletes">
+    <Key>
+      <PropertyRef Name="AthleteID" />
+    </Key>
+    <Property Name="AthleteID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PrivacyMode" Type="int" Nullable="true" />
+    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="Countries">
     <Key>
       <PropertyRef Name="CountryID" />
     </Key>
-    <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Code" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LeadershipBoards">
+    <Key>
+      <PropertyRef Name="LeaderBoardID" />
+    </Key>
+    <Property Name="LeaderBoardID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ResultPeriodID" Type="int" Nullable="false" />
+    <Property Name="AthleteID" Type="int" Nullable="false" />
+    <Property Name="Rank" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Duration" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="GreenPoints" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PolkaDotPoints" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="NoSegmentsRidden" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Regions">
     <Key>
@@ -66,6 +96,19 @@
     <Property Name="RegionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CountryID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Distance" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="ResultPeriods">
+    <Key>
+      <PropertyRef Name="ResultPeriodID" />
+    </Key>
+    <Property Name="ResultPeriodID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="From" Type="datetime" Nullable="false" />
+    <Property Name="To" Type="datetime" Nullable="false" />
+    <Property Name="SegmentAreaResultPeriod_ResultPeriod_SegmentAreaID" Type="int" Nullable="true" />
+    <Property Name="Segment_SegmentID" Type="int" Nullable="true" />
+    <Property Name="RegionResultPeriod_ResultPeriod_RegionID" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="SegmentAreas">
     <Key>
@@ -77,15 +120,15 @@
     <Property Name="Distance" Type="float" Nullable="true" />
     <Property Name="ElevDifference" Type="int" Nullable="true" />
     <Property Name="AvgGrade" Type="float" Nullable="true" />
+    <Property Name="SecretKey" Type="uniqueidentifier" Nullable="true" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Segments">
     <Key>
       <PropertyRef Name="SegmentID" />
     </Key>
-    <Property Name="SegmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SegmentID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="StravaID" Type="int" Nullable="false" />
     <Property Name="GradeType" Type="int" Nullable="false" />
     <Property Name="Distance" Type="float" Nullable="true" />
     <Property Name="ElevDifference" Type="int" Nullable="true" />
@@ -93,146 +136,96 @@
     <Property Name="NoRiders" Type="int" Nullable="true" />
     <Property Name="NoRidden" Type="int" Nullable="true" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
-    <Property Name="SegmentAreaID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Athletes">
-    <Key>
-      <PropertyRef Name="AthleteID" />
-    </Key>
-    <Property Name="AthleteID" Type="int" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="PrivacyMode" Type="int" Nullable="true" />
-    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Statistics">
     <Key>
       <PropertyRef Name="StatisticID" />
     </Key>
     <Property Name="StatisticID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ResultPeriodID" Type="int" Nullable="false" />
+    <Property Name="AthleteID" Type="int" Nullable="false" />
     <Property Name="Period" Type="nvarchar(max)" Nullable="false" />
     <Property Name="YerseyType" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Duration" Type="time" Nullable="true" />
+    <Property Name="Duration" Type="time" Nullable="true" Precision="7" />
     <Property Name="Points" Type="int" Nullable="false" />
-    <Property Name="ResultPeriodID" Type="int" Nullable="false" />
-    <Property Name="Athlete_AthleteID" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="LeadershipBoards">
+  <EntityType Name="SegmentAreasSegments">
     <Key>
-      <PropertyRef Name="LeaderBoardID" />
+      <PropertyRef Name="SegmentAreas_SegmentAreaID" />
+      <PropertyRef Name="Segments_SegmentID" />
     </Key>
-    <Property Name="LeaderBoardID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Rank" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Duration" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="GreenPoints" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PolkaDotPoints" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="NoSegmentsRidden" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="AthleteAthleteID" Type="int" Nullable="false" />
-    <Property Name="ResultPeriodID" Type="int" Nullable="false" />
+    <Property Name="SegmentAreas_SegmentAreaID" Type="int" Nullable="false" />
+    <Property Name="Segments_SegmentID" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="ResultPeriods">
-    <Key>
-      <PropertyRef Name="ResultPeriodID" />
-    </Key>
-    <Property Name="ResultPeriodID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SegmentID" Type="int" Nullable="true" />
-    <Property Name="SegmentAreaID" Type="int" Nullable="true" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="From" Type="datetime" Nullable="false" />
-    <Property Name="To" Type="datetime" Nullable="false" />
-  </EntityType>
-  <Association Name="CountryRegion">
-    <End Role="Country" Type="TourModel.Store.Countries" Multiplicity="1" />
-    <End Role="Region" Type="TourModel.Store.Regions" Multiplicity="*" />
+  <Association Name="AthleteLeaderboard">
+    <End Role="Athletes" Type="TourModel.Store.Athletes" Multiplicity="1" />
+    <End Role="LeadershipBoards" Type="TourModel.Store.LeadershipBoards" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Country">
-        <PropertyRef Name="CountryID" />
+      <Principal Role="Athletes">
+        <PropertyRef Name="AthleteID" />
       </Principal>
-      <Dependent Role="Region">
-        <PropertyRef Name="CountryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="RegionSegmentArea">
-    <End Role="Region" Type="TourModel.Store.Regions" Multiplicity="1" />
-    <End Role="SegmentArea" Type="TourModel.Store.SegmentAreas" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Region">
-        <PropertyRef Name="RegionID" />
-      </Principal>
-      <Dependent Role="SegmentArea">
-        <PropertyRef Name="RegionID" />
+      <Dependent Role="LeadershipBoards">
+        <PropertyRef Name="AthleteID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="StatisticAthlete">
-    <End Role="Statistic" Type="TourModel.Store.Statistics" Multiplicity="*" />
-    <End Role="Athlete" Type="TourModel.Store.Athletes" Multiplicity="1" />
+    <End Role="Athletes" Type="TourModel.Store.Athletes" Multiplicity="1" />
+    <End Role="Statistics" Type="TourModel.Store.Statistics" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Athlete">
+      <Principal Role="Athletes">
         <PropertyRef Name="AthleteID" />
       </Principal>
-      <Dependent Role="Statistic">
-        <PropertyRef Name="Athlete_AthleteID" />
+      <Dependent Role="Statistics">
+        <PropertyRef Name="AthleteID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="AthleteLeaderboard">
-    <End Role="Athlete" Type="TourModel.Store.Athletes" Multiplicity="1" />
-    <End Role="Leaderboard" Type="TourModel.Store.LeadershipBoards" Multiplicity="*" />
+  <Association Name="CountryRegion">
+    <End Role="Countries" Type="TourModel.Store.Countries" Multiplicity="1" />
+    <End Role="Regions" Type="TourModel.Store.Regions" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Athlete">
-        <PropertyRef Name="AthleteID" />
+      <Principal Role="Countries">
+        <PropertyRef Name="CountryID" />
       </Principal>
-      <Dependent Role="Leaderboard">
-        <PropertyRef Name="AthleteAthleteID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ResultPeriodStatistic">
-    <End Role="ResultPeriod" Type="TourModel.Store.ResultPeriods" Multiplicity="1" />
-    <End Role="Statistic" Type="TourModel.Store.Statistics" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="ResultPeriod">
-        <PropertyRef Name="ResultPeriodID" />
-      </Principal>
-      <Dependent Role="Statistic">
-        <PropertyRef Name="ResultPeriodID" />
+      <Dependent Role="Regions">
+        <PropertyRef Name="CountryID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="ResultPeriodLeaderBoard">
-    <End Role="ResultPeriod" Type="TourModel.Store.ResultPeriods" Multiplicity="1" />
-    <End Role="LeaderBoard" Type="TourModel.Store.LeadershipBoards" Multiplicity="*" />
+    <End Role="ResultPeriods" Type="TourModel.Store.ResultPeriods" Multiplicity="1" />
+    <End Role="LeadershipBoards" Type="TourModel.Store.LeadershipBoards" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="ResultPeriod">
+      <Principal Role="ResultPeriods">
         <PropertyRef Name="ResultPeriodID" />
       </Principal>
-      <Dependent Role="LeaderBoard">
+      <Dependent Role="LeadershipBoards">
         <PropertyRef Name="ResultPeriodID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="SegmentAreaSegment">
-    <End Role="SegmentArea" Type="TourModel.Store.SegmentAreas" Multiplicity="1" />
-    <End Role="Segment" Type="TourModel.Store.Segments" Multiplicity="*" />
+  <Association Name="RegionSegmentArea">
+    <End Role="Regions" Type="TourModel.Store.Regions" Multiplicity="1" />
+    <End Role="SegmentAreas" Type="TourModel.Store.SegmentAreas" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="SegmentArea">
-        <PropertyRef Name="SegmentAreaID" />
+      <Principal Role="Regions">
+        <PropertyRef Name="RegionID" />
       </Principal>
-      <Dependent Role="Segment">
-        <PropertyRef Name="SegmentAreaID" />
+      <Dependent Role="SegmentAreas">
+        <PropertyRef Name="RegionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="SegmentResultPeriod">
-    <End Role="Segment" Type="TourModel.Store.Segments" Multiplicity="0..1" />
-    <End Role="ResultPeriod" Type="TourModel.Store.ResultPeriods" Multiplicity="*" />
+  <Association Name="ResultPeriodStatistic">
+    <End Role="ResultPeriods" Type="TourModel.Store.ResultPeriods" Multiplicity="1" />
+    <End Role="Statistics" Type="TourModel.Store.Statistics" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Segment">
-        <PropertyRef Name="SegmentID" />
+      <Principal Role="ResultPeriods">
+        <PropertyRef Name="ResultPeriodID" />
       </Principal>
-      <Dependent Role="ResultPeriod">
-        <PropertyRef Name="SegmentID" />
+      <Dependent Role="Statistics">
+        <PropertyRef Name="ResultPeriodID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -244,7 +237,55 @@
         <PropertyRef Name="SegmentAreaID" />
       </Principal>
       <Dependent Role="ResultPeriod">
+        <PropertyRef Name="SegmentAreaResultPeriod_ResultPeriod_SegmentAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SegmentResultPeriod">
+    <End Role="Segment" Type="TourModel.Store.Segments" Multiplicity="0..1" />
+    <End Role="ResultPeriod" Type="TourModel.Store.ResultPeriods" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Segment">
+        <PropertyRef Name="SegmentID" />
+      </Principal>
+      <Dependent Role="ResultPeriod">
+        <PropertyRef Name="Segment_SegmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RegionResultPeriod">
+    <End Role="Region" Type="TourModel.Store.Regions" Multiplicity="0..1" />
+    <End Role="ResultPeriod" Type="TourModel.Store.ResultPeriods" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionID" />
+      </Principal>
+      <Dependent Role="ResultPeriod">
+        <PropertyRef Name="RegionResultPeriod_ResultPeriod_RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SegmentAreasSegments_SegmentAreas">
+    <End Role="SegmentAreas" Type="TourModel.Store.SegmentAreas" Multiplicity="1" />
+    <End Role="SegmentAreasSegments" Type="TourModel.Store.SegmentAreasSegments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SegmentAreas">
         <PropertyRef Name="SegmentAreaID" />
+      </Principal>
+      <Dependent Role="SegmentAreasSegments">
+        <PropertyRef Name="SegmentAreas_SegmentAreaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SegmentAreasSegments_Segments">
+    <End Role="SegmentAreasSegments" Type="TourModel.Store.SegmentAreasSegments" Multiplicity="*" />
+    <End Role="Segments" Type="TourModel.Store.Segments" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Segments">
+        <PropertyRef Name="SegmentID" />
+      </Principal>
+      <Dependent Role="SegmentAreasSegments">
+        <PropertyRef Name="Segments_SegmentID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -253,59 +294,88 @@
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TourModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="TourModelContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Countries" EntityType="TourModel.Country" />
-          <EntitySet Name="Regions" EntityType="TourModel.Region" />
-          <AssociationSet Name="CountryRegion" Association="TourModel.CountryRegion">
-            <End Role="Country" EntitySet="Countries" />
-            <End Role="Region" EntitySet="Regions" />
-          </AssociationSet>
-          <EntitySet Name="SegmentAreas" EntityType="TourModel.SegmentArea" />
-          <AssociationSet Name="RegionSegmentArea" Association="TourModel.RegionSegmentArea">
-            <End Role="Region" EntitySet="Regions" />
-            <End Role="SegmentArea" EntitySet="SegmentAreas" />
-          </AssociationSet>
-          <EntitySet Name="Segments" EntityType="TourModel.Segment" />
           <EntitySet Name="Athletes" EntityType="TourModel.Athlete" />
-          <EntitySet Name="Statistics" EntityType="TourModel.Statistic" />
-          <AssociationSet Name="StatisticAthlete" Association="TourModel.StatisticAthlete">
-            <End Role="Statistic" EntitySet="Statistics" />
-            <End Role="Athlete" EntitySet="Athletes" />
-          </AssociationSet>
-          <EntitySet Name="LeadershipBoards" EntityType="TourModel.LeaderBoard" />
-          <AssociationSet Name="AthleteLeaderboard" Association="TourModel.AthleteLeaderboard">
-            <End Role="Athlete" EntitySet="Athletes" />
-            <End Role="Leaderboard" EntitySet="LeadershipBoards" />
-          </AssociationSet>
+          <EntitySet Name="Countries" EntityType="TourModel.Country" />
+          <EntitySet Name="LeadershipBoards" EntityType="TourModel.LeadershipBoard" />
+          <EntitySet Name="Regions" EntityType="TourModel.Region" />
           <EntitySet Name="ResultPeriods" EntityType="TourModel.ResultPeriod" />
-          <AssociationSet Name="ResultPeriodStatistic" Association="TourModel.ResultPeriodStatistic">
-            <End Role="ResultPeriod" EntitySet="ResultPeriods" />
-            <End Role="Statistic" EntitySet="Statistics" />
+          <EntitySet Name="SegmentAreas" EntityType="TourModel.SegmentArea" />
+          <EntitySet Name="Segments" EntityType="TourModel.Segment" />
+          <EntitySet Name="Statistics" EntityType="TourModel.Statistic" />
+          <AssociationSet Name="AthleteLeaderboard" Association="TourModel.AthleteLeaderboard">
+            <End Role="Athletes" EntitySet="Athletes" />
+            <End Role="LeadershipBoards" EntitySet="LeadershipBoards" />
+          </AssociationSet>
+          <AssociationSet Name="StatisticAthlete" Association="TourModel.StatisticAthlete">
+            <End Role="Athletes" EntitySet="Athletes" />
+            <End Role="Statistics" EntitySet="Statistics" />
+          </AssociationSet>
+          <AssociationSet Name="CountryRegion" Association="TourModel.CountryRegion">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Regions" EntitySet="Regions" />
           </AssociationSet>
           <AssociationSet Name="ResultPeriodLeaderBoard" Association="TourModel.ResultPeriodLeaderBoard">
-            <End Role="ResultPeriod" EntitySet="ResultPeriods" />
-            <End Role="LeaderBoard" EntitySet="LeadershipBoards" />
+            <End Role="ResultPeriods" EntitySet="ResultPeriods" />
+            <End Role="LeadershipBoards" EntitySet="LeadershipBoards" />
           </AssociationSet>
-          <AssociationSet Name="SegmentAreaSegment" Association="TourModel.SegmentAreaSegment">
-            <End Role="SegmentArea" EntitySet="SegmentAreas" />
-            <End Role="Segment" EntitySet="Segments" />
+          <AssociationSet Name="RegionSegmentArea" Association="TourModel.RegionSegmentArea">
+            <End Role="Regions" EntitySet="Regions" />
+            <End Role="SegmentAreas" EntitySet="SegmentAreas" />
           </AssociationSet>
-          <AssociationSet Name="SegmentResultPeriod" Association="TourModel.SegmentResultPeriod">
-            <End Role="Segment" EntitySet="Segments" />
-            <End Role="ResultPeriod" EntitySet="ResultPeriods" />
+          <AssociationSet Name="ResultPeriodStatistic" Association="TourModel.ResultPeriodStatistic">
+            <End Role="ResultPeriods" EntitySet="ResultPeriods" />
+            <End Role="Statistics" EntitySet="Statistics" />
+          </AssociationSet>
+          <AssociationSet Name="SegmentAreasSegments" Association="TourModel.SegmentAreasSegments">
+            <End Role="SegmentAreas" EntitySet="SegmentAreas" />
+            <End Role="Segments" EntitySet="Segments" />
           </AssociationSet>
           <AssociationSet Name="SegmentAreaResultPeriod" Association="TourModel.SegmentAreaResultPeriod">
             <End Role="SegmentArea" EntitySet="SegmentAreas" />
             <End Role="ResultPeriod" EntitySet="ResultPeriods" />
           </AssociationSet>
+          <AssociationSet Name="SegmentResultPeriod" Association="TourModel.SegmentResultPeriod">
+            <End Role="Segment" EntitySet="Segments" />
+            <End Role="ResultPeriod" EntitySet="ResultPeriods" />
+          </AssociationSet>
+          <AssociationSet Name="RegionResultPeriod" Association="TourModel.RegionResultPeriod">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="ResultPeriod" EntitySet="ResultPeriods" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Athlete">
+          <Key>
+            <PropertyRef Name="AthleteID" />
+          </Key>
+          <Property Type="Int32" Name="AthleteID" Nullable="false" />
+          <Property Type="String" Name="Name" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="PrivacyMode" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="false" Precision="3" />
+          <NavigationProperty Name="LeadershipBoards" Relationship="TourModel.AthleteLeaderboard" FromRole="Athletes" ToRole="LeadershipBoards" />
+          <NavigationProperty Name="Statistics" Relationship="TourModel.StatisticAthlete" FromRole="Athletes" ToRole="Statistics" />
+        </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="CountryID" />
           </Key>
-          <Property Type="Int32" Name="CountryID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Code" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <NavigationProperty Name="Region" Relationship="TourModel.CountryRegion" FromRole="Country" ToRole="Region" />
+          <Property Type="Int32" Name="CountryID" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Regions" Relationship="TourModel.CountryRegion" FromRole="Countries" ToRole="Regions" />
+        </EntityType>
+        <EntityType Name="LeadershipBoard">
+          <Key>
+            <PropertyRef Name="LeaderBoardID" />
+          </Key>
+          <Property Type="Int32" Name="LeaderBoardID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ResultPeriodID" Nullable="false" />
+          <Property Type="Int32" Name="AthleteID" Nullable="false" />
+          <Property Type="String" Name="Rank" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Duration" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GreenPoints" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PolkaDotPoints" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="NoSegmentsRidden" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Athlete" Relationship="TourModel.AthleteLeaderboard" FromRole="LeadershipBoards" ToRole="Athletes" />
+          <NavigationProperty Name="ResultPeriods" Relationship="TourModel.ResultPeriodLeaderBoard" FromRole="LeadershipBoards" ToRole="ResultPeriods" />
         </EntityType>
         <EntityType Name="Region">
           <Key>
@@ -313,207 +383,192 @@
           </Key>
           <Property Type="Int32" Name="RegionID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="CountryID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <NavigationProperty Name="Country" Relationship="TourModel.CountryRegion" FromRole="Region" ToRole="Country" />
-          <NavigationProperty Name="SegmentArea" Relationship="TourModel.RegionSegmentArea" FromRole="Region" ToRole="SegmentArea" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Country" Relationship="TourModel.CountryRegion" FromRole="Regions" ToRole="Countries" />
+          <NavigationProperty Name="SegmentAreas" Relationship="TourModel.RegionSegmentArea" FromRole="Regions" ToRole="SegmentAreas" />
+          <Property Type="String" Name="Distance" Nullable="true" />
+          <NavigationProperty Name="ResultPeriod" Relationship="TourModel.RegionResultPeriod" FromRole="Region" ToRole="ResultPeriod" />
         </EntityType>
-        <Association Name="CountryRegion">
-          <End Type="TourModel.Country" Role="Country" Multiplicity="1" />
-          <End Type="TourModel.Region" Role="Region" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country">
-              <PropertyRef Name="CountryID" />
-            </Principal>
-            <Dependent Role="Region">
-              <PropertyRef Name="CountryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="ResultPeriod">
+          <Key>
+            <PropertyRef Name="ResultPeriodID" />
+          </Key>
+          <Property Type="Int32" Name="ResultPeriodID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="From" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="To" Nullable="false" Precision="3" />
+          <NavigationProperty Name="LeadershipBoards" Relationship="TourModel.ResultPeriodLeaderBoard" FromRole="ResultPeriods" ToRole="LeadershipBoards" />
+          <NavigationProperty Name="Statistics" Relationship="TourModel.ResultPeriodStatistic" FromRole="ResultPeriods" ToRole="Statistics" />
+          <NavigationProperty Name="Segment" Relationship="TourModel.SegmentResultPeriod" FromRole="ResultPeriod" ToRole="Segment" />
+        </EntityType>
         <EntityType Name="SegmentArea">
           <Key>
             <PropertyRef Name="SegmentAreaID" />
           </Key>
           <Property Type="Int32" Name="SegmentAreaID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Region" Relationship="TourModel.RegionSegmentArea" FromRole="SegmentArea" ToRole="Region" />
           <Property Type="Int32" Name="RegionID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="Double" Name="Distance" Nullable="true" />
-          <Property Type="Int32" Name="ElevDifference" Nullable="true" />
-          <Property Type="Double" Name="AvgGrade" Nullable="true" />
-          <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
-          <NavigationProperty Name="Segment" Relationship="TourModel.SegmentAreaSegment" FromRole="SegmentArea" ToRole="Segment" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="Distance" />
+          <Property Type="Int32" Name="ElevDifference" />
+          <Property Type="Double" Name="AvgGrade" />
+          <Property Type="Guid" Name="SecretKey" Nullable="true" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Region" Relationship="TourModel.RegionSegmentArea" FromRole="SegmentAreas" ToRole="Regions" />
+          <NavigationProperty Name="Segments" Relationship="TourModel.SegmentAreasSegments" FromRole="SegmentAreas" ToRole="Segments" />
           <NavigationProperty Name="ResultPeriod" Relationship="TourModel.SegmentAreaResultPeriod" FromRole="SegmentArea" ToRole="ResultPeriod" />
         </EntityType>
-        <Association Name="RegionSegmentArea">
-          <End Type="TourModel.Region" Role="Region" Multiplicity="1" />
-          <End Type="TourModel.SegmentArea" Role="SegmentArea" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Region">
-              <PropertyRef Name="RegionID" />
-            </Principal>
-            <Dependent Role="SegmentArea">
-              <PropertyRef Name="RegionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Segment">
           <Key>
             <PropertyRef Name="SegmentID" />
           </Key>
-          <Property Type="Int32" Name="SegmentID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="Int32" Name="StravaID" Nullable="false" />
+          <Property Type="Int32" Name="SegmentID" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="GradeType" Nullable="false" />
-          <Property Type="Double" Name="Distance" Nullable="true" />
-          <Property Type="Int32" Name="ElevDifference" Nullable="true" />
-          <Property Type="Double" Name="AvgGrade" Nullable="true" />
-          <Property Type="Int32" Name="NoRiders" Nullable="true" />
-          <Property Type="Int32" Name="NoRidden" Nullable="true" />
-          <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
-          <NavigationProperty Name="SegmentArea" Relationship="TourModel.SegmentAreaSegment" FromRole="Segment" ToRole="SegmentArea" />
-          <Property Type="Int32" Name="SegmentAreaID" Nullable="false" />
-          <NavigationProperty Name="ResultPeriod" Relationship="TourModel.SegmentResultPeriod" FromRole="Segment" ToRole="ResultPeriod" />
-        </EntityType>
-        <EntityType Name="Athlete">
-          <Key>
-            <PropertyRef Name="AthleteID" />
-          </Key>
-          <Property Type="Int32" Name="AthleteID" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Type="String" Name="Name" Nullable="true" />
-          <Property Type="Int32" Name="PrivacyMode" Nullable="true" />
-          <Property Type="DateTime" Name="LastUpdated" Nullable="false" />
+          <Property Type="Double" Name="Distance" />
+          <Property Type="Int32" Name="ElevDifference" />
+          <Property Type="Double" Name="AvgGrade" />
+          <Property Type="Int32" Name="NoRiders" />
+          <Property Type="Int32" Name="NoRidden" />
+          <Property Type="DateTime" Name="LastUpdated" Nullable="false" Precision="3" />
+          <NavigationProperty Name="SegmentAreas" Relationship="TourModel.SegmentAreasSegments" FromRole="Segments" ToRole="SegmentAreas" />
         </EntityType>
         <EntityType Name="Statistic">
           <Key>
             <PropertyRef Name="StatisticID" />
           </Key>
           <Property Type="Int32" Name="StatisticID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Athlete" Relationship="TourModel.StatisticAthlete" FromRole="Statistic" ToRole="Athlete" />
-          <Property Type="String" Name="Period" Nullable="false" />
-          <Property Type="String" Name="YerseyType" Nullable="false" />
-          <Property Type="Time" Name="Duration" />
+          <Property Type="Int32" Name="ResultPeriodID" Nullable="false" />
+          <Property Type="Int32" Name="AthleteID" Nullable="false" />
+          <Property Type="String" Name="Period" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="YerseyType" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Time" Name="Duration" Precision="7" />
           <Property Type="Int32" Name="Points" Nullable="false" />
-          <NavigationProperty Name="ResultPeriod" Relationship="TourModel.ResultPeriodStatistic" FromRole="Statistic" ToRole="ResultPeriod" />
-          <Property Type="Int32" Name="ResultPeriodID" Nullable="false" />
-        </EntityType>
-        <Association Name="StatisticAthlete">
-          <End Type="TourModel.Statistic" Role="Statistic" Multiplicity="*" />
-          <End Type="TourModel.Athlete" Role="Athlete" Multiplicity="1" />
-        </Association>
-        <EntityType Name="LeaderBoard">
-          <Key>
-            <PropertyRef Name="LeaderBoardID" />
-          </Key>
-          <Property Type="Int32" Name="LeaderBoardID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Rank" Nullable="false" />
-          <Property Type="String" Name="Duration" Nullable="false" />
-          <Property Type="String" Name="GreenPoints" Nullable="false" />
-          <Property Type="String" Name="PolkaDotPoints" Nullable="false" />
-          <Property Type="String" Name="NoSegmentsRidden" Nullable="false" />
-          <NavigationProperty Name="Athlete" Relationship="TourModel.AthleteLeaderboard" FromRole="Leaderboard" ToRole="Athlete" />
-          <Property Type="Int32" Name="AthleteAthleteID" Nullable="false" />
-          <NavigationProperty Name="ResultPeriod" Relationship="TourModel.ResultPeriodLeaderBoard" FromRole="LeaderBoard" ToRole="ResultPeriod" />
-          <Property Type="Int32" Name="ResultPeriodID" Nullable="false" />
+          <NavigationProperty Name="Athlete" Relationship="TourModel.StatisticAthlete" FromRole="Statistics" ToRole="Athletes" />
+          <NavigationProperty Name="ResultPeriod" Relationship="TourModel.ResultPeriodStatistic" FromRole="Statistics" ToRole="ResultPeriods" />
         </EntityType>
         <Association Name="AthleteLeaderboard">
-          <End Type="TourModel.Athlete" Role="Athlete" Multiplicity="1" />
-          <End Type="TourModel.LeaderBoard" Role="Leaderboard" Multiplicity="*" />
+          <End Type="TourModel.Athlete" Role="Athletes" Multiplicity="1" />
+          <End Type="TourModel.LeadershipBoard" Role="LeadershipBoards" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Athlete">
+            <Principal Role="Athletes">
               <PropertyRef Name="AthleteID" />
             </Principal>
-            <Dependent Role="Leaderboard">
-              <PropertyRef Name="AthleteAthleteID" />
+            <Dependent Role="LeadershipBoards">
+              <PropertyRef Name="AthleteID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ResultPeriod">
-          <Key>
-            <PropertyRef Name="ResultPeriodID" />
-          </Key>
-          <Property Type="Int32" Name="ResultPeriodID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Statistic" Relationship="TourModel.ResultPeriodStatistic" FromRole="ResultPeriod" ToRole="Statistic" />
-          <NavigationProperty Name="LeaderBoard" Relationship="TourModel.ResultPeriodLeaderBoard" FromRole="ResultPeriod" ToRole="LeaderBoard" />
-          <NavigationProperty Name="Segment" Relationship="TourModel.SegmentResultPeriod" FromRole="ResultPeriod" ToRole="Segment" />
-          <Property Type="Int32" Name="SegmentID" Nullable="true" />
-          <NavigationProperty Name="SegmentArea" Relationship="TourModel.SegmentAreaResultPeriod" FromRole="ResultPeriod" ToRole="SegmentArea" />
-          <Property Type="Int32" Name="SegmentAreaID" Nullable="true" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="DateTime" Name="From" Nullable="false" />
-          <Property Type="DateTime" Name="To" Nullable="false" />
-        </EntityType>
-        <Association Name="ResultPeriodStatistic">
-          <End Type="TourModel.ResultPeriod" Role="ResultPeriod" Multiplicity="1" />
-          <End Type="TourModel.Statistic" Role="Statistic" Multiplicity="*" />
+        <Association Name="StatisticAthlete">
+          <End Type="TourModel.Athlete" Role="Athletes" Multiplicity="1" />
+          <End Type="TourModel.Statistic" Role="Statistics" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ResultPeriod">
-              <PropertyRef Name="ResultPeriodID" />
+            <Principal Role="Athletes">
+              <PropertyRef Name="AthleteID" />
             </Principal>
-            <Dependent Role="Statistic">
-              <PropertyRef Name="ResultPeriodID" />
+            <Dependent Role="Statistics">
+              <PropertyRef Name="AthleteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CountryRegion">
+          <End Type="TourModel.Country" Role="Countries" Multiplicity="1" />
+          <End Type="TourModel.Region" Role="Regions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="Regions">
+              <PropertyRef Name="CountryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="ResultPeriodLeaderBoard">
-          <End Type="TourModel.ResultPeriod" Role="ResultPeriod" Multiplicity="1" />
-          <End Type="TourModel.LeaderBoard" Role="LeaderBoard" Multiplicity="*" />
+          <End Type="TourModel.ResultPeriod" Role="ResultPeriods" Multiplicity="1" />
+          <End Type="TourModel.LeadershipBoard" Role="LeadershipBoards" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ResultPeriod">
+            <Principal Role="ResultPeriods">
               <PropertyRef Name="ResultPeriodID" />
             </Principal>
-            <Dependent Role="LeaderBoard">
+            <Dependent Role="LeadershipBoards">
               <PropertyRef Name="ResultPeriodID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="SegmentAreaSegment">
-          <End Type="TourModel.SegmentArea" Role="SegmentArea" Multiplicity="1" />
-          <End Type="TourModel.Segment" Role="Segment" Multiplicity="*" />
+        <Association Name="RegionSegmentArea">
+          <End Type="TourModel.Region" Role="Regions" Multiplicity="1" />
+          <End Type="TourModel.SegmentArea" Role="SegmentAreas" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SegmentArea">
-              <PropertyRef Name="SegmentAreaID" />
+            <Principal Role="Regions">
+              <PropertyRef Name="RegionID" />
             </Principal>
-            <Dependent Role="Segment">
-              <PropertyRef Name="SegmentAreaID" />
+            <Dependent Role="SegmentAreas">
+              <PropertyRef Name="RegionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="SegmentResultPeriod">
-          <End Type="TourModel.Segment" Role="Segment" Multiplicity="0..1" />
-          <End Type="TourModel.ResultPeriod" Role="ResultPeriod" Multiplicity="*" />
+        <Association Name="ResultPeriodStatistic">
+          <End Type="TourModel.ResultPeriod" Role="ResultPeriods" Multiplicity="1" />
+          <End Type="TourModel.Statistic" Role="Statistics" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Segment">
-              <PropertyRef Name="SegmentID" />
+            <Principal Role="ResultPeriods">
+              <PropertyRef Name="ResultPeriodID" />
             </Principal>
-            <Dependent Role="ResultPeriod">
-              <PropertyRef Name="SegmentID" />
+            <Dependent Role="Statistics">
+              <PropertyRef Name="ResultPeriodID" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="SegmentAreasSegments">
+          <End Type="TourModel.SegmentArea" Role="SegmentAreas" Multiplicity="*" />
+          <End Type="TourModel.Segment" Role="Segments" Multiplicity="*" />
         </Association>
         <Association Name="SegmentAreaResultPeriod">
           <End Type="TourModel.SegmentArea" Role="SegmentArea" Multiplicity="0..1" />
           <End Type="TourModel.ResultPeriod" Role="ResultPeriod" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SegmentArea">
-              <PropertyRef Name="SegmentAreaID" />
-            </Principal>
-            <Dependent Role="ResultPeriod">
-              <PropertyRef Name="SegmentAreaID" />
-            </Dependent>
-          </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="SegmentResultPeriod">
+          <End Type="TourModel.Segment" Role="Segment" Multiplicity="0..1" />
+          <End Type="TourModel.ResultPeriod" Role="ResultPeriod" Multiplicity="*" />
+        </Association>
+        <Association Name="RegionResultPeriod">
+          <End Type="TourModel.Region" Role="Region" Multiplicity="0..1" />
+          <End Type="TourModel.ResultPeriod" Role="ResultPeriod" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="TourModelStoreContainer" CdmEntityContainer="TourModelContainer">
+    <EntitySetMapping Name="Athletes">
+      <EntityTypeMapping TypeName="IsTypeOf(TourModel.Athlete)">
+        <MappingFragment StoreEntitySet="Athletes">
+          <ScalarProperty Name="AthleteID" ColumnName="AthleteID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PrivacyMode" ColumnName="PrivacyMode" />
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Countries">
       <EntityTypeMapping TypeName="IsTypeOf(TourModel.Country)">
         <MappingFragment StoreEntitySet="Countries">
           <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LeadershipBoards">
+      <EntityTypeMapping TypeName="IsTypeOf(TourModel.LeadershipBoard)">
+        <MappingFragment StoreEntitySet="LeadershipBoards">
+          <ScalarProperty Name="LeaderBoardID" ColumnName="LeaderBoardID" />
+          <ScalarProperty Name="ResultPeriodID" ColumnName="ResultPeriodID" />
+          <ScalarProperty Name="AthleteID" ColumnName="AthleteID" />
+          <ScalarProperty Name="Rank" ColumnName="Rank" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="GreenPoints" ColumnName="GreenPoints" />
+          <ScalarProperty Name="PolkaDotPoints" ColumnName="PolkaDotPoints" />
+          <ScalarProperty Name="NoSegmentsRidden" ColumnName="NoSegmentsRidden" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -523,6 +578,17 @@
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
           <ScalarProperty Name="CountryID" ColumnName="CountryID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ResultPeriods">
+      <EntityTypeMapping TypeName="IsTypeOf(TourModel.ResultPeriod)">
+        <MappingFragment StoreEntitySet="ResultPeriods">
+          <ScalarProperty Name="ResultPeriodID" ColumnName="ResultPeriodID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="From" ColumnName="From" />
+          <ScalarProperty Name="To" ColumnName="To" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -535,6 +601,7 @@
           <ScalarProperty Name="Distance" ColumnName="Distance" />
           <ScalarProperty Name="ElevDifference" ColumnName="ElevDifference" />
           <ScalarProperty Name="AvgGrade" ColumnName="AvgGrade" />
+          <ScalarProperty Name="SecretKey" ColumnName="SecretKey" />
           <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -544,24 +611,12 @@
         <MappingFragment StoreEntitySet="Segments">
           <ScalarProperty Name="SegmentID" ColumnName="SegmentID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="StravaID" ColumnName="StravaID" />
           <ScalarProperty Name="GradeType" ColumnName="GradeType" />
           <ScalarProperty Name="Distance" ColumnName="Distance" />
           <ScalarProperty Name="ElevDifference" ColumnName="ElevDifference" />
           <ScalarProperty Name="AvgGrade" ColumnName="AvgGrade" />
           <ScalarProperty Name="NoRiders" ColumnName="NoRiders" />
           <ScalarProperty Name="NoRidden" ColumnName="NoRidden" />
-          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
-          <ScalarProperty Name="SegmentAreaID" ColumnName="SegmentAreaID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Athletes">
-      <EntityTypeMapping TypeName="IsTypeOf(TourModel.Athlete)">
-        <MappingFragment StoreEntitySet="Athletes">
-          <ScalarProperty Name="AthleteID" ColumnName="AthleteID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="PrivacyMode" ColumnName="PrivacyMode" />
           <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -570,47 +625,49 @@
       <EntityTypeMapping TypeName="IsTypeOf(TourModel.Statistic)">
         <MappingFragment StoreEntitySet="Statistics">
           <ScalarProperty Name="StatisticID" ColumnName="StatisticID" />
+          <ScalarProperty Name="ResultPeriodID" ColumnName="ResultPeriodID" />
+          <ScalarProperty Name="AthleteID" ColumnName="AthleteID" />
           <ScalarProperty Name="Period" ColumnName="Period" />
           <ScalarProperty Name="YerseyType" ColumnName="YerseyType" />
           <ScalarProperty Name="Duration" ColumnName="Duration" />
           <ScalarProperty Name="Points" ColumnName="Points" />
-          <ScalarProperty Name="ResultPeriodID" ColumnName="ResultPeriodID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="LeadershipBoards">
-      <EntityTypeMapping TypeName="IsTypeOf(TourModel.LeaderBoard)">
-        <MappingFragment StoreEntitySet="LeadershipBoards">
-          <ScalarProperty Name="LeaderBoardID" ColumnName="LeaderBoardID" />
-          <ScalarProperty Name="Rank" ColumnName="Rank" />
-          <ScalarProperty Name="Duration" ColumnName="Duration" />
-          <ScalarProperty Name="GreenPoints" ColumnName="GreenPoints" />
-          <ScalarProperty Name="PolkaDotPoints" ColumnName="PolkaDotPoints" />
-          <ScalarProperty Name="NoSegmentsRidden" ColumnName="NoSegmentsRidden" />
-          <ScalarProperty Name="AthleteAthleteID" ColumnName="AthleteAthleteID" />
-          <ScalarProperty Name="ResultPeriodID" ColumnName="ResultPeriodID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ResultPeriods">
-      <EntityTypeMapping TypeName="IsTypeOf(TourModel.ResultPeriod)">
-        <MappingFragment StoreEntitySet="ResultPeriods">
-          <ScalarProperty Name="ResultPeriodID" ColumnName="ResultPeriodID" />
-          <ScalarProperty Name="SegmentID" ColumnName="SegmentID" />
-          <ScalarProperty Name="SegmentAreaID" ColumnName="SegmentAreaID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="From" ColumnName="From" />
-          <ScalarProperty Name="To" ColumnName="To" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <AssociationSetMapping Name="StatisticAthlete" TypeName="TourModel.StatisticAthlete" StoreEntitySet="Statistics">
-      <EndProperty Name="Athlete">
-        <ScalarProperty Name="AthleteID" ColumnName="Athlete_AthleteID" />
+    <AssociationSetMapping Name="SegmentAreasSegments" TypeName="TourModel.SegmentAreasSegments" StoreEntitySet="SegmentAreasSegments">
+      <EndProperty Name="SegmentAreas">
+        <ScalarProperty Name="SegmentAreaID" ColumnName="SegmentAreas_SegmentAreaID" />
       </EndProperty>
-      <EndProperty Name="Statistic">
-        <ScalarProperty Name="StatisticID" ColumnName="StatisticID" />
+      <EndProperty Name="Segments">
+        <ScalarProperty Name="SegmentID" ColumnName="Segments_SegmentID" />
       </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SegmentAreaResultPeriod" TypeName="TourModel.SegmentAreaResultPeriod" StoreEntitySet="ResultPeriods">
+      <EndProperty Name="SegmentArea">
+        <ScalarProperty Name="SegmentAreaID" ColumnName="SegmentAreaResultPeriod_ResultPeriod_SegmentAreaID" />
+      </EndProperty>
+      <EndProperty Name="ResultPeriod">
+        <ScalarProperty Name="ResultPeriodID" ColumnName="ResultPeriodID" />
+      </EndProperty>
+      <Condition ColumnName="SegmentAreaResultPeriod_ResultPeriod_SegmentAreaID" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SegmentResultPeriod" TypeName="TourModel.SegmentResultPeriod" StoreEntitySet="ResultPeriods">
+      <EndProperty Name="Segment">
+        <ScalarProperty Name="SegmentID" ColumnName="Segment_SegmentID" />
+      </EndProperty>
+      <EndProperty Name="ResultPeriod">
+        <ScalarProperty Name="ResultPeriodID" ColumnName="ResultPeriodID" />
+      </EndProperty>
+      <Condition ColumnName="Segment_SegmentID" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RegionResultPeriod" TypeName="TourModel.RegionResultPeriod" StoreEntitySet="ResultPeriods">
+      <EndProperty Name="Region">
+        <ScalarProperty Name="RegionID" ColumnName="RegionResultPeriod_ResultPeriod_RegionID" />
+      </EndProperty>
+      <EndProperty Name="ResultPeriod">
+        <ScalarProperty Name="ResultPeriodID" ColumnName="ResultPeriodID" />
+      </EndProperty>
+      <Condition ColumnName="RegionResultPeriod_ResultPeriod_RegionID" IsNull="false" />
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
@@ -627,6 +684,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->

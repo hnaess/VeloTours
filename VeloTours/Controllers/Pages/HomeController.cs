@@ -10,9 +10,14 @@ namespace VeloTours.Controllers
 {
     public class HomeController : Controller
     {
+        private TourModelContainer db = new TourModelContainer();
+        
         public ActionResult Index()
         {
             ViewBag.Message = "Strava segments made into Tours";
+
+            VeloTours.DAL.InitDB.CreateAndInitIfEmpty(db);
+
             return View();
         }
 

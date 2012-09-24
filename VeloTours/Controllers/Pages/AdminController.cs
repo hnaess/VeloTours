@@ -18,11 +18,10 @@ namespace VeloTours.Controllers
             return View();
         }
         
-        public ActionResult Init()
+        public ActionResult ResetDB()
         {
-            ViewBag.Message = "Admin - Init";
-
-            return View();
+            VeloTours.DAL.InitDB.CreateAndInitIfEmpty(db);
+            return View("Index");
         }
     }
 }

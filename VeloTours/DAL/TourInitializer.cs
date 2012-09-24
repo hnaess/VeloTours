@@ -11,7 +11,7 @@ namespace VeloTours.DAL
     {
         protected override void Seed(TourModelContainer context)
         {
-            InitDB.Init(context);
+            InitDB.CreateAndInitIfEmpty(context);
         }
     }
 }
