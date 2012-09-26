@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 09/24/2012 16:19:47
+-- Date Created: 09/26/2012 12:39:06
 -- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
@@ -46,6 +46,9 @@ IF OBJECT_ID(N'[dbo].[FK_SegmentAreaResultPeriod]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_SegmentResultPeriod]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ResultPeriods] DROP CONSTRAINT [FK_SegmentResultPeriod];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RegionResultPeriod]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ResultPeriods] DROP CONSTRAINT [FK_RegionResultPeriod];
 GO
 
 -- --------------------------------------------------
@@ -105,11 +108,13 @@ CREATE TABLE [dbo].[LeadershipBoards] (
     [LeaderBoardID] int IDENTITY(1,1) NOT NULL,
     [ResultPeriodID] int  NOT NULL,
     [AthleteID] int  NOT NULL,
-    [Rank] nvarchar(max)  NOT NULL,
-    [Duration] nvarchar(max)  NOT NULL,
-    [GreenPoints] nvarchar(max)  NOT NULL,
-    [PolkaDotPoints] nvarchar(max)  NOT NULL,
-    [NoSegmentsRidden] nvarchar(max)  NOT NULL
+    [Rank] int  NOT NULL,
+    [Duration] time  NOT NULL,
+    [YellowPoints] int  NULL,
+    [GreenPoints] int  NOT NULL,
+    [PolkaDotPoints] int  NOT NULL,
+    [NoSegmentsRidden] int  NOT NULL,
+    [VAM] int  NULL
 );
 GO
 
@@ -166,8 +171,7 @@ CREATE TABLE [dbo].[Statistics] (
     [StatisticID] int IDENTITY(1,1) NOT NULL,
     [ResultPeriodID] int  NOT NULL,
     [AthleteID] int  NOT NULL,
-    [Period] nvarchar(max)  NOT NULL,
-    [YerseyType] nvarchar(max)  NOT NULL,
+    [YerseyType] int  NOT NULL,
     [Duration] time  NULL,
     [Points] int  NOT NULL
 );

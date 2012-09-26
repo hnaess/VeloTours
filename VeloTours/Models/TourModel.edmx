@@ -83,11 +83,13 @@
     <Property Name="LeaderBoardID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ResultPeriodID" Type="int" Nullable="false" />
     <Property Name="AthleteID" Type="int" Nullable="false" />
-    <Property Name="Rank" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Duration" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="GreenPoints" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PolkaDotPoints" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="NoSegmentsRidden" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Rank" Type="int" Nullable="false" />
+    <Property Name="Duration" Type="time" Nullable="false" />
+    <Property Name="YellowPoints" Type="int" Nullable="true" />
+    <Property Name="GreenPoints" Type="int" Nullable="false" />
+    <Property Name="PolkaDotPoints" Type="int" Nullable="false" />
+    <Property Name="NoSegmentsRidden" Type="int" Nullable="false" />
+    <Property Name="VAM" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="Regions">
     <Key>
@@ -144,8 +146,7 @@
     <Property Name="StatisticID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ResultPeriodID" Type="int" Nullable="false" />
     <Property Name="AthleteID" Type="int" Nullable="false" />
-    <Property Name="Period" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="YerseyType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="YerseyType" Type="int" Nullable="false" />
     <Property Name="Duration" Type="time" Nullable="true" Precision="7" />
     <Property Name="Points" Type="int" Nullable="false" />
   </EntityType>
@@ -369,13 +370,15 @@
           <Property Type="Int32" Name="LeaderBoardID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="ResultPeriodID" Nullable="false" />
           <Property Type="Int32" Name="AthleteID" Nullable="false" />
-          <Property Type="String" Name="Rank" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Duration" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="GreenPoints" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PolkaDotPoints" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="NoSegmentsRidden" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Rank" Nullable="false" />
+          <Property Type="Time" Name="Duration" Nullable="false" />
+          <Property Type="Int32" Name="YellowPoints" />
+          <Property Type="Int32" Name="GreenPoints" Nullable="false" />
+          <Property Type="Int32" Name="PolkaDotPoints" Nullable="false" />
+          <Property Type="Int32" Name="NoSegmentsRidden" Nullable="false" />
           <NavigationProperty Name="Athlete" Relationship="TourModel.AthleteLeaderboard" FromRole="LeadershipBoards" ToRole="Athletes" />
           <NavigationProperty Name="ResultPeriods" Relationship="TourModel.ResultPeriodLeaderBoard" FromRole="LeadershipBoards" ToRole="ResultPeriods" />
+          <Property Type="Int32" Name="VAM" />
         </EntityType>
         <EntityType Name="Region">
           <Key>
@@ -439,8 +442,7 @@
           <Property Type="Int32" Name="StatisticID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="ResultPeriodID" Nullable="false" />
           <Property Type="Int32" Name="AthleteID" Nullable="false" />
-          <Property Type="String" Name="Period" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="YerseyType" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="YerseyType" Nullable="false" />
           <Property Type="Time" Name="Duration" Precision="7" />
           <Property Type="Int32" Name="Points" Nullable="false" />
           <NavigationProperty Name="Athlete" Relationship="TourModel.StatisticAthlete" FromRole="Statistics" ToRole="Athletes" />
@@ -566,9 +568,11 @@
           <ScalarProperty Name="AthleteID" ColumnName="AthleteID" />
           <ScalarProperty Name="Rank" ColumnName="Rank" />
           <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="YellowPoints" ColumnName="YellowPoints" />
           <ScalarProperty Name="GreenPoints" ColumnName="GreenPoints" />
           <ScalarProperty Name="PolkaDotPoints" ColumnName="PolkaDotPoints" />
           <ScalarProperty Name="NoSegmentsRidden" ColumnName="NoSegmentsRidden" />
+          <ScalarProperty Name="VAM" ColumnName="VAM" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -627,7 +631,6 @@
           <ScalarProperty Name="StatisticID" ColumnName="StatisticID" />
           <ScalarProperty Name="ResultPeriodID" ColumnName="ResultPeriodID" />
           <ScalarProperty Name="AthleteID" ColumnName="AthleteID" />
-          <ScalarProperty Name="Period" ColumnName="Period" />
           <ScalarProperty Name="YerseyType" ColumnName="YerseyType" />
           <ScalarProperty Name="Duration" ColumnName="Duration" />
           <ScalarProperty Name="Points" ColumnName="Points" />

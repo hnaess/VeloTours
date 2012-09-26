@@ -15,11 +15,12 @@ namespace VeloTours.Controllers
         public ActionResult Index(int? athlete)
         {
             ViewBag.Message = "Strava segments made into Tours";
-            ViewBag.Athlete = athlete;
 
+            // TODO: Temporary
             VeloTours.DAL.InitDB.CreateAndInitIfEmpty(db);
 
-            return View();
+            Athlete athleteObj = db.Athletes.Find(athlete);
+            return View(athleteObj);
         }
 
         [HttpPost]
@@ -27,7 +28,7 @@ namespace VeloTours.Controllers
         {
             try
             {
-                return RedirectToAction("Index", "Segment", new { Athlete = athlete });
+                return RedirectToAction("Index", "Segment", new { athlete = athlete });
             }
             catch
             {

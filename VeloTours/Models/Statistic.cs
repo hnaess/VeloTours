@@ -24,9 +24,7 @@ public partial class Statistic
 
     public int AthleteID { get; set; }
 
-    public string Period { get; set; }
-
-    public string YerseyType { get; set; }
+    public int YerseyType { get; set; }
 
     public Nullable<System.TimeSpan> Duration { get; set; }
 

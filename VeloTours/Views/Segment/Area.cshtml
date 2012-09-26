@@ -3,22 +3,19 @@
 
 @{
     ViewBag.Title = "Area";
-}
 
-<script src="~/Scripts/jquery-1.8.1.min.js" type="text/javascript"></script>
-<script src="~/Scripts/jquery.popover-1.1.0.js" type="text/javascript"></script>
+    int athleteID = ViewBag.Athlete ?? 0;
+}
 
 <h2>Resultboard for @Model.Name</h2>
 
 <p>Nam quis eros sit amet lectus accumsan faucibus aliquam et nisl. Cras at urna orci. Maecenas ullamcorper, justo at volutpat tincidunt, mi nunc molestie erat, et dapibus felis turpis id ligula. Aliquam posuere consequat mauris sit amet sollicitudin. Duis pretium nunc ut nibh semper nec facilisis nibh pretium. Suspendisse elementum tempus ipsum, ut scelerisque ante vulputate eget. Mauris magna diam, tincidunt nec aliquam vel, mattis bibendum tellus. Nullam placerat nibh vel felis vehicula consectetur. Etiam ut enim arcu. Vestibulum sed vehicula eros. Nulla sit amet dolor vel lectus porttitor dapibus.</p>
 
 <h3>Segments in the areas</h3>
-
-<table>
+<table id="SegmentsTable" class="hidden-phone tablesorter table table-striped table-bordered table-condensed smallTable" style="table-layout: fixed; overflow: hidden;">
     <thead>
         <tr>
             <th>Name</th>
-            <th class="right">Strava</th>
             <th class="right">Distance</th>
             <th class="right">#ridden</th>
             <th class="right">#riders</th>
@@ -31,9 +28,12 @@
         @foreach (var item in Model.Segments)
         {
             <tr>
-                <td>@Html.ActionLink(item.Name, "Segment", new { id = item.SegmentID }) </td>
-                <td id="segmentID" class="right">@item.SegmentID</td>
-                @*<td class="right">@Html.HtmlLink("http://strava.com/segments/" + item.SegmentID, item.SegmentID.ToString(), null)</td>*@
+                <td>
+                    @Html.ActionLink(item.Name, "Segment", new { segment = item.SegmentID, Athlete = athleteID })
+
+                    @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-signal'></i></a>",
+                        item.SegmentID, 0, 0))
+                </td>
                 <td class="right">@item.Distance km</td>
                 <td class="right">@item.NoRidden</td>
                 <td class="right">@item.NoRiders</td>
@@ -48,7 +48,8 @@
 
 <h2>Strava Segments for @Model.Name</h2>
 
-@foreach (var item in Model.Segments) {
+@foreach (var item in Model.Segments)
+{
     <iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@item.SegmentID/embed" width="450"></iframe>
 }
 
@@ -56,18 +57,34 @@
     Go back to @Html.ActionLink("overview", "/", new { athlete = ViewBag.Athlete })
 </p>
 
-<a href="#" id="ex2" data-segmentID="123">Please, let me speak!</a>
 
-<script type="text/javascript">
-    /* <![CDATA[ */
-    jQuery(document).ready(function ($) {
-        $("#ex1").popover({
-            trigger: 'click'
-        });
-        $("#ex2").popover({
-            title: "Hello",
-            content: "Finally, I can speak!" + $("
-        });
+<script>
+    var athleteId = @athleteID
+
+    // SegmentLink
+    $('.segmentLink').each(function () {
+        var links = '<a target="_blank" data-parentid="segment' + $(this).data("segmentid") + '" class="popoverLink" href="http://www.strava.com/segments/' + $(this).data("segmentid") + '" title="View segment on Strava (external link)">View on Strava</a><br/>';
+        links += '<a target="_blank" data-parentid="segment' + $(this).data("segmentid") + '" class="popoverLink" href="http://www.jonathanokeeffe.com/strava/segmentDetails.php?segmentId=' + $(this).data("segmentid") + '" title="View as much detail about this segment as you could possible imagine (external link)">O\'Keeffe\'s Segment History</a><br/>';
+        links += '<a target="_blank" data-parentid="segment' + $(this).data("segmentid") + '" class="popoverLink" href="http://raceshape.com/strava-segments/' + $(this).data("segmentid") + '?rides=' + $(this).data("effortid") + '-' + $(this).data("komid") + '" title="See where you lost time to the KOM (external link)">RaceShape your PR against KOM</a><br/>';
+        links += '<a target="_blank" data-parentid="segment' + $(this).data("segmentid") + '" class="popoverLink" href="http://strava-tools.raceshape.com/exporter/?url=http://app.strava.com/segments/' + $(this).data("segmentid") + '" title="Download the KOM\'s gpx/tcx/crs file for Virtual Partner action via RaceShape (external link)">Virtual Partner GPX download</a><br/>';
+        links += '<a data-parentid="segment' + $(this).data("segmentid") + '" class="popoverLink" href="http://veloviewer.com/NewLeaderboard.php?segmentId=' + $(this).data("segmentid") + '" title="View the alternative leaderboard for this segment">Alternative leaderboard</a><br/>';
+        links += '<a data-parentid="segment' + $(this).data("segmentid") + '" class="popoverLink" href="http://veloviewer.com/NewLeaderboard.php?segmentId=' + $(this).data("segmentid") + '&athleteId' + athleteId + '" title="View the alternative leaderboard for this segment">Your alternative leaderboard</a><br/>';
+
+        $(this).popover({ title: 'Segment links <button type="button" data-parentid="segment' + $(this).data("segmentid") + '" class="close popoverClose" data-dismiss="alert">x</button>', content: links, trigger: 'manual' });
     });
-        /* ]]> */
+
+    $('.segmentLink').click(function () {
+        $(this).popover('toggle');
+
+        $('.popoverClose').click(function () {
+            $('#' + $(this).data('parentid')).popover('hide');
+        });
+
+        $('.popoverLink').click(function () {
+            $('#' + $(this).data('parentid')).popover('hide');
+        });
+        return false;
+    });
+
+
 </script>

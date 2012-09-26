@@ -21,7 +21,7 @@ namespace VeloTours.Controllers.Pages
             return View(segmentObj);
         }
 
-        public ActionResult Area(int area, int athlete)
+        public ActionResult Area(int area, int? athlete)
         {
             SegmentArea segmentArea = db.SegmentAreas.Find(area);
             ViewBag.Area = area;
@@ -30,7 +30,7 @@ namespace VeloTours.Controllers.Pages
             return View(segmentArea);
         }
 
-        public ActionResult Index(int athlete)
+        public ActionResult Index(int? athlete)
         {
             List<Country> countries = db.Countries.ToList();
             ViewBag.Athlete = athlete;

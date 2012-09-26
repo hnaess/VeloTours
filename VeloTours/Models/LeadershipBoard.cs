@@ -24,15 +24,19 @@ public partial class LeadershipBoard
 
     public int AthleteID { get; set; }
 
-    public string Rank { get; set; }
+    public int Rank { get; set; }
 
-    public string Duration { get; set; }
+    public System.TimeSpan Duration { get; set; }
 
-    public string GreenPoints { get; set; }
+    public Nullable<int> YellowPoints { get; set; }
 
-    public string PolkaDotPoints { get; set; }
+    public int GreenPoints { get; set; }
 
-    public string NoSegmentsRidden { get; set; }
+    public int PolkaDotPoints { get; set; }
+
+    public int NoSegmentsRidden { get; set; }
+
+    public Nullable<int> VAM { get; set; }
 
 
 
