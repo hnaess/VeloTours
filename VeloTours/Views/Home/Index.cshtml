@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "VeloTours";
 
-    int athleteID = (@Model != null) ? @Model.AthleteID : 0;
+    int athlete = (@Model != null) ? @Model.AthleteID : 0;
 }
 
 @section featured {
@@ -59,15 +59,18 @@
             </div>
         </div>
 
-        <input id="athleteID" type="text" />
-        <button name="button" value="Change">Change user</button>
+        @using (Html.BeginForm())
+        {
+            @Html.TextBoxFor(x => athlete)
+            <input type="submit" value="Change" />
+        }
 
     </li>
 
     <li class="three">
         <h5>Get started</h5>
 
-        @if (@athleteID == 0)
+        @if (@athlete == 0)
         {
             <p>To give you an idea what this site is about, here is a link to my data:</p>
         
@@ -92,6 +95,6 @@
             </table>
         }
 
-        Get an overview of all @Html.ActionLink("segments areas", "", "Segment", routeValues: new { athlete = athleteID }, htmlAttributes: null )
+        Get an overview of all @Html.ActionLink("segments areas", "", "Segment", routeValues: new { athlete = athlete }, htmlAttributes: null )
     </li>
 </ol>

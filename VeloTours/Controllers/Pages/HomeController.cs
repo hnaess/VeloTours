@@ -28,7 +28,10 @@ namespace VeloTours.Controllers
         {
             try
             {
-                return RedirectToAction("Index", "Segment", new { athlete = athlete });
+                if(athlete > 0)
+                    return RedirectToAction("Index", "Segment", new { athlete = athlete });
+                else
+                    return View();
             }
             catch
             {
