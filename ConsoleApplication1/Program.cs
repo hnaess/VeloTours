@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Stravan;
+using Stravan.Json;
+using System.Diagnostics;
 
 namespace ConsoleApplication1
 {
@@ -16,6 +19,17 @@ namespace ConsoleApplication1
 
         
         static void Main(string[] args)
+        {
+            var SegmentId = 1637189;
+
+            StravaWebClient cli = new StravaWebClient();
+
+            //SegmentService serv = new SegmentService(web);
+
+            //var s = serv.Efforts(SegmentId);
+        }
+
+        void test1()
         {
             System.Net.WebClient proxy = new System.Net.WebClient();
             string uri = "http://app.strava.com/api/v1/segments/1637189";
@@ -29,7 +43,7 @@ namespace ConsoleApplication1
             List<ConsoleApplication1.StravaAPI.Segment> stravaSegments = new List<ConsoleApplication1.StravaAPI.Segment>();
             //foreach(JToken stravaSegment in stravaSegments)
             //{
-                
+
             //}
         }
     }
