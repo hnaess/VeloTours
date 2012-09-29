@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VeloTours", "VeloTours\VeloTours.csproj", "{CF9D733D-DBB0-4B28-A7FB-AB0F3E62E9E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{F093F96F-937D-41FD-8D20-9779B04C2059}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{CF9D733D-DBB0-4B28-A7FB-AB0F3E62E9E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF9D733D-DBB0-4B28-A7FB-AB0F3E62E9E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF9D733D-DBB0-4B28-A7FB-AB0F3E62E9E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F093F96F-937D-41FD-8D20-9779B04C2059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F093F96F-937D-41FD-8D20-9779B04C2059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F093F96F-937D-41FD-8D20-9779B04C2059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F093F96F-937D-41FD-8D20-9779B04C2059}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
