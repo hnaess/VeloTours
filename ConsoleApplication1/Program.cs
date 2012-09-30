@@ -25,57 +25,72 @@ namespace ConsoleApplication1
         {
             var SegmentId = 1637189;
 
-            StravaWebClient cli = new StravaWebClient();
-            SegmentService serv = new SegmentService(cli);
-            //Segment segment = serv.Show(SegmentId);
-            
-            int i = 0;
-            string lastResult = String.Empty;
-            SegmentEfforts segmentEfforts = null;
-            do
-            {
-
-                if (i > 0)
-                {
-                    lastResult = segmentEfforts.ToString();
-                    segmentEfforts = serv.Efforts(SegmentId, offset: i);
-                }
-                else
-                {
-                    segmentEfforts = serv.Efforts(SegmentId);
-                }
-
-                PrintEffort(segmentEfforts, ref i);
-            } while ((i % 50 == 0) && (segmentEfforts.ToString() != lastResult));
+            GetSegmentRides(SegmentId);
          }
 
-        private static void PrintEffort(SegmentEfforts segmentEfforts, ref int i)
+        private static List<SegmentEffort> GetSegmentRides(int SegmentId)
         {
+            StravaWebClient cli = new StravaWebClient();
+            SegmentService serv = new SegmentService(cli);
+
+            serv.Show(SegmentId);
+
+            List<SegmentEffort> rides = new List<SegmentEffort>();
+            SegmentEfforts segmentEfforts = null;
+            int offset = 0;
+            do
+            {
+                segmentEfforts = serv.Efforts(SegmentId, offset: offset);
+            } while (AddEfforts(ref rides, ref segmentEfforts, ref offset));
+
+            rides.Sort();
+
+            return rides;
+        }
+
+        private static void SegmentInfo(int SegmentId)
+        {
+
+        }
+
+        private static bool AddEfforts(ref List<SegmentEffort> rides, ref SegmentEfforts segmentEfforts, ref int offset)
+        {
+            if (segmentEfforts.Efforts.Count == 0)
+                return false;
+            
             foreach (Effort effort in segmentEfforts.Efforts)
             {
-                i++;
-                Athlete athlete = effort.Athlete;
-                Console.WriteLine(String.Format("{0}, {1}, {2}, {3}", i, effort.Athlete.Name, effort.ElapsedTime, effort.StartDate.ToString()));
+                offset++;
+
+                int elapsedTime = effort.ElapsedTime;
+                int id = effort.Id;
+                int athleteId = effort.Athlete.Id;
+                DateTime startTime = Convert.ToDateTime(effort.StartDate);
+
+                var ride = new SegmentEffort() { ElapsedTime = elapsedTime, Id = id, Start = startTime, AthleteId = athleteId };
+                rides.Add(ride);
+                //Console.WriteLine(String.Format("{0}, {1}, {2}, {3}", i, effort.Athlete.Name, effort.ElapsedTime, effort.StartDate.ToString()));
             }
+            return true;
         }
+    }
 
+    public class SegmentEffort : IComparable<SegmentEffort>
+    {
+        public int Id { get; set; }
+        public int AthleteId { get; set; }
+        public int ElapsedTime { get; set; }
+        public DateTime Start { get; set; }
 
-        void test1()
+        #region IComparable<Employee> Members
+
+        public int CompareTo(SegmentEffort other)
         {
-            System.Net.WebClient proxy = new System.Net.WebClient();
-            string uri = "http://app.strava.com/api/v1/segments/1637189";
-
-            byte[] resultJsonAsString = proxy.DownloadData(new Uri(uri));
-            string result = System.Text.Encoding.UTF8.GetString(resultJsonAsString);
-
-            JObject jResult = JObject.Parse(result);
-            IList<JToken> jResults = jResult["segment"].Children().ToList();
-
-            List<ConsoleApplication1.StravaAPI.Segment> stravaSegments = new List<ConsoleApplication1.StravaAPI.Segment>();
-            //foreach(JToken stravaSegment in stravaSegments)
-            //{
-
-            //}
+            if (this.ElapsedTime > other.ElapsedTime) return 1;
+            else if (this.ElapsedTime < other.ElapsedTime) return -1;
+            else return 0;
         }
+
+        #endregion
     }
 }
