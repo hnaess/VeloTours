@@ -19,9 +19,8 @@ namespace ConsoleApplication1
 
 
         // http://app.strava.com/api/v1/segments/229781/efforts
-        // http://app.strava.com/api/v1/segments/229781/efforts?offset=2
 
-        
+
         static void Main(string[] args)
         {
             var SegmentId = 1637189;
@@ -31,13 +30,23 @@ namespace ConsoleApplication1
             //Segment segment = serv.Show(SegmentId);
             
             int i = 0;
+            string lastResult = String.Empty;
+            SegmentEfforts segmentEfforts = null;
             do
             {
-                SegmentEfforts segmentEfforts = serv.Efforts(SegmentId);
-                PrintEffort(segmentEfforts, ref i);
-                serv.Index(serv.
 
-            } while (i % 50 == 0);
+                if (i > 0)
+                {
+                    lastResult = segmentEfforts.ToString();
+                    segmentEfforts = serv.Efforts(SegmentId, offset: i);
+                }
+                else
+                {
+                    segmentEfforts = serv.Efforts(SegmentId);
+                }
+
+                PrintEffort(segmentEfforts, ref i);
+            } while ((i % 50 == 0) && (segmentEfforts.ToString() != lastResult));
          }
 
         private static void PrintEffort(SegmentEfforts segmentEfforts, ref int i)
