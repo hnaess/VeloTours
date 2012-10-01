@@ -45,10 +45,10 @@ namespace VeloTours.DAL.IntilizeDB.Norway
 
         private static void InitBVerk(TourModelContainer context, Models.Region region)
         {
-            var segments = new List<Segment>
+            var segments = new List<Models.Segment>
             {
-                new Segment { SegmentID = 730928, Name = "Bærums Verk - Belset", LastUpdated = new DateTime(1980, 1, 1), },
-                new Segment { SegmentID = 1797698, Name = "Steinshøgda Vest", LastUpdated = new DateTime(1980, 1, 1), },
+                new Models.Segment { SegmentID = 730928, Name = "Bærums Verk - Belset", LastUpdated = new DateTime(1980, 1, 1), },
+                new Models.Segment { SegmentID = 1797698, Name = "Steinshøgda Vest", LastUpdated = new DateTime(1980, 1, 1), },
             };
             segments.ForEach(s => context.Segments.Add(s));
             context.SaveChanges();
@@ -58,13 +58,13 @@ namespace VeloTours.DAL.IntilizeDB.Norway
 
         private static void InitRykkinn(TourModelContainer context, Models.Region region)
         {
-            var segments = new List<Segment>
+            var segments = new List<Models.Segment>
             {
-                new Segment { SegmentID = 1637189, Name = "Nybrua - Bryn kirke", LastUpdated = new DateTime(1980, 1, 1), },
-                new Segment { SegmentID = 1382813, Name = "Rykkinn round (counter clockwise)", LastUpdated = new DateTime(1980, 1, 1), },
-                new Segment { SegmentID = 1524861, Name = "Paal Bergs vei", LastUpdated = new DateTime(1980, 1, 1), },
-                new Segment { SegmentID = 1354941, Name = "Belset-strekket", LastUpdated = new DateTime(1980, 1, 1), },
-                new Segment { SegmentID = 1242445, Name = "Gamle Lommedalsvei (Brynsvn - Lommedalsveien)", LastUpdated = new DateTime(1980, 1, 1), },
+                new Models.Segment { SegmentID = 1637189, Name = "Nybrua - Bryn kirke", LastUpdated = new DateTime(1980, 1, 1), },
+                new Models.Segment { SegmentID = 1382813, Name = "Rykkinn round (counter clockwise)", LastUpdated = new DateTime(1980, 1, 1), },
+                new Models.Segment { SegmentID = 1524861, Name = "Paal Bergs vei", LastUpdated = new DateTime(1980, 1, 1), },
+                new Models.Segment { SegmentID = 1354941, Name = "Belset-strekket", LastUpdated = new DateTime(1980, 1, 1), },
+                new Models.Segment { SegmentID = 1242445, Name = "Gamle Lommedalsvei (Brynsvn - Lommedalsveien)", LastUpdated = new DateTime(1980, 1, 1), },
             };
             segments.ForEach(s => context.Segments.Add(s));
             context.SaveChanges();
@@ -76,22 +76,22 @@ namespace VeloTours.DAL.IntilizeDB.Norway
         {
             var segmentAreas = new List<SegmentArea>
             {
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Nesøya", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Nesbru", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Billingstad", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Hvalstad", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Skaugum", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Sem", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Syverstad", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Fusdal", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Sentrum", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Drengsrud", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Vettre", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Borgen", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Blakstad", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Vollen", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Heggedal", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Solberg", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Nesøya", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Nesbru", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Billingstad", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Hvalstad", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Skaugum", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Sem", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Syverstad", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Fusdal", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Sentrum", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Drengsrud", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Vettre", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Borgen", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Blakstad", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Vollen", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Heggedal", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Solberg", },
             };
             segmentAreas.ForEach(s => context.SegmentAreas.Add(s));
             context.SaveChanges();
@@ -99,19 +99,19 @@ namespace VeloTours.DAL.IntilizeDB.Norway
 
         internal static void Nesodden(TourModelContainer context, Models.Region region)
         {
-            var segmentAreas = new List<SegmentArea>
+            var segmentAreas = new List<Models.SegmentArea>
             {
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Berger", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Tangen", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Fjellstrand", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Jaer", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Myklerud", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Bjørnemyr", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Kolbotn", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Tårnåsen", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Sofiemyr", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Greverud", },
-                new SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Svartskog", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Berger", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Tangen", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Fjellstrand", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Jaer", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Myklerud", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Bjørnemyr", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Kolbotn", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Tårnåsen", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Sofiemyr", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Greverud", },
+                new Models.SegmentArea { Region = region, LastUpdated = DateTime.Now, Name = "Svartskog", },
             };
             segmentAreas.ForEach(s => context.SegmentAreas.Add(s));
             context.SaveChanges();
@@ -120,9 +120,9 @@ namespace VeloTours.DAL.IntilizeDB.Norway
 
         internal static void OsloKlatreKonge(TourModelContainer context, Models.Region region)
         {
-            var segments = new List<Segment>
+            var segments = new List<Models.Segment>
             {
-                new Segment { 
+                new Models.Segment { 
                     SegmentID = 632847, 
                     Name = "Kongsveien", 
                     GradeType = 1,
@@ -133,7 +133,7 @@ namespace VeloTours.DAL.IntilizeDB.Norway
                     NoRidden = 2952,
                     LastUpdated = new DateTime(2012, 09, 18, 15, 0, 0),
                 },
-                new Segment { 
+                new Models.Segment { 
                     SegmentID = 1942901,
                     Name = "Klatringen til Tryvann fra Gressbanen", 
                     Distance = 1.8,
@@ -143,7 +143,7 @@ namespace VeloTours.DAL.IntilizeDB.Norway
                     NoRidden = 8132,
                     LastUpdated = new DateTime(2012, 09, 18, 15, 0, 0),
                 },
-                new Segment { 
+                new Models.Segment { 
                     SegmentID = 660072,
                     Name = "Grefsenkollen", 
                     //ElevDifference = 91,
@@ -179,7 +179,7 @@ namespace VeloTours.DAL.IntilizeDB.Norway
             //throw new NotImplementedException();
         }
 
-        private static void AddSegmentArea(TourModelContainer context, Region region, string name, List<Segment> segments)
+        private static void AddSegmentArea(TourModelContainer context, Models.Region region, string name, List<Models.Segment> segments)
         {
             var segmentAreas = new List<SegmentArea>
             {

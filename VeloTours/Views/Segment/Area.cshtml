@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "Area";
-
+    int areaID = @Model.SegmentAreaID;
     int athleteID = ViewBag.Athlete ?? 0;
 }
 
@@ -29,7 +29,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(item.Name, "Segment", new { segment = item.SegmentID, athlete = athleteID, area = Model.SegmentAreaID })
+                    @Html.ActionLink(item.Name, "Segment", new { segment = item.SegmentID, athlete = athleteID, area = @areaID })
 
                     @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-signal'></i></a>",
                         item.SegmentID, 0, 0))
@@ -54,14 +54,14 @@
 }
 
 <p>
-    Go back to @Html.ActionLink("overview", "/", new { athlete = ViewBag.Athlete })
+    @Html.ActionLink("Update from Strava", "AreaUpdate",  routeValues: new { athlete = athleteID, area = areaID, recursive = false, }, htmlAttributes: null)<br />
+    @Html.ActionLink("Update all from Strava", "SegmentUpdate", routeValues: new { athlete = athleteID, area = areaID, recursive = true, }, htmlAttributes: null)<br />
+    @Html.ActionLink("Go back to overview", "/", new { athlete = athleteID })
 </p>
 
 
 <script>
     var athleteId = @athleteID
-
-    // SegmentLink
     $('.segmentLink').each(function () {
         var links = '<a target="_blank" data-parentid="segment' + $(this).data("segmentid") + '" class="popoverLink" href="http://www.strava.com/segments/' + $(this).data("segmentid") + '" title="View segment on Strava (external link)">View on Strava</a><br/>';
         links += '<a target="_blank" data-parentid="segment' + $(this).data("segmentid") + '" class="popoverLink" href="http://www.jonathanokeeffe.com/strava/segmentDetails.php?segmentId=' + $(this).data("segmentid") + '" title="View as much detail about this segment as you could possible imagine (external link)">O\'Keeffe\'s Segment History</a><br/>';

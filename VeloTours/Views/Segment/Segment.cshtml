@@ -9,17 +9,17 @@
 }
 
 <h2>@Model.Name</h2>
-
+<p>@Model.Description</p>
 
 <h2>Strava Segments for @Model.Name</h2>
 
 <iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@segmentID/embed" width="450"></iframe>
 
-@Html.ActionLink("Update from Strava", "SegmentUpdate",  routeValues: new { segment = @segmentID, athlete = @athleteID, area = areaID }, htmlAttributes: null);
-
-@if (areaID > 0)
-{
 <p>
-    Go back to @Html.ActionLink("area", "area", new { area = areaID, athlete = athleteID })
+    @Html.ActionLink("Update from Strava", "SegmentUpdate", routeValues: new { segment = @segmentID, athlete = @athleteID, area = areaID }, htmlAttributes: null)<br />
+
+    @if (areaID > 0)
+    {
+        @Html.ActionLink("Go back to area", "area", new { area = areaID, athlete = athleteID })
+    }
 </p>
-}

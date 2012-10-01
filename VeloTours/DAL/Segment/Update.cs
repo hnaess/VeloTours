@@ -7,9 +7,9 @@ using Stravan;
 using Stravan.Json;
 using VeloTours.Models;
 
-namespace VeloTours.DAL.Update
+namespace VeloTours.DAL.Segment
 {
-    public class Segment
+    public class Update
     {
         private TourModelContainer db = new TourModelContainer();
         private int segmentID;
@@ -26,13 +26,13 @@ namespace VeloTours.DAL.Update
         
         #endregion
 
-        public Segment(int segmentID)
+        public Update(int segmentID)
         {
             this.segmentID = segmentID;
             dbSegment = db.Segments.Find(segmentID);
         }
 
-        public Stravan.Segment UpdateSegmentInfo()
+        public Models.Segment UpdateSegmentInfo()
         {
             List<SegmentEffort> rides = new List<SegmentEffort>();
             Stravan.Segment segmentinfo = null;
@@ -56,13 +56,12 @@ namespace VeloTours.DAL.Update
             dbSegment.ElevationLow = segmentinfo.ElevationLow;
             dbSegment.Name = segmentinfo.Name;
             dbSegment.LastUpdated = DateTime.UtcNow;
-
             db.SaveChanges();
- 
-            return segmentinfo; // or dbSegment
+            
+            return dbSegment; 
         }
 
-        private List<SegmentEffort> SegmentRides(int segmentId)
+        public List<SegmentEffort> UpdateRides()
         {
             List<SegmentEffort> rides = new List<SegmentEffort>();
 
@@ -71,13 +70,13 @@ namespace VeloTours.DAL.Update
             {
                 SegmentService serv = new SegmentService(StravaWebClientObj);
 
-                Stravan.Segment segmentinfo = serv.Show(segmentId);
+                Stravan.Segment segmentinfo = serv.Show(segmentID);
 
                 SegmentEfforts segmentEfforts = null;
                 int offset = 0;
                 do
                 {
-                    segmentEfforts = serv.Efforts(segmentId, offset: offset);
+                    segmentEfforts = serv.Efforts(segmentID, offset: offset);
                 } while (AddEfforts(ref rides, ref segmentEfforts, ref offset));
 
                 rides.Sort();

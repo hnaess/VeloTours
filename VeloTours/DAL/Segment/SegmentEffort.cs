@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace VeloTours.DAL.Update
+namespace VeloTours.DAL.Segment
 {
     public class SegmentEffort : IComparable<SegmentEffort>
     {

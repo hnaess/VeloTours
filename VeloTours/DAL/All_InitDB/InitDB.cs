@@ -33,28 +33,28 @@ namespace VeloTours.DAL
             SegmentData.Nesodden(context, regions[3]);
         }
 
-        private static List<Region> RegionsInNorway(TourModelContainer context, Models.Country country)
+        private static List<Models.Region> RegionsInNorway(TourModelContainer context, Models.Country country)
         {
-            var regions = new List<Region>
+            var regions = new List<Models.Region>
             {
-                new Region { CountryID = 578, Name = "Oslo" },
-                new Region { CountryID = 578, Name = "Bærum" },
-                new Region { CountryID = 578, Name = "Asker" },
-                new Region { CountryID = 578, Name = "Nesodden" },
-                new Region { CountryID = 578, Name = "Trondheim" },
+                new Models.Region { CountryID = 578, Name = "Oslo" },
+                new Models.Region { CountryID = 578, Name = "Bærum" },
+                new Models.Region { CountryID = 578, Name = "Asker" },
+                new Models.Region { CountryID = 578, Name = "Nesodden" },
+                new Models.Region { CountryID = 578, Name = "Trondheim" },
             };
             regions.ForEach(s => context.Regions.Add(s));
             context.SaveChanges();
             return regions;
         }
 
-        private static List<Country> Countries(TourModelContainer context)
+        private static List<Models.Country> Countries(TourModelContainer context)
         {
-            var countries = new List<Country>
+            var countries = new List<Models.Country>
             {
-                new Country { CountryID = 578, Name = "Norway" },
-                new Country { CountryID = 826, Name = "United Kingdom" },
-                new Country { CountryID = 840, Name = "United States" },
+                new Models.Country { CountryID = 578, Name = "Norway" },
+                new Models.Country { CountryID = 826, Name = "United Kingdom" },
+                new Models.Country { CountryID = 840, Name = "United States" },
             };
             countries.ForEach(s => context.Countries.Add(s));
             context.SaveChanges();
