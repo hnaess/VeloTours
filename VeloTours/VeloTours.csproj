@@ -203,9 +203,6 @@
     <Compile Include="Models\Athlete.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Comment.cs">
-      <DependentUpon>TourModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Country.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>

@@ -1,5 +1,6 @@
 ﻿@model VeloTours.Models.SegmentArea
 @using VeloTours.Helpers;
+@using System.Globalization;
 
 @{
     ViewBag.Title = "Area";
@@ -9,19 +10,27 @@
 
 <h2>Resultboard for @Model.Name</h2>
 
-<p>Nam quis eros sit amet lectus accumsan faucibus aliquam et nisl. Cras at urna orci. Maecenas ullamcorper, justo at volutpat tincidunt, mi nunc molestie erat, et dapibus felis turpis id ligula. Aliquam posuere consequat mauris sit amet sollicitudin. Duis pretium nunc ut nibh semper nec facilisis nibh pretium. Suspendisse elementum tempus ipsum, ut scelerisque ante vulputate eget. Mauris magna diam, tincidunt nec aliquam vel, mattis bibendum tellus. Nullam placerat nibh vel felis vehicula consectetur. Etiam ut enim arcu. Vestibulum sed vehicula eros. Nulla sit amet dolor vel lectus porttitor dapibus.</p>
+<p>@Model.Description</p>
 
 <h3>Segments in the areas</h3>
-<table id="SegmentsTable" class="hidden-phone tablesorter table table-striped table-bordered table-condensed smallTable" style="table-layout: fixed; overflow: hidden;">
+@*tablesorter*@
+<table id="SegmentsTable" class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
     <thead>
         <tr>
             <th>Name</th>
-            <th class="right">Distance</th>
-            <th class="right">#ridden</th>
-            <th class="right">#riders</th>
-            <th class="right">elevation diff</th>
+            <th class="right">distance</th>
+            <th class="right">elevation<br />diff</th>
             <th class="right">grade</th>
-            <th class="right">grade-type</th>
+            <th class="right">grade<br />type</th>
+            <th class="right">KOM</th>
+            <th class="right">speed</th>
+            <th class="right">position</th>
+            <th class="right">time</th>
+            <th class="right">behind<br />KOM s</th>
+            <th class="right">behind<br />KOM %</th>
+            <th class="right">pos %</th>
+            <th class="right">riders</th>
+            <th class="right">ridden</th>
         </tr>
     </thead>
     <tbody>
@@ -34,14 +43,37 @@
                     @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-signal'></i></a>",
                         item.SegmentID, 0, 0))
                 </td>
-                <td class="right">@item.Distance m.</td>
+                <td class="right">@String.Format("{0:#0.##}", @item.Distance / 1000) km.</td>
+                <td class="right">@Math.Round(item.ElevationGain ?? 0) m.</td>
+                <td class="right">@String.Format("{0:#0.##}", item.AvgGrade) %</td>
+                <td class="right">@item.GradeType</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
                 <td class="right">@item.NoRidden</td>
                 <td class="right">@item.NoRiders</td>
-                <td class="right">@Math.Round(item.ElevationGain ?? 0) m.</td>
-                <td class="right">@item.AvgGrade %</td>
-                <td class="right">@item.GradeType</td>
             </tr>
         }
+        <tr>
+            <td>Sum</td>
+            <td class="right">@String.Format("{0:#0.##}", @Model.Distance / 1000) km.</td>
+            <td class="right">@Math.Round(@Model.ElevationGain ?? 0) m.</td>
+            <td class="right">@String.Format("{0:#0.##}", @Model.AvgGrade) %</td>
+            <td class="right">&nbsp;</td>
+            <td class="right">&nbsp;</td>
+            <td class="right">&nbsp;</td>
+            <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+            <td class="right">&nbsp;</td>
+            <td class="right">&nbsp;</td>
+            <td class="right">&nbsp;</td>
+            <td class="right">&nbsp;</td>
+            <td class="right">&nbsp;</td>
+        </tr>
     </tbody>
 </table>
 
@@ -54,7 +86,7 @@
 }
 
 <p>
-    @Html.ActionLink("Update from Strava", "AreaUpdate",  routeValues: new { athlete = athleteID, area = areaID, recursive = false, }, htmlAttributes: null)<br />
+    @Html.ActionLink("Update from Strava", "AreaUpdate", routeValues: new { athlete = athleteID, area = areaID, recursive = false, }, htmlAttributes: null)<br />
     @Html.ActionLink("Update all from Strava", "SegmentUpdate", routeValues: new { athlete = athleteID, area = areaID, recursive = true, }, htmlAttributes: null)<br />
     @Html.ActionLink("Go back to overview", "/", new { athlete = athleteID })
 </p>

@@ -1,7 +1,14 @@
-﻿tr th.right {
+﻿.table td{
+	white-space: nowrap;
+}
+
+tr th.right {
     text-align: right;
+    vertical-align: top;
 }
 
 tr td.right {
     text-align: right;
+    vertical-align: top;
 }
+

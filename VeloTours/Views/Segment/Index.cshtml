@@ -24,8 +24,7 @@
     <a href="@Url.Action("Update from Strava", "RegionUpdate", new { athlete = athleteID, region = region.RegionID, })">
         <i class='icon-share'></i>
     </a>
-    
-    
+        
         foreach (SegmentArea area in region.SegmentAreas)
         {
     @Html.ActionLink(area.Name, "/Area", new { area = area.SegmentAreaID, athlete = ViewBag.Athlete })

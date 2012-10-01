@@ -163,7 +163,7 @@ namespace VeloTours.DAL.IntilizeDB.Norway
                     Region = region,
                     Segments = segments,
                     Distance = 9.4,
-                    ElevDifference = 585,
+                    //ElevDifference = 585,
                     AvgGrade = 6.25,
                     LastUpdated = new DateTime(2012, 09, 18, 15, 0, 0),
                 }

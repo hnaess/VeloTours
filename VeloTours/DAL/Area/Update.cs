@@ -35,7 +35,10 @@ namespace VeloTours.DAL.Area
 
         public void UpdateArea(bool recursive)
         {
-            List<Models.Segment> segmentsInfo = new List<Models.Segment>();
+            dbArea.Distance = 0;
+            dbArea.ElevationGain = 0;
+            decimal avgGradeTemp = 0;
+
             foreach (var segment in dbArea.Segments)
             {
                 Segment.Update updater = new Segment.Update(segment.SegmentID);
@@ -45,10 +48,15 @@ namespace VeloTours.DAL.Area
                 {
                     updater.UpdateRides();
                 }
-                
+
                 var info = updater.UpdateSegmentInfo();
-                segmentsInfo.Add(info);
+                dbArea.Distance += info.Distance;
+                dbArea.ElevationGain += info.ElevationGain;
+                avgGradeTemp += Convert.ToDecimal(info.Distance) * Convert.ToDecimal(info.AvgGrade);
             }
+
+            dbArea.AvgGrade = Convert.ToDouble((avgGradeTemp / Convert.ToDecimal(dbArea.Distance)));
+            db.SaveChanges();
         }
     }
 }

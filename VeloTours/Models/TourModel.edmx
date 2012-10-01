@@ -121,10 +121,10 @@
     <Property Name="RegionID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Picture" Type="tinyint" Nullable="true" />
+    <Property Name="PictureUri" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Distance" Type="float" Nullable="true" />
-    <Property Name="ElevDifference" Type="int" Nullable="true" />
     <Property Name="AvgGrade" Type="float" Nullable="true" />
+    <Property Name="ElevationGain" Type="float" Nullable="true" />
     <Property Name="SecretKey" Type="uniqueidentifier" Nullable="true" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
   </EntityType>
@@ -422,10 +422,10 @@
           <Property Type="Int32" Name="RegionID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="Byte" Name="Picture" Nullable="true" />
+          <Property Type="String" Name="PictureUri" Nullable="true" />
           <Property Type="Double" Name="Distance" />
-          <Property Type="Int32" Name="ElevDifference" />
           <Property Type="Double" Name="AvgGrade" />
+          <Property Type="Double" Name="ElevationGain" />
           <Property Type="Guid" Name="SecretKey" Nullable="true" />
           <Property Type="DateTime" Name="LastUpdated" Nullable="false" Precision="3" />
           <NavigationProperty Name="Region" Relationship="TourModel.RegionSegmentArea" FromRole="SegmentAreas" ToRole="Regions" />
@@ -622,10 +622,10 @@
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Picture" ColumnName="Picture" />
+          <ScalarProperty Name="PictureUri" ColumnName="PictureUri" />
           <ScalarProperty Name="Distance" ColumnName="Distance" />
-          <ScalarProperty Name="ElevDifference" ColumnName="ElevDifference" />
           <ScalarProperty Name="AvgGrade" ColumnName="AvgGrade" />
+          <ScalarProperty Name="ElevationGain" ColumnName="ElevationGain" />
           <ScalarProperty Name="SecretKey" ColumnName="SecretKey" />
           <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
         </MappingFragment>

@@ -36,13 +36,13 @@ public partial class SegmentArea
 
     public string Description { get; set; }
 
-    public Nullable<byte> Picture { get; set; }
+    public string PictureUri { get; set; }
 
     public Nullable<double> Distance { get; set; }
 
-    public Nullable<int> ElevDifference { get; set; }
-
     public Nullable<double> AvgGrade { get; set; }
+
+    public Nullable<double> ElevationGain { get; set; }
 
     public Nullable<System.Guid> SecretKey { get; set; }
 

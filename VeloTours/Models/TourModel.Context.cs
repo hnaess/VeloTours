@@ -48,8 +48,6 @@ public partial class TourModelContainer : DbContext
 
     public DbSet<Statistic> Statistics { get; set; }
 
-    public DbSet<Comment> Comments { get; set; }
-
 }
 
 }
