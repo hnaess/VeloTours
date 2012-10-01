@@ -184,6 +184,7 @@
     <Compile Include="DAL\InitDB.cs" />
     <Compile Include="DAL\InitDB\Athlete.cs" />
     <Compile Include="DAL\InitDB\Norway\Norway.cs" />
+    <Compile Include="DAL\Strava.cs" />
     <Compile Include="DAL\TourInitializer.cs" />
     <Compile Include="DAL\Update\Area.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />

@@ -343,6 +343,11 @@
             <End Role="Region" EntitySet="Regions" />
             <End Role="ResultPeriod" EntitySet="ResultPeriods" />
           </AssociationSet>
+          <EntitySet Name="Comments" EntityType="TourModel.Comment" />
+          <AssociationSet Name="CommentAthlete" Association="TourModel.CommentAthlete">
+            <End Role="Comment" EntitySet="Comments" />
+            <End Role="Athlete" EntitySet="Athletes" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Athlete">
           <Key>
@@ -403,6 +408,7 @@
           <NavigationProperty Name="LeadershipBoards" Relationship="TourModel.ResultPeriodLeaderBoard" FromRole="ResultPeriods" ToRole="LeadershipBoards" />
           <NavigationProperty Name="Statistics" Relationship="TourModel.ResultPeriodStatistic" FromRole="ResultPeriods" ToRole="Statistics" />
           <NavigationProperty Name="Segment" Relationship="TourModel.SegmentResultPeriod" FromRole="ResultPeriod" ToRole="Segment" />
+          <Property Type="String" Name="Type" Nullable="true" />
         </EntityType>
         <EntityType Name="SegmentArea">
           <Key>
@@ -411,6 +417,8 @@
           <Property Type="Int32" Name="SegmentAreaID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="RegionID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="Byte" Name="Picture" Nullable="true" />
           <Property Type="Double" Name="Distance" />
           <Property Type="Int32" Name="ElevDifference" />
           <Property Type="Double" Name="AvgGrade" />
@@ -426,6 +434,8 @@
           </Key>
           <Property Type="Int32" Name="SegmentID" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="Byte" Name="Picture" Nullable="true" />
           <Property Type="Int32" Name="GradeType" Nullable="false" />
           <Property Type="Double" Name="Distance" />
           <Property Type="Int32" Name="ElevDifference" />
@@ -535,6 +545,21 @@
         <Association Name="RegionResultPeriod">
           <End Type="TourModel.Region" Role="Region" Multiplicity="0..1" />
           <End Type="TourModel.ResultPeriod" Role="ResultPeriod" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentID" />
+            <PropertyRef Name="ParentCommentID" />
+          </Key>
+          <Property Type="Int32" Name="CommentID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ParentCommentID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="DateTime" Name="Created" Nullable="false" />
+          <NavigationProperty Name="Athlete" Relationship="TourModel.CommentAthlete" FromRole="Comment" ToRole="Athlete" />
+        </EntityType>
+        <Association Name="CommentAthlete">
+          <End Type="TourModel.Comment" Role="Comment" Multiplicity="*" />
+          <End Type="TourModel.Athlete" Role="Athlete" Multiplicity="1" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
