@@ -3,6 +3,9 @@
 
 @{
     ViewBag.Title = "Segment";
+    int segmentID = @Model.SegmentID;
+    int athleteID = ViewBag.Athlete;
+    int areaID = ViewBag.Area;
 }
 
 <h2>@Model.Name</h2>
@@ -10,19 +13,13 @@
 
 <h2>Strava Segments for @Model.Name</h2>
 
-<iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@Model.SegmentID/embed" width="450"></iframe>
+<iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@segmentID/embed" width="450"></iframe>
 
-@*<p>
-    Go back to
-    @
-    {
-        int count = @Model.SegmentAreas.Count;
-        for(int i = 0; i < count; i++)
-        {
-            SegmentArea area = @Model.SegmentAreas[i];
-            Html.ActionLink("", "/", new { area = area.SegmentAreaID, athlete = ViewBag.Athlete] );
-            if(i + 1 < count)
-                <label>,</label>
-        }
-    }  
-</p>*@
+@Html.ActionLink("Update from Strava", "SegmentUpdate",  routeValues: new { segment = @segmentID, athlete = @athleteID, area = areaID }, htmlAttributes: null);
+
+@if (areaID > 0)
+{
+<p>
+    Go back to @Html.ActionLink("area", "area", new { area = areaID, athlete = athleteID })
+</p>
+}

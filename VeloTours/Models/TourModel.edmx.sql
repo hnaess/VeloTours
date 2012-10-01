@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 09/26/2012 12:39:06
+-- Date Created: 10/01/2012 13:53:25
 -- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
@@ -133,6 +133,7 @@ CREATE TABLE [dbo].[ResultPeriods] (
     [Name] nvarchar(max)  NOT NULL,
     [From] datetime  NOT NULL,
     [To] datetime  NOT NULL,
+    [Type] nvarchar(max)  NULL,
     [SegmentAreaResultPeriod_ResultPeriod_SegmentAreaID] int  NULL,
     [Segment_SegmentID] int  NULL,
     [RegionResultPeriod_ResultPeriod_RegionID] int  NULL
@@ -144,6 +145,8 @@ CREATE TABLE [dbo].[SegmentAreas] (
     [SegmentAreaID] int IDENTITY(1,1) NOT NULL,
     [RegionID] int  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
+    [Description] nvarchar(max)  NULL,
+    [Picture] tinyint  NULL,
     [Distance] float  NULL,
     [ElevDifference] int  NULL,
     [AvgGrade] float  NULL,
@@ -156,10 +159,15 @@ GO
 CREATE TABLE [dbo].[Segments] (
     [SegmentID] int  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
+    [Description] nvarchar(max)  NULL,
+    [Picture] tinyint  NULL,
     [GradeType] int  NOT NULL,
     [Distance] float  NULL,
-    [ElevDifference] int  NULL,
     [AvgGrade] float  NULL,
+    [ClimbCategory] nvarchar(max)  NULL,
+    [ElevationHigh] float  NULL,
+    [ElevationLow] float  NULL,
+    [ElevationGain] float  NULL,
     [NoRiders] int  NULL,
     [NoRidden] int  NULL,
     [LastUpdated] datetime  NOT NULL
@@ -173,7 +181,8 @@ CREATE TABLE [dbo].[Statistics] (
     [AthleteID] int  NOT NULL,
     [YerseyType] int  NOT NULL,
     [Duration] time  NULL,
-    [Points] int  NOT NULL
+    [Points] int  NOT NULL,
+    [Period] nvarchar(max)  NOT NULL
 );
 GO
 

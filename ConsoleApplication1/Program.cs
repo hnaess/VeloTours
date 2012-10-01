@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Stravan;
 using Stravan.Json;
 using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 
 namespace ConsoleApplication1
 {
@@ -26,26 +28,45 @@ namespace ConsoleApplication1
             var SegmentId = 1637189;
 
             GetSegmentRides(SegmentId);
-         }
+        }
 
         private static List<SegmentEffort> GetSegmentRides(int SegmentId)
         {
-            StravaWebClient cli = new StravaWebClient();
-            SegmentService serv = new SegmentService(cli);
-
-            serv.Show(SegmentId);
-
             List<SegmentEffort> rides = new List<SegmentEffort>();
-            SegmentEfforts segmentEfforts = null;
-            int offset = 0;
-            do
-            {
-                segmentEfforts = serv.Efforts(SegmentId, offset: offset);
-            } while (AddEfforts(ref rides, ref segmentEfforts, ref offset));
 
-            rides.Sort();
+            var originalCulture = SetStravaCultureAndReturnCurrentCulture();
+            try
+            {
+                StravaWebClient cli = new StravaWebClient();
+                SegmentService serv = new SegmentService(cli);
+
+                Segment segmentinfo = serv.Show(SegmentId);
+
+                SegmentEfforts segmentEfforts = null;
+                int offset = 0;
+                do
+                {
+                    segmentEfforts = serv.Efforts(SegmentId, offset: offset);
+                } while (AddEfforts(ref rides, ref segmentEfforts, ref offset));
+
+                rides.Sort();
+            }
+            finally
+            {
+                Thread.CurrentThread.CurrentCulture = originalCulture;
+            }
 
             return rides;
+        }
+
+        private static CultureInfo SetStravaCultureAndReturnCurrentCulture()
+        {
+            var originalCulture = Thread.CurrentThread.CurrentCulture;
+
+            var stravaCulture = new CultureInfo("en-us");
+            Thread.CurrentThread.CurrentCulture = stravaCulture;
+
+            return originalCulture;
         }
 
         private static void SegmentInfo(int SegmentId)
@@ -57,17 +78,17 @@ namespace ConsoleApplication1
         {
             if (segmentEfforts.Efforts.Count == 0)
                 return false;
-            
+
             foreach (Effort effort in segmentEfforts.Efforts)
             {
                 offset++;
-
-                int elapsedTime = effort.ElapsedTime;
-                int id = effort.Id;
-                int athleteId = effort.Athlete.Id;
-                DateTime startTime = Convert.ToDateTime(effort.StartDate);
-
-                var ride = new SegmentEffort() { ElapsedTime = elapsedTime, Id = id, Start = startTime, AthleteId = athleteId };
+                var ride = new SegmentEffort()
+                {
+                    AthleteId = effort.Athlete.Id,
+                    ElapsedTime = effort.ElapsedTime,
+                    Id = effort.Id,
+                    Start = Convert.ToDateTime(effort.StartDate),
+                };
                 rides.Add(ride);
                 //Console.WriteLine(String.Format("{0}, {1}, {2}, {3}", i, effort.Athlete.Name, effort.ElapsedTime, effort.StartDate.ToString()));
             }

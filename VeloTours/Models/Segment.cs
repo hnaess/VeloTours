@@ -30,13 +30,23 @@ public partial class Segment
 
     public string Name { get; set; }
 
+    public string Description { get; set; }
+
+    public Nullable<byte> Picture { get; set; }
+
     public int GradeType { get; set; }
 
     public Nullable<double> Distance { get; set; }
 
-    public Nullable<int> ElevDifference { get; set; }
-
     public Nullable<double> AvgGrade { get; set; }
+
+    public string ClimbCategory { get; set; }
+
+    public Nullable<double> ElevationHigh { get; set; }
+
+    public Nullable<double> ElevationLow { get; set; }
+
+    public Nullable<double> ElevationGain { get; set; }
 
     public Nullable<int> NoRiders { get; set; }
 

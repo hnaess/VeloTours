@@ -34,6 +34,10 @@ public partial class SegmentArea
 
     public string Name { get; set; }
 
+    public string Description { get; set; }
+
+    public Nullable<byte> Picture { get; set; }
+
     public Nullable<double> Distance { get; set; }
 
     public Nullable<int> ElevDifference { get; set; }

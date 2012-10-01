@@ -29,15 +29,15 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(item.Name, "Segment", new { segment = item.SegmentID, Athlete = athleteID })
+                    @Html.ActionLink(item.Name, "Segment", new { segment = item.SegmentID, athlete = athleteID, area = Model.SegmentAreaID })
 
                     @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-signal'></i></a>",
                         item.SegmentID, 0, 0))
                 </td>
-                <td class="right">@item.Distance km</td>
+                <td class="right">@item.Distance m.</td>
                 <td class="right">@item.NoRidden</td>
                 <td class="right">@item.NoRiders</td>
-                <td class="right">@item.ElevDifference m.</td>
+                <td class="right">@Math.Round(item.ElevationGain ?? 0) m.</td>
                 <td class="right">@item.AvgGrade %</td>
                 <td class="right">@item.GradeType</td>
             </tr>

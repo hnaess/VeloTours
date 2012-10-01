@@ -74,6 +74,9 @@
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Stravan">
+      <HintPath>..\..\StravaTools\Stravan\Stravan\bin\Debug\Stravan.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -181,12 +184,14 @@
     <Compile Include="Controllers\Pages\HomeController.cs" />
     <Compile Include="Controllers\Pages\ProfileController.cs" />
     <Compile Include="Controllers\Pages\SegmentController.cs" />
-    <Compile Include="DAL\InitDB.cs" />
+    <Compile Include="DAL\InitDB\InitDB.cs" />
     <Compile Include="DAL\InitDB\Athlete.cs" />
     <Compile Include="DAL\InitDB\Norway\Norway.cs" />
-    <Compile Include="DAL\Strava.cs" />
-    <Compile Include="DAL\TourInitializer.cs" />
+    <Compile Include="DAL\InitDB\TourInitializer.cs" />
     <Compile Include="DAL\Update\Area.cs" />
+    <Compile Include="DAL\Update\Segment.cs" />
+    <Compile Include="DAL\Update\SegmentEffort.cs" />
+    <Compile Include="DAL\Utils.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -194,6 +199,9 @@
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\Account\AccountModels.cs" />
     <Compile Include="Models\Athlete.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comment.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Country.cs">
@@ -390,6 +398,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

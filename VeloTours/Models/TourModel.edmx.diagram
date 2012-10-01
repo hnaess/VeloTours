@@ -23,8 +23,6 @@
         <AssociationConnector Association="TourModel.SegmentAreaResultPeriod" />
         <AssociationConnector Association="TourModel.SegmentResultPeriod" />
         <AssociationConnector Association="TourModel.RegionResultPeriod" />
-        <EntityTypeShape EntityType="TourModel.Comment" Width="1.5" PointX="13.5" PointY="4.625" />
-        <AssociationConnector Association="TourModel.CommentAthlete" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

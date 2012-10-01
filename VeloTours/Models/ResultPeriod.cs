@@ -36,6 +36,8 @@ public partial class ResultPeriod
 
     public System.DateTime To { get; set; }
 
+    public string Type { get; set; }
+
 
 
     public virtual ICollection<LeadershipBoard> LeadershipBoards { get; set; }

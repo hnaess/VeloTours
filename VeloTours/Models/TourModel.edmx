@@ -108,6 +108,7 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="From" Type="datetime" Nullable="false" />
     <Property Name="To" Type="datetime" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="true" />
     <Property Name="SegmentAreaResultPeriod_ResultPeriod_SegmentAreaID" Type="int" Nullable="true" />
     <Property Name="Segment_SegmentID" Type="int" Nullable="true" />
     <Property Name="RegionResultPeriod_ResultPeriod_RegionID" Type="int" Nullable="true" />
@@ -119,6 +120,8 @@
     <Property Name="SegmentAreaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RegionID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Picture" Type="tinyint" Nullable="true" />
     <Property Name="Distance" Type="float" Nullable="true" />
     <Property Name="ElevDifference" Type="int" Nullable="true" />
     <Property Name="AvgGrade" Type="float" Nullable="true" />
@@ -131,10 +134,15 @@
     </Key>
     <Property Name="SegmentID" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Picture" Type="tinyint" Nullable="true" />
     <Property Name="GradeType" Type="int" Nullable="false" />
     <Property Name="Distance" Type="float" Nullable="true" />
-    <Property Name="ElevDifference" Type="int" Nullable="true" />
     <Property Name="AvgGrade" Type="float" Nullable="true" />
+    <Property Name="ClimbCategory" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ElevationHigh" Type="float" Nullable="true" />
+    <Property Name="ElevationLow" Type="float" Nullable="true" />
+    <Property Name="ElevationGain" Type="float" Nullable="true" />
     <Property Name="NoRiders" Type="int" Nullable="true" />
     <Property Name="NoRidden" Type="int" Nullable="true" />
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
@@ -149,6 +157,7 @@
     <Property Name="YerseyType" Type="int" Nullable="false" />
     <Property Name="Duration" Type="time" Nullable="true" Precision="7" />
     <Property Name="Points" Type="int" Nullable="false" />
+    <Property Name="Period" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="SegmentAreasSegments">
     <Key>
@@ -343,11 +352,6 @@
             <End Role="Region" EntitySet="Regions" />
             <End Role="ResultPeriod" EntitySet="ResultPeriods" />
           </AssociationSet>
-          <EntitySet Name="Comments" EntityType="TourModel.Comment" />
-          <AssociationSet Name="CommentAthlete" Association="TourModel.CommentAthlete">
-            <End Role="Comment" EntitySet="Comments" />
-            <End Role="Athlete" EntitySet="Athletes" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Athlete">
           <Key>
@@ -394,7 +398,7 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Country" Relationship="TourModel.CountryRegion" FromRole="Regions" ToRole="Countries" />
           <NavigationProperty Name="SegmentAreas" Relationship="TourModel.RegionSegmentArea" FromRole="Regions" ToRole="SegmentAreas" />
-          <Property Type="String" Name="Distance" Nullable="true" />
+          <Property Type="String" Name="Distance" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="ResultPeriod" Relationship="TourModel.RegionResultPeriod" FromRole="Region" ToRole="ResultPeriod" />
         </EntityType>
         <EntityType Name="ResultPeriod">
@@ -438,8 +442,11 @@
           <Property Type="Byte" Name="Picture" Nullable="true" />
           <Property Type="Int32" Name="GradeType" Nullable="false" />
           <Property Type="Double" Name="Distance" />
-          <Property Type="Int32" Name="ElevDifference" />
           <Property Type="Double" Name="AvgGrade" />
+          <Property Type="String" Name="ClimbCategory" />
+          <Property Type="Double" Name="ElevationHigh" />
+          <Property Type="Double" Name="ElevationLow" />
+          <Property Type="Double" Name="ElevationGain" />
           <Property Type="Int32" Name="NoRiders" />
           <Property Type="Int32" Name="NoRidden" />
           <Property Type="DateTime" Name="LastUpdated" Nullable="false" Precision="3" />
@@ -457,6 +464,7 @@
           <Property Type="Int32" Name="Points" Nullable="false" />
           <NavigationProperty Name="Athlete" Relationship="TourModel.StatisticAthlete" FromRole="Statistics" ToRole="Athletes" />
           <NavigationProperty Name="ResultPeriod" Relationship="TourModel.ResultPeriodStatistic" FromRole="Statistics" ToRole="ResultPeriods" />
+          <Property Type="String" Name="Period" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="AthleteLeaderboard">
           <End Type="TourModel.Athlete" Role="Athletes" Multiplicity="1" />
@@ -546,21 +554,6 @@
           <End Type="TourModel.Region" Role="Region" Multiplicity="0..1" />
           <End Type="TourModel.ResultPeriod" Role="ResultPeriod" Multiplicity="*" />
         </Association>
-        <EntityType Name="Comment">
-          <Key>
-            <PropertyRef Name="CommentID" />
-            <PropertyRef Name="ParentCommentID" />
-          </Key>
-          <Property Type="Int32" Name="CommentID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="ParentCommentID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Text" Nullable="false" />
-          <Property Type="DateTime" Name="Created" Nullable="false" />
-          <NavigationProperty Name="Athlete" Relationship="TourModel.CommentAthlete" FromRole="Comment" ToRole="Athlete" />
-        </EntityType>
-        <Association Name="CommentAthlete">
-          <End Type="TourModel.Comment" Role="Comment" Multiplicity="*" />
-          <End Type="TourModel.Athlete" Role="Athlete" Multiplicity="1" />
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -618,6 +611,7 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="From" ColumnName="From" />
           <ScalarProperty Name="To" ColumnName="To" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -627,6 +621,8 @@
           <ScalarProperty Name="SegmentAreaID" ColumnName="SegmentAreaID" />
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Picture" ColumnName="Picture" />
           <ScalarProperty Name="Distance" ColumnName="Distance" />
           <ScalarProperty Name="ElevDifference" ColumnName="ElevDifference" />
           <ScalarProperty Name="AvgGrade" ColumnName="AvgGrade" />
@@ -640,10 +636,15 @@
         <MappingFragment StoreEntitySet="Segments">
           <ScalarProperty Name="SegmentID" ColumnName="SegmentID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Picture" ColumnName="Picture" />
           <ScalarProperty Name="GradeType" ColumnName="GradeType" />
           <ScalarProperty Name="Distance" ColumnName="Distance" />
-          <ScalarProperty Name="ElevDifference" ColumnName="ElevDifference" />
           <ScalarProperty Name="AvgGrade" ColumnName="AvgGrade" />
+          <ScalarProperty Name="ClimbCategory" ColumnName="ClimbCategory" />
+          <ScalarProperty Name="ElevationHigh" ColumnName="ElevationHigh" />
+          <ScalarProperty Name="ElevationLow" ColumnName="ElevationLow" />
+          <ScalarProperty Name="ElevationGain" ColumnName="ElevationGain" />
           <ScalarProperty Name="NoRiders" ColumnName="NoRiders" />
           <ScalarProperty Name="NoRidden" ColumnName="NoRidden" />
           <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
@@ -659,6 +660,7 @@
           <ScalarProperty Name="YerseyType" ColumnName="YerseyType" />
           <ScalarProperty Name="Duration" ColumnName="Duration" />
           <ScalarProperty Name="Points" ColumnName="Points" />
+          <ScalarProperty Name="Period" ColumnName="Period" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

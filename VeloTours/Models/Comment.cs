@@ -15,28 +15,20 @@ namespace VeloTours.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Statistic
+public partial class Comment
 {
 
-    public int StatisticID { get; set; }
+    public int CommentID { get; set; }
 
-    public int ResultPeriodID { get; set; }
+    public string ParentCommentID { get; set; }
 
-    public int AthleteID { get; set; }
+    public string Text { get; set; }
 
-    public int YerseyType { get; set; }
-
-    public Nullable<System.TimeSpan> Duration { get; set; }
-
-    public int Points { get; set; }
-
-    public string Period { get; set; }
+    public System.DateTime Created { get; set; }
 
 
 
     public virtual Athlete Athlete { get; set; }
-
-    public virtual ResultPeriod ResultPeriod { get; set; }
 
 }
 
