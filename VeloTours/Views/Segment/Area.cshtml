@@ -17,65 +17,61 @@
 <table id="SegmentsTable" class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
     <thead>
         <tr>
-            <th class="right" title="Your position on the segment the last time you updated.">pos</th>
+            <th class="right" title="Your position on the segment; the last time you updated.">pos</th>
             <th class="right" title="Your placing's percentile position of the total number of riders.">pos %</th>
-            <th>Name</th>
-            <th class="right">distance</th>
-            <th class="right">elevation<br />diff</th>
-            <th class="right">grade</th>
-            <th class="right">grade<br />type</th>
+            <th style="vertical-align:top">Name</th>
+            <th class="right" title="Distance, measured in kilometers">dist<br />km.</th>
+            <th class="right" title="Elevation difference">Elev<br />diff</th>
+            <th class="right">grade<br />%</th>
+            <th class="right" title="Grade category. This influence the Yersey calculations.">grade<br />cat</th>
             <th class="right" title="Total number of riders that have completed this segment">riders</th>
-            <th class="right">ridden</th>
-            <th class="right" title="Speed on segment, ridden by KOM">KOM</th>
-            <th class="right">speed</th>
-            <th class="right">time</th>
-            <th class="right" title="The time your personal best is currently behind the current KOM.">behind<br />KOM s</th>
+            <th class="right" title="Total number the segments has been ridden">ridden</th>
+            <th class="right" title="Speed on segment, ridden by KOM">KOM<br />km/h</th>
+            <th class="right" title="Your time on the segment">time</th>
+            <th class="right" title="The time your personal best is currently behind the current KOM.">behind<br />KOM s.</th>
             <th class="right" title="Percentage of time your personal best is currently behind the current KOM.">behind<br />KOM %</th>
-            <th class="right">change</th>
+            <th class="right" title="Position change on the leaderboard">change</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Segments)
         {
             <tr>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
+                <td class="right">@item.UsersPosition</td>
+                <td class="right">@item.UsersPositionPercentage</td>
                 <td>
                     @Html.ActionLink(item.Name, "Segment", new { segment = item.SegmentID, athlete = athleteID, area = @areaID })
 
                     @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-info-sign'></i></a>",
                         item.SegmentID, 0, 0))
                 </td>
-                <td class="right">@String.Format("{0:#0.##}", @item.Distance / 1000) km.</td>
-                <td class="right">@Math.Round(item.ElevationGain ?? 0) m.</td>
-                <td class="right">@String.Format("{0:#0.##}", item.AvgGrade) %</td>
+                <td class="right">@String.Format("{0:#0.##}", @item.Distance / 1000)</td>
+                <td class="right">@Math.Round(item.ElevationGain ?? 0)</td>
+                <td class="right">@String.Format("{0:#0.##}", item.AvgGrade)</td>
                 <td class="right">@item.GradeType</td>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
                 <td class="right">@item.NoRidden</td>
                 <td class="right">@item.NoRiders</td>
+                <td class="right">@item.KomSpeed</td>
+                <td class="right">@item.UsersTime<br />@item.UsersTimePrevious</td>
+                <td class="right">@item.BehindKom</td>
+                <td class="right">@item.BehindKomPercentage</td>
+                <td class="right">@item.UsersChangePos</td>
             </tr>
         }
         <tr>
-            <td class="right">@Model.Position</td>
+            <td class="right">@Model.UsersPosition</td>
             <td class="right">&nbsp;</td>
             <td>SUM</td>
-            <td class="right">@String.Format("{0:#0.##}", @Model.Distance / 1000) km.</td>
-            <td class="right">@Math.Round(@Model.ElevationGain ?? 0) m.</td>
-            <td class="right">@String.Format("{0:#0.##}", @Model.AvgGrade) %</td>
-            <td class="right">&nbsp;</td>
-            <td class="right">&nbsp;</td>
-            <td class="right">&nbsp;</td>
-            <td class="right">&nbsp;</td>
-            <td class="right">&nbsp;</td>
-            <td class="right">&nbsp;</td>
-            <td class="right">&nbsp;</td>
-            <td class="right">&nbsp;</td>
-            <td class="right">&nbsp;</td>
+            <td class="right">@String.Format("{0:#0.##}", @Model.Distance / 1000)</td>
+            <td class="right">@Math.Round(@Model.ElevationGain ?? 0)</td>
+            <td class="right">@String.Format("{0:#0.##}", @Model.AvgGrade)</td>
+            <td class="right">-</td>
+            <td class="right">@Model.NoRiders</td>
+            <td class="right">@Model.KomSpeed</td>
+            <td class="right">@Model.UsersTime<br />@Model.UsersTimePrevious</td>
+            <td class="right">@Model.BehindKom</td>
+            <td class="right">@Model.BehindKomPercentage</td>
+            <td class="right">@Model.UsersChangePos</td>
         </tr>
     </tbody>
 </table>

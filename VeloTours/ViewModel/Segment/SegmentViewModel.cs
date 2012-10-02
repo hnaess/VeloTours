@@ -3,29 +3,29 @@ using System.Collections.Generic;
 
 namespace VeloTours.Models
 {
-    public class SegmentAreaViewModel
+    public class SegmentViewModel
     {
-        public SegmentAreaViewModel()
+        public SegmentViewModel()
         {
-            this.Segments = new HashSet<SegmentViewModel>();
-            //this.ResultPeriod = new HashSet<ResultPeriod>();
+            this.SegmentAreas = new HashSet<SegmentArea>();
         }
 
+        // From the Model
         public Nullable<double> AvgGrade { get; set; }
+        public string ClimbCategory { get; set; }
         public string Description { get; set; }
         public Nullable<double> Distance { get; set; }
         public Nullable<double> ElevationGain { get; set; }
+        public Nullable<double> ElevationHigh { get; set; }
+        public Nullable<double> ElevationLow { get; set; }
+        public int GradeType { get; set; }
         public System.DateTime LastUpdated { get; set; }
         public string Name { get; set; }
+        public Nullable<int> NoRidden { get; set; }
         public Nullable<int> NoRiders { get; set; }
         public string PictureUri { get; set; }
-        public int Position { get; set; }
-        public virtual Region Region { get; set; }
-        public int RegionID { get; set; }
-        public virtual ICollection<ResultPeriod> ResultPeriod { get; set; }
-        public Nullable<System.Guid> SecretKey { get; set; }
-        public int SegmentAreaID { get; set; }
-        public virtual ICollection<SegmentViewModel> Segments { get; set; }
+        public virtual ICollection<SegmentArea> SegmentAreas { get; set; }
+        public int SegmentID { get; set; }
 
         // Others
         public Nullable<double> KomSpeed { get; set; }

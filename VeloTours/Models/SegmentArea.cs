@@ -46,6 +46,8 @@ public partial class SegmentArea
 
     public Nullable<System.Guid> SecretKey { get; set; }
 
+    public Nullable<int> NoRiders { get; set; }
+
     public System.DateTime LastUpdated { get; set; }
 
 

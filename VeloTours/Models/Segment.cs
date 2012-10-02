@@ -32,7 +32,7 @@ public partial class Segment
 
     public string Description { get; set; }
 
-    public Nullable<byte> Picture { get; set; }
+    public string PictureUri { get; set; }
 
     public int GradeType { get; set; }
 

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 10/01/2012 17:23:52
+-- Date Created: 10/02/2012 21:21:22
 -- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
@@ -151,6 +151,7 @@ CREATE TABLE [dbo].[SegmentAreas] (
     [AvgGrade] float  NULL,
     [ElevationGain] float  NULL,
     [SecretKey] uniqueidentifier  NULL,
+    [NoRiders] int  NULL,
     [LastUpdated] datetime  NOT NULL
 );
 GO
@@ -160,7 +161,7 @@ CREATE TABLE [dbo].[Segments] (
     [SegmentID] int  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Description] nvarchar(max)  NULL,
-    [Picture] tinyint  NULL,
+    [PictureUri] nvarchar(max)  NULL,
     [GradeType] int  NOT NULL,
     [Distance] float  NULL,
     [AvgGrade] float  NULL,

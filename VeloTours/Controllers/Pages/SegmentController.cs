@@ -30,6 +30,51 @@ namespace VeloTours.Controllers.Pages
             TourModelContainer db = new TourModelContainer();
             Models.SegmentArea segmentArea = db.SegmentAreas.Find(area);
 
+            SegmentAreaViewModel viewModel = GetSegmentArea(segmentArea);
+            foreach (Models.Segment segment in segmentArea.Segments)
+            {
+                GetSegment(viewModel, segment);
+            }
+
+            ViewBag.Area = area;
+            ViewBag.Athlete = athlete;
+
+            return View(viewModel);
+        }
+
+        private static void GetSegment(SegmentAreaViewModel viewModel, Models.Segment segment)
+        {
+            viewModel.Segments.Add(new SegmentViewModel
+            {
+                AvgGrade = segment.AvgGrade,
+                ClimbCategory = segment.ClimbCategory,
+                Description = segment.Description,
+                Distance = segment.Distance,
+                ElevationGain = segment.ElevationGain,
+                ElevationHigh = segment.ElevationHigh,
+                ElevationLow = segment.ElevationLow,
+                GradeType = segment.GradeType,
+                LastUpdated = segment.LastUpdated,
+                Name = segment.Name,
+                NoRidden = segment.NoRidden,
+                NoRiders = segment.NoRiders,
+                PictureUri = segment.PictureUri,
+                SegmentID = segment.SegmentID,
+
+                // + new fields?
+                //KomSpeed =
+                //BehindKom =
+                //BehindKomPercentage =
+                //UsersPosition =
+                //UsersPositionPercentage =
+                //UsersTime =
+                //UsersTimePrevious =
+                //UsersChangePos =
+            });
+        }
+
+        private static SegmentAreaViewModel GetSegmentArea(Models.SegmentArea segmentArea)
+        {
             SegmentAreaViewModel viewModel = new SegmentAreaViewModel()
             {
                 AvgGrade = segmentArea.AvgGrade,
@@ -38,31 +83,23 @@ namespace VeloTours.Controllers.Pages
                 ElevationGain = segmentArea.ElevationGain,
                 LastUpdated = segmentArea.LastUpdated,
                 PictureUri = segmentArea.PictureUri,
+                SegmentAreaID = segmentArea.SegmentAreaID,
+
+                //
+                //NoRidden = segment.NoRidden,
+                //KomSpeed =
+                //BehindKom =
+                //BehindKomPercentage =
+                //UsersPosition =
+                //UsersPositionPercentage =
+                //UsersTime =
+                //UsersTimePrevious =
+                //UsersChangePos =
 
                 // example of a new
                 Position = 1234,
             };
-
-            foreach (Models.Segment segment in segmentArea.Segments)
-            {
-                viewModel.Segments.Add(new Segment
-                {
-                    SegmentID = segment.SegmentID,
-                    Name = segment.Name,
-                    GradeType = segment.GradeType,
-                    Description = segment.Description,
-                    Distance = segment.Distance,
-                    AvgGrade = segment.AvgGrade,
-                    ElevationGain = segment.ElevationGain,
-                    LastUpdated = segment.LastUpdated,
-                    // + rest of the fields
-                });
-            }
-
-            ViewBag.Area = area;
-            ViewBag.Athlete = athlete;
-
-            return View(viewModel);
+            return viewModel;
         }
 
         public ActionResult Index(int? athlete)

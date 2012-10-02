@@ -242,6 +242,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\AthleteInfoViewModel.cs" />
     <Compile Include="ViewModel\Segment\SegmentAreaViewModel.cs" />
+    <Compile Include="ViewModel\Segment\SegmentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-responsive.css" />
