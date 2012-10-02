@@ -19,17 +19,50 @@ namespace VeloTours.Controllers.Pages
             ViewBag.Segment = segment;
             ViewBag.Athlete = athlete;
             ViewBag.Area = area;
-            
+
             return View(segmentObj);
         }
 
         public ActionResult Area(int area, int? athlete)
         {
-            SegmentArea segmentArea = db.SegmentAreas.Find(area);
+            //Models.SegmentArea segmentArea = db.SegmentAreas.Find(area);
+
+            TourModelContainer db = new TourModelContainer();
+            Models.SegmentArea segmentArea = db.SegmentAreas.Find(area);
+
+            SegmentAreaViewModel viewModel = new SegmentAreaViewModel()
+            {
+                AvgGrade = segmentArea.AvgGrade,
+                Description = segmentArea.Description,
+                Distance = segmentArea.Distance,
+                ElevationGain = segmentArea.ElevationGain,
+                LastUpdated = segmentArea.LastUpdated,
+                PictureUri = segmentArea.PictureUri,
+
+                // example of a new
+                Position = 1234,
+            };
+
+            foreach (Models.Segment segment in segmentArea.Segments)
+            {
+                viewModel.Segments.Add(new Segment
+                {
+                    SegmentID = segment.SegmentID,
+                    Name = segment.Name,
+                    GradeType = segment.GradeType,
+                    Description = segment.Description,
+                    Distance = segment.Distance,
+                    AvgGrade = segment.AvgGrade,
+                    ElevationGain = segment.ElevationGain,
+                    LastUpdated = segment.LastUpdated,
+                    // + rest of the fields
+                });
+            }
+
             ViewBag.Area = area;
             ViewBag.Athlete = athlete;
-            
-            return View(segmentArea);
+
+            return View(viewModel);
         }
 
         public ActionResult Index(int? athlete)

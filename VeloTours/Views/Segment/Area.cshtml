@@ -1,4 +1,4 @@
-﻿@model VeloTours.Models.SegmentArea
+﻿@model VeloTours.Models.SegmentAreaViewModel
 @using VeloTours.Helpers;
 @using System.Globalization;
 
@@ -17,30 +17,33 @@
 <table id="SegmentsTable" class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
     <thead>
         <tr>
+            <th class="right" title="Your position on the segment the last time you updated.">pos</th>
+            <th class="right" title="Your placing's percentile position of the total number of riders.">pos %</th>
             <th>Name</th>
             <th class="right">distance</th>
             <th class="right">elevation<br />diff</th>
             <th class="right">grade</th>
             <th class="right">grade<br />type</th>
-            <th class="right">KOM</th>
-            <th class="right">speed</th>
-            <th class="right">position</th>
-            <th class="right">time</th>
-            <th class="right">behind<br />KOM s</th>
-            <th class="right">behind<br />KOM %</th>
-            <th class="right">pos %</th>
-            <th class="right">riders</th>
+            <th class="right" title="Total number of riders that have completed this segment">riders</th>
             <th class="right">ridden</th>
+            <th class="right" title="Speed on segment, ridden by KOM">KOM</th>
+            <th class="right">speed</th>
+            <th class="right">time</th>
+            <th class="right" title="The time your personal best is currently behind the current KOM.">behind<br />KOM s</th>
+            <th class="right" title="Percentage of time your personal best is currently behind the current KOM.">behind<br />KOM %</th>
+            <th class="right">change</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Segments)
         {
             <tr>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
                 <td>
                     @Html.ActionLink(item.Name, "Segment", new { segment = item.SegmentID, athlete = athleteID, area = @areaID })
 
-                    @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-signal'></i></a>",
+                    @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-info-sign'></i></a>",
                         item.SegmentID, 0, 0))
                 </td>
                 <td class="right">@String.Format("{0:#0.##}", @item.Distance / 1000) km.</td>
@@ -53,13 +56,14 @@
                 <td class="right">&nbsp;</td>
                 <td class="right">&nbsp;</td>
                 <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
                 <td class="right">@item.NoRidden</td>
                 <td class="right">@item.NoRiders</td>
             </tr>
         }
         <tr>
-            <td>Sum</td>
+            <td class="right">@Model.Position</td>
+            <td class="right">&nbsp;</td>
+            <td>SUM</td>
             <td class="right">@String.Format("{0:#0.##}", @Model.Distance / 1000) km.</td>
             <td class="right">@Math.Round(@Model.ElevationGain ?? 0) m.</td>
             <td class="right">@String.Format("{0:#0.##}", @Model.AvgGrade) %</td>
@@ -67,7 +71,6 @@
             <td class="right">&nbsp;</td>
             <td class="right">&nbsp;</td>
             <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
             <td class="right">&nbsp;</td>
             <td class="right">&nbsp;</td>
             <td class="right">&nbsp;</td>

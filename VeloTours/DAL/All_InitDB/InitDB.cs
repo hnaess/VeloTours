@@ -12,7 +12,7 @@ namespace VeloTours.DAL
     {
         public static void CreateAndInitIfEmpty(TourModelContainer context)
         {
-            context.Database.Delete();
+            //context.Database.Delete();
             if (!context.Database.Exists())
             {
                 context.Database.Create();

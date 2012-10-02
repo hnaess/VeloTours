@@ -240,7 +240,8 @@
       <DependentUpon>TourModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\AthleteInfo.cs" />
+    <Compile Include="ViewModel\AthleteInfoViewModel.cs" />
+    <Compile Include="ViewModel\Segment\SegmentAreaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-responsive.css" />
@@ -391,6 +392,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\Profile\" />
+    <Folder Include="Controllers\Segment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -6,7 +6,7 @@ using VeloTours.Models;
 
 namespace VeloTours.ViewModel
 {
-    public class AthleteInfo
+    public class AthleteInfoViewModel
     {
         public int AthleteCount { get; set; }
     }

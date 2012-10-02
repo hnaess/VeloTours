@@ -12,7 +12,7 @@
     <h3>@country.Name</h3>   
     
     <a href="@Url.Action("Update from Strava", "CountryUpdate", new { athlete = athleteID, country = country.CountryID, })">
-        <i class='icon-share'></i>
+        <i class='icon-refresh'></i>
     </a>
     
     foreach (Region region in country.Regions)
@@ -22,7 +22,7 @@
     </h4>
 
     <a href="@Url.Action("Update from Strava", "RegionUpdate", new { athlete = athleteID, region = region.RegionID, })">
-        <i class='icon-share'></i>
+        <i class='icon-refresh'></i>
     </a>
         
         foreach (SegmentArea area in region.SegmentAreas)
