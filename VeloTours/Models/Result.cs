@@ -15,36 +15,28 @@ namespace VeloTours.Models
 using System;
     using System.Collections.Generic;
     
-public partial class ResultPeriod
+public partial class Result
 {
 
-    public ResultPeriod()
+    public Result()
     {
 
-        this.LeadershipBoards = new HashSet<LeadershipBoard>();
-
-        this.Statistics = new HashSet<Statistic>();
+        this.LeaderBoard = new HashSet<LeaderBoard>();
 
     }
 
 
-    public int ResultPeriodID { get; set; }
+    public int ResultID { get; set; }
 
-    public string Name { get; set; }
-
-    public System.DateTime From { get; set; }
-
-    public System.DateTime To { get; set; }
-
-    public string Type { get; set; }
+    public System.DateTime LastUpdated { get; set; }
 
 
 
-    public virtual ICollection<LeadershipBoard> LeadershipBoards { get; set; }
-
-    public virtual ICollection<Statistic> Statistics { get; set; }
+    public virtual ICollection<LeaderBoard> LeaderBoard { get; set; }
 
     public virtual Segment Segment { get; set; }
+
+    public virtual SegmentArea SegmentArea { get; set; }
 
 }
 

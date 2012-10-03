@@ -36,17 +36,15 @@ public partial class TourModelContainer : DbContext
 
     public DbSet<Country> Countries { get; set; }
 
-    public DbSet<LeadershipBoard> LeadershipBoards { get; set; }
+    public DbSet<LeaderBoard> LeaderBoards { get; set; }
 
     public DbSet<Region> Regions { get; set; }
-
-    public DbSet<ResultPeriod> ResultPeriods { get; set; }
 
     public DbSet<SegmentArea> SegmentAreas { get; set; }
 
     public DbSet<Segment> Segments { get; set; }
 
-    public DbSet<Statistic> Statistics { get; set; }
+    public DbSet<Effort> Statistics { get; set; }
 
 }
 

@@ -22,7 +22,6 @@ namespace VeloTours.Models
         public int Position { get; set; }
         public virtual Region Region { get; set; }
         public int RegionID { get; set; }
-        public virtual ICollection<ResultPeriod> ResultPeriod { get; set; }
         public Nullable<System.Guid> SecretKey { get; set; }
         public int SegmentAreaID { get; set; }
         public virtual ICollection<SegmentViewModel> Segments { get; set; }

@@ -206,22 +206,22 @@
     <Compile Include="Models\Country.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LeadershipBoard.cs">
+    <Compile Include="Models\Effort.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LeaderBoard.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Region.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ResultPeriod.cs">
+    <Compile Include="Models\Result.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Segment.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SegmentArea.cs">
-      <DependentUpon>TourModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Statistic.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TourModel.Context.cs">

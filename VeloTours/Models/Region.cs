@@ -23,8 +23,6 @@ public partial class Region
 
         this.SegmentAreas = new HashSet<SegmentArea>();
 
-        this.ResultPeriod = new HashSet<ResultPeriod>();
-
     }
 
 
@@ -41,8 +39,6 @@ public partial class Region
     public virtual Country Country { get; set; }
 
     public virtual ICollection<SegmentArea> SegmentAreas { get; set; }
-
-    public virtual ICollection<ResultPeriod> ResultPeriod { get; set; }
 
 }
 

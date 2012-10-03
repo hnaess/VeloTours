@@ -63,6 +63,13 @@ namespace VeloTours.DAL.Segment
 
         public List<SegmentEffort> UpdateRides()
         {
+            List<SegmentEffort> efforts = GetEffortsFromStrava();
+
+            return null;
+        }
+
+        private List<SegmentEffort> GetEffortsFromStrava()
+        {
             List<SegmentEffort> rides = new List<SegmentEffort>();
 
             var originalCulture = Utils.SetStravaCultureAndReturnCurrentCulture();
@@ -94,7 +101,7 @@ namespace VeloTours.DAL.Segment
             if (segmentEfforts.Efforts.Count == 0)
                 return false;
 
-            foreach (Effort effort in segmentEfforts.Efforts)
+            foreach (Stravan.Effort effort in segmentEfforts.Efforts)
             {
                 offset++;
                 var ride = new SegmentEffort()

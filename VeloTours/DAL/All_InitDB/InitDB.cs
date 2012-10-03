@@ -10,9 +10,11 @@ namespace VeloTours.DAL
 {
     public class InitDB
     {
+        public static DateTime DefaultDate = new DateTime(1980, 1, 1);
+
         public static void CreateAndInitIfEmpty(TourModelContainer context)
         {
-            //context.Database.Delete();
+            context.Database.Delete();
             if (!context.Database.Exists())
             {
                 context.Database.Create();
@@ -60,6 +62,18 @@ namespace VeloTours.DAL
             context.SaveChanges();
 
             return countries;
+        }
+
+        internal static Models.SegmentArea NewSegmentArea(TourModelContainer context, Models.Region region, List<Models.Segment> segments, string name)
+        {
+            var result = new Models.Result { LastUpdated = DefaultDate };
+            return new SegmentArea { Region = region, Name = name, Segments = segments, Result = result, LastUpdated = DefaultDate };
+        }
+
+        internal static Models.Segment NewSegment(TourModelContainer context, int segmentID, string name)
+        {
+            var result = new Models.Result { LastUpdated = DefaultDate };
+            return new Models.Segment { SegmentID = segmentID, Name = name, Result = result, LastUpdated = DefaultDate, };
         }
     }
 }

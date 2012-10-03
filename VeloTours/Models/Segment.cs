@@ -58,6 +58,8 @@ public partial class Segment
 
     public virtual ICollection<SegmentArea> SegmentAreas { get; set; }
 
+    public virtual Result Result { get; set; }
+
 }
 
 }

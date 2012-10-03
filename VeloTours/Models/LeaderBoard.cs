@@ -15,28 +15,34 @@ namespace VeloTours.Models
 using System;
     using System.Collections.Generic;
     
-public partial class Statistic
+public partial class LeaderBoard
 {
 
-    public int StatisticID { get; set; }
+    public int LeaderBoardID { get; set; }
 
-    public int ResultPeriodID { get; set; }
+    public int ResultID { get; set; }
+
+    public int EffortID { get; set; }
 
     public int AthleteID { get; set; }
 
-    public int YerseyType { get; set; }
+    public int Rank { get; set; }
 
-    public Nullable<System.TimeSpan> Duration { get; set; }
+    public Nullable<int> YellowPoints { get; set; }
 
-    public int Points { get; set; }
+    public int GreenPoints { get; set; }
 
-    public string Period { get; set; }
+    public int PolkaDotPoints { get; set; }
+
+    public int NoRidden { get; set; }
 
 
 
     public virtual Athlete Athlete { get; set; }
 
-    public virtual ResultPeriod ResultPeriod { get; set; }
+    public virtual Effort Effort { get; set; }
+
+    public virtual Result Result { get; set; }
 
 }
 

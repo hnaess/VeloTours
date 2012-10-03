@@ -23,8 +23,6 @@ public partial class SegmentArea
 
         this.Segments = new HashSet<Segment>();
 
-        this.ResultPeriod = new HashSet<ResultPeriod>();
-
     }
 
 
@@ -56,7 +54,7 @@ public partial class SegmentArea
 
     public virtual ICollection<Segment> Segments { get; set; }
 
-    public virtual ICollection<ResultPeriod> ResultPeriod { get; set; }
+    public virtual Result Result { get; set; }
 
 }
 

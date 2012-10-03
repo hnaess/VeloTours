@@ -15,26 +15,28 @@ namespace VeloTours.Models
 using System;
     using System.Collections.Generic;
     
-public partial class LeadershipBoard
+public partial class Effort
 {
 
-    public int LeaderBoardID { get; set; }
+    public Effort()
+    {
 
-    public int ResultPeriodID { get; set; }
+        this.LeaderBoard = new HashSet<LeaderBoard>();
+
+    }
+
+
+    public int EffortID { get; set; }
 
     public int AthleteID { get; set; }
 
-    public int Rank { get; set; }
+    public string StravaActivityID { get; set; }
 
-    public System.TimeSpan Duration { get; set; }
+    public string StravaID { get; set; }
 
-    public Nullable<int> YellowPoints { get; set; }
+    public System.DateTime StartDate { get; set; }
 
-    public int GreenPoints { get; set; }
-
-    public int PolkaDotPoints { get; set; }
-
-    public int NoSegmentsRidden { get; set; }
+    public Nullable<System.TimeSpan> ElapsedTime { get; set; }
 
     public Nullable<int> VAM { get; set; }
 
@@ -42,7 +44,7 @@ public partial class LeadershipBoard
 
     public virtual Athlete Athlete { get; set; }
 
-    public virtual ResultPeriod ResultPeriods { get; set; }
+    public virtual ICollection<LeaderBoard> LeaderBoard { get; set; }
 
 }
 

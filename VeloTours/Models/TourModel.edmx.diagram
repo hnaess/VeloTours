@@ -5,25 +5,24 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3975b6222e00432896c73502e8a2532b" Name="Diagram1" ZoomLevel="93" >
-        <EntityTypeShape EntityType="TourModel.Athlete" Width="1.5" PointX="7.5" PointY="11.5" />
-        <EntityTypeShape EntityType="TourModel.Country" Width="1.5" PointX="0.75" PointY="3.625" />
-        <EntityTypeShape EntityType="TourModel.LeadershipBoard" Width="1.5" PointX="11.75" PointY="8.25" />
-        <EntityTypeShape EntityType="TourModel.Region" Width="1.5" PointX="4" PointY="3.625" />
-        <EntityTypeShape EntityType="TourModel.ResultPeriod" Width="1.5" PointX="7.5" PointY="7.875" />
-        <EntityTypeShape EntityType="TourModel.SegmentArea" Width="1.5" PointX="7.375" PointY="3.625" />
-        <EntityTypeShape EntityType="TourModel.Segment" Width="1.5" PointX="10.25" PointY="3.625" />
-        <EntityTypeShape EntityType="TourModel.Statistic" Width="1.5" PointX="3" PointY="9.125" />
-        <AssociationConnector Association="TourModel.AthleteLeaderboard" />
-        <AssociationConnector Association="TourModel.StatisticAthlete" />
+        <EntityTypeShape EntityType="TourModel.Athlete" Width="1.5" PointX="12.75" PointY="6.75" />
+        <EntityTypeShape EntityType="TourModel.Country" Width="1.5" PointX="0.875" PointY="3.375" />
+        <EntityTypeShape EntityType="TourModel.LeaderBoard" Width="1.5" PointX="9.5" PointY="8.5" />
+        <EntityTypeShape EntityType="TourModel.Region" Width="1.5" PointX="0.875" PointY="5.625" />
+        <EntityTypeShape EntityType="TourModel.SegmentArea" Width="1.5" PointX="3.875" PointY="3.5" />
+        <EntityTypeShape EntityType="TourModel.Segment" Width="1.5" PointX="6.5" PointY="3.5" />
+        <EntityTypeShape EntityType="TourModel.Effort" Width="1.5" PointX="9.5" PointY="4.25" />
         <AssociationConnector Association="TourModel.CountryRegion" />
-        <AssociationConnector Association="TourModel.ResultPeriodLeaderBoard" />
         <AssociationConnector Association="TourModel.RegionSegmentArea" />
-        <AssociationConnector Association="TourModel.ResultPeriodStatistic" />
         <AssociationConnector Association="TourModel.SegmentAreasSegments" />
-        <AssociationConnector Association="TourModel.SegmentAreaResultPeriod" />
-        <AssociationConnector Association="TourModel.SegmentResultPeriod" />
-        <AssociationConnector Association="TourModel.RegionResultPeriod" />
-      </Diagram>
+        <AssociationConnector Association="TourModel.EffortAthlete" />
+        <AssociationConnector Association="TourModel.LeaderBoardAthlete" />
+        <AssociationConnector Association="TourModel.LeaderBoardEffort" />
+        <EntityTypeShape EntityType="TourModel.Result" Width="1.5" PointX="5.875" PointY="8.375" />
+        <AssociationConnector Association="TourModel.ResultLeaderBoard" />
+        <AssociationConnector Association="TourModel.SegmentResult" />
+        <AssociationConnector Association="TourModel.SegmentAreaResult" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

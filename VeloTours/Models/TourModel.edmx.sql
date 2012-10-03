@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 10/02/2012 21:21:22
+-- Date Created: 10/03/2012 12:37:07
 -- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
@@ -17,23 +17,11 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_AthleteLeaderboard]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LeadershipBoards] DROP CONSTRAINT [FK_AthleteLeaderboard];
-GO
-IF OBJECT_ID(N'[dbo].[FK_StatisticAthlete]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Statistics] DROP CONSTRAINT [FK_StatisticAthlete];
-GO
 IF OBJECT_ID(N'[dbo].[FK_CountryRegion]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Regions] DROP CONSTRAINT [FK_CountryRegion];
 GO
-IF OBJECT_ID(N'[dbo].[FK_ResultPeriodLeaderBoard]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LeadershipBoards] DROP CONSTRAINT [FK_ResultPeriodLeaderBoard];
-GO
 IF OBJECT_ID(N'[dbo].[FK_RegionSegmentArea]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[SegmentAreas] DROP CONSTRAINT [FK_RegionSegmentArea];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ResultPeriodStatistic]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Statistics] DROP CONSTRAINT [FK_ResultPeriodStatistic];
 GO
 IF OBJECT_ID(N'[dbo].[FK_SegmentAreasSegments_SegmentAreas]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[SegmentAreasSegments] DROP CONSTRAINT [FK_SegmentAreasSegments_SegmentAreas];
@@ -41,14 +29,23 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_SegmentAreasSegments_Segments]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[SegmentAreasSegments] DROP CONSTRAINT [FK_SegmentAreasSegments_Segments];
 GO
-IF OBJECT_ID(N'[dbo].[FK_SegmentAreaResultPeriod]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ResultPeriods] DROP CONSTRAINT [FK_SegmentAreaResultPeriod];
+IF OBJECT_ID(N'[dbo].[FK_EffortAthlete]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Statistics] DROP CONSTRAINT [FK_EffortAthlete];
 GO
-IF OBJECT_ID(N'[dbo].[FK_SegmentResultPeriod]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ResultPeriods] DROP CONSTRAINT [FK_SegmentResultPeriod];
+IF OBJECT_ID(N'[dbo].[FK_LeaderBoardAthlete]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LeaderBoards] DROP CONSTRAINT [FK_LeaderBoardAthlete];
 GO
-IF OBJECT_ID(N'[dbo].[FK_RegionResultPeriod]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ResultPeriods] DROP CONSTRAINT [FK_RegionResultPeriod];
+IF OBJECT_ID(N'[dbo].[FK_LeaderBoardEffort]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LeaderBoards] DROP CONSTRAINT [FK_LeaderBoardEffort];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ResultLeaderBoard]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LeaderBoards] DROP CONSTRAINT [FK_ResultLeaderBoard];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SegmentResult]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Segments] DROP CONSTRAINT [FK_SegmentResult];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SegmentAreaResult]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SegmentAreas] DROP CONSTRAINT [FK_SegmentAreaResult];
 GO
 
 -- --------------------------------------------------
@@ -61,14 +58,11 @@ GO
 IF OBJECT_ID(N'[dbo].[Countries]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Countries];
 GO
-IF OBJECT_ID(N'[dbo].[LeadershipBoards]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[LeadershipBoards];
+IF OBJECT_ID(N'[dbo].[LeaderBoards]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LeaderBoards];
 GO
 IF OBJECT_ID(N'[dbo].[Regions]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Regions];
-GO
-IF OBJECT_ID(N'[dbo].[ResultPeriods]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ResultPeriods];
 GO
 IF OBJECT_ID(N'[dbo].[SegmentAreas]', 'U') IS NOT NULL
     DROP TABLE [dbo].[SegmentAreas];
@@ -78,6 +72,9 @@ IF OBJECT_ID(N'[dbo].[Segments]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Statistics]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Statistics];
+GO
+IF OBJECT_ID(N'[dbo].[ResultSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ResultSet];
 GO
 IF OBJECT_ID(N'[dbo].[SegmentAreasSegments]', 'U') IS NOT NULL
     DROP TABLE [dbo].[SegmentAreasSegments];
@@ -103,18 +100,17 @@ CREATE TABLE [dbo].[Countries] (
 );
 GO
 
--- Creating table 'LeadershipBoards'
-CREATE TABLE [dbo].[LeadershipBoards] (
+-- Creating table 'LeaderBoards'
+CREATE TABLE [dbo].[LeaderBoards] (
     [LeaderBoardID] int IDENTITY(1,1) NOT NULL,
-    [ResultPeriodID] int  NOT NULL,
+    [ResultID] int  NOT NULL,
+    [EffortID] int  NOT NULL,
     [AthleteID] int  NOT NULL,
     [Rank] int  NOT NULL,
-    [Duration] time  NOT NULL,
     [YellowPoints] int  NULL,
     [GreenPoints] int  NOT NULL,
     [PolkaDotPoints] int  NOT NULL,
-    [NoSegmentsRidden] int  NOT NULL,
-    [VAM] int  NULL
+    [NoRidden] int  NOT NULL
 );
 GO
 
@@ -124,19 +120,6 @@ CREATE TABLE [dbo].[Regions] (
     [CountryID] int  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Distance] nvarchar(max)  NULL
-);
-GO
-
--- Creating table 'ResultPeriods'
-CREATE TABLE [dbo].[ResultPeriods] (
-    [ResultPeriodID] int IDENTITY(1,1) NOT NULL,
-    [Name] nvarchar(max)  NOT NULL,
-    [From] datetime  NOT NULL,
-    [To] datetime  NOT NULL,
-    [Type] nvarchar(max)  NULL,
-    [SegmentAreaResultPeriod_ResultPeriod_SegmentAreaID] int  NULL,
-    [Segment_SegmentID] int  NULL,
-    [RegionResultPeriod_ResultPeriod_RegionID] int  NULL
 );
 GO
 
@@ -152,7 +135,8 @@ CREATE TABLE [dbo].[SegmentAreas] (
     [ElevationGain] float  NULL,
     [SecretKey] uniqueidentifier  NULL,
     [NoRiders] int  NULL,
-    [LastUpdated] datetime  NOT NULL
+    [LastUpdated] datetime  NOT NULL,
+    [Result_ResultID] int  NOT NULL
 );
 GO
 
@@ -171,19 +155,27 @@ CREATE TABLE [dbo].[Segments] (
     [ElevationGain] float  NULL,
     [NoRiders] int  NULL,
     [NoRidden] int  NULL,
-    [LastUpdated] datetime  NOT NULL
+    [LastUpdated] datetime  NOT NULL,
+    [Result_ResultID] int  NOT NULL
 );
 GO
 
 -- Creating table 'Statistics'
 CREATE TABLE [dbo].[Statistics] (
-    [StatisticID] int IDENTITY(1,1) NOT NULL,
-    [ResultPeriodID] int  NOT NULL,
+    [EffortID] int IDENTITY(1,1) NOT NULL,
     [AthleteID] int  NOT NULL,
-    [YerseyType] int  NOT NULL,
-    [Duration] time  NULL,
-    [Points] int  NOT NULL,
-    [Period] nvarchar(max)  NOT NULL
+    [StravaActivityID] nvarchar(max)  NOT NULL,
+    [StravaID] nvarchar(max)  NOT NULL,
+    [StartDate] datetime  NOT NULL,
+    [ElapsedTime] time  NULL,
+    [VAM] int  NULL
+);
+GO
+
+-- Creating table 'ResultSet'
+CREATE TABLE [dbo].[ResultSet] (
+    [ResultID] int IDENTITY(1,1) NOT NULL,
+    [LastUpdated] datetime  NOT NULL
 );
 GO
 
@@ -210,9 +202,9 @@ ADD CONSTRAINT [PK_Countries]
     PRIMARY KEY CLUSTERED ([CountryID] ASC);
 GO
 
--- Creating primary key on [LeaderBoardID] in table 'LeadershipBoards'
-ALTER TABLE [dbo].[LeadershipBoards]
-ADD CONSTRAINT [PK_LeadershipBoards]
+-- Creating primary key on [LeaderBoardID] in table 'LeaderBoards'
+ALTER TABLE [dbo].[LeaderBoards]
+ADD CONSTRAINT [PK_LeaderBoards]
     PRIMARY KEY CLUSTERED ([LeaderBoardID] ASC);
 GO
 
@@ -220,12 +212,6 @@ GO
 ALTER TABLE [dbo].[Regions]
 ADD CONSTRAINT [PK_Regions]
     PRIMARY KEY CLUSTERED ([RegionID] ASC);
-GO
-
--- Creating primary key on [ResultPeriodID] in table 'ResultPeriods'
-ALTER TABLE [dbo].[ResultPeriods]
-ADD CONSTRAINT [PK_ResultPeriods]
-    PRIMARY KEY CLUSTERED ([ResultPeriodID] ASC);
 GO
 
 -- Creating primary key on [SegmentAreaID] in table 'SegmentAreas'
@@ -240,10 +226,16 @@ ADD CONSTRAINT [PK_Segments]
     PRIMARY KEY CLUSTERED ([SegmentID] ASC);
 GO
 
--- Creating primary key on [StatisticID] in table 'Statistics'
+-- Creating primary key on [EffortID] in table 'Statistics'
 ALTER TABLE [dbo].[Statistics]
 ADD CONSTRAINT [PK_Statistics]
-    PRIMARY KEY CLUSTERED ([StatisticID] ASC);
+    PRIMARY KEY CLUSTERED ([EffortID] ASC);
+GO
+
+-- Creating primary key on [ResultID] in table 'ResultSet'
+ALTER TABLE [dbo].[ResultSet]
+ADD CONSTRAINT [PK_ResultSet]
+    PRIMARY KEY CLUSTERED ([ResultID] ASC);
 GO
 
 -- Creating primary key on [SegmentAreas_SegmentAreaID], [Segments_SegmentID] in table 'SegmentAreasSegments'
@@ -255,34 +247,6 @@ GO
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
-
--- Creating foreign key on [AthleteID] in table 'LeadershipBoards'
-ALTER TABLE [dbo].[LeadershipBoards]
-ADD CONSTRAINT [FK_AthleteLeaderboard]
-    FOREIGN KEY ([AthleteID])
-    REFERENCES [dbo].[Athletes]
-        ([AthleteID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_AthleteLeaderboard'
-CREATE INDEX [IX_FK_AthleteLeaderboard]
-ON [dbo].[LeadershipBoards]
-    ([AthleteID]);
-GO
-
--- Creating foreign key on [AthleteID] in table 'Statistics'
-ALTER TABLE [dbo].[Statistics]
-ADD CONSTRAINT [FK_StatisticAthlete]
-    FOREIGN KEY ([AthleteID])
-    REFERENCES [dbo].[Athletes]
-        ([AthleteID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_StatisticAthlete'
-CREATE INDEX [IX_FK_StatisticAthlete]
-ON [dbo].[Statistics]
-    ([AthleteID]);
-GO
 
 -- Creating foreign key on [CountryID] in table 'Regions'
 ALTER TABLE [dbo].[Regions]
@@ -298,20 +262,6 @@ ON [dbo].[Regions]
     ([CountryID]);
 GO
 
--- Creating foreign key on [ResultPeriodID] in table 'LeadershipBoards'
-ALTER TABLE [dbo].[LeadershipBoards]
-ADD CONSTRAINT [FK_ResultPeriodLeaderBoard]
-    FOREIGN KEY ([ResultPeriodID])
-    REFERENCES [dbo].[ResultPeriods]
-        ([ResultPeriodID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_ResultPeriodLeaderBoard'
-CREATE INDEX [IX_FK_ResultPeriodLeaderBoard]
-ON [dbo].[LeadershipBoards]
-    ([ResultPeriodID]);
-GO
-
 -- Creating foreign key on [RegionID] in table 'SegmentAreas'
 ALTER TABLE [dbo].[SegmentAreas]
 ADD CONSTRAINT [FK_RegionSegmentArea]
@@ -324,20 +274,6 @@ ADD CONSTRAINT [FK_RegionSegmentArea]
 CREATE INDEX [IX_FK_RegionSegmentArea]
 ON [dbo].[SegmentAreas]
     ([RegionID]);
-GO
-
--- Creating foreign key on [ResultPeriodID] in table 'Statistics'
-ALTER TABLE [dbo].[Statistics]
-ADD CONSTRAINT [FK_ResultPeriodStatistic]
-    FOREIGN KEY ([ResultPeriodID])
-    REFERENCES [dbo].[ResultPeriods]
-        ([ResultPeriodID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_ResultPeriodStatistic'
-CREATE INDEX [IX_FK_ResultPeriodStatistic]
-ON [dbo].[Statistics]
-    ([ResultPeriodID]);
 GO
 
 -- Creating foreign key on [SegmentAreas_SegmentAreaID] in table 'SegmentAreasSegments'
@@ -363,46 +299,88 @@ ON [dbo].[SegmentAreasSegments]
     ([Segments_SegmentID]);
 GO
 
--- Creating foreign key on [SegmentAreaResultPeriod_ResultPeriod_SegmentAreaID] in table 'ResultPeriods'
-ALTER TABLE [dbo].[ResultPeriods]
-ADD CONSTRAINT [FK_SegmentAreaResultPeriod]
-    FOREIGN KEY ([SegmentAreaResultPeriod_ResultPeriod_SegmentAreaID])
-    REFERENCES [dbo].[SegmentAreas]
-        ([SegmentAreaID])
+-- Creating foreign key on [AthleteID] in table 'Statistics'
+ALTER TABLE [dbo].[Statistics]
+ADD CONSTRAINT [FK_EffortAthlete]
+    FOREIGN KEY ([AthleteID])
+    REFERENCES [dbo].[Athletes]
+        ([AthleteID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_SegmentAreaResultPeriod'
-CREATE INDEX [IX_FK_SegmentAreaResultPeriod]
-ON [dbo].[ResultPeriods]
-    ([SegmentAreaResultPeriod_ResultPeriod_SegmentAreaID]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_EffortAthlete'
+CREATE INDEX [IX_FK_EffortAthlete]
+ON [dbo].[Statistics]
+    ([AthleteID]);
 GO
 
--- Creating foreign key on [Segment_SegmentID] in table 'ResultPeriods'
-ALTER TABLE [dbo].[ResultPeriods]
-ADD CONSTRAINT [FK_SegmentResultPeriod]
-    FOREIGN KEY ([Segment_SegmentID])
-    REFERENCES [dbo].[Segments]
-        ([SegmentID])
+-- Creating foreign key on [AthleteID] in table 'LeaderBoards'
+ALTER TABLE [dbo].[LeaderBoards]
+ADD CONSTRAINT [FK_LeaderBoardAthlete]
+    FOREIGN KEY ([AthleteID])
+    REFERENCES [dbo].[Athletes]
+        ([AthleteID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_SegmentResultPeriod'
-CREATE INDEX [IX_FK_SegmentResultPeriod]
-ON [dbo].[ResultPeriods]
-    ([Segment_SegmentID]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_LeaderBoardAthlete'
+CREATE INDEX [IX_FK_LeaderBoardAthlete]
+ON [dbo].[LeaderBoards]
+    ([AthleteID]);
 GO
 
--- Creating foreign key on [RegionResultPeriod_ResultPeriod_RegionID] in table 'ResultPeriods'
-ALTER TABLE [dbo].[ResultPeriods]
-ADD CONSTRAINT [FK_RegionResultPeriod]
-    FOREIGN KEY ([RegionResultPeriod_ResultPeriod_RegionID])
-    REFERENCES [dbo].[Regions]
-        ([RegionID])
+-- Creating foreign key on [EffortID] in table 'LeaderBoards'
+ALTER TABLE [dbo].[LeaderBoards]
+ADD CONSTRAINT [FK_LeaderBoardEffort]
+    FOREIGN KEY ([EffortID])
+    REFERENCES [dbo].[Statistics]
+        ([EffortID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_RegionResultPeriod'
-CREATE INDEX [IX_FK_RegionResultPeriod]
-ON [dbo].[ResultPeriods]
-    ([RegionResultPeriod_ResultPeriod_RegionID]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_LeaderBoardEffort'
+CREATE INDEX [IX_FK_LeaderBoardEffort]
+ON [dbo].[LeaderBoards]
+    ([EffortID]);
+GO
+
+-- Creating foreign key on [ResultID] in table 'LeaderBoards'
+ALTER TABLE [dbo].[LeaderBoards]
+ADD CONSTRAINT [FK_ResultLeaderBoard]
+    FOREIGN KEY ([ResultID])
+    REFERENCES [dbo].[ResultSet]
+        ([ResultID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ResultLeaderBoard'
+CREATE INDEX [IX_FK_ResultLeaderBoard]
+ON [dbo].[LeaderBoards]
+    ([ResultID]);
+GO
+
+-- Creating foreign key on [Result_ResultID] in table 'Segments'
+ALTER TABLE [dbo].[Segments]
+ADD CONSTRAINT [FK_SegmentResult]
+    FOREIGN KEY ([Result_ResultID])
+    REFERENCES [dbo].[ResultSet]
+        ([ResultID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_SegmentResult'
+CREATE INDEX [IX_FK_SegmentResult]
+ON [dbo].[Segments]
+    ([Result_ResultID]);
+GO
+
+-- Creating foreign key on [Result_ResultID] in table 'SegmentAreas'
+ALTER TABLE [dbo].[SegmentAreas]
+ADD CONSTRAINT [FK_SegmentAreaResult]
+    FOREIGN KEY ([Result_ResultID])
+    REFERENCES [dbo].[ResultSet]
+        ([ResultID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_SegmentAreaResult'
+CREATE INDEX [IX_FK_SegmentAreaResult]
+ON [dbo].[SegmentAreas]
+    ([Result_ResultID]);
 GO
 
 -- --------------------------------------------------
