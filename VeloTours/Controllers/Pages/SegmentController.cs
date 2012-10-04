@@ -110,18 +110,18 @@ namespace VeloTours.Controllers.Pages
             return View(countries);
         }
 
-        public ActionResult SegmentUpdate(int segment, int athlete, int? area)
+        public ActionResult SegmentUpdate(int segment, int athlete, int? area, bool? effort = false)
         {
-            DAL.Segment.Update segmentUpdate = new DAL.Segment.Update(segment);
-            var s = segmentUpdate.UpdateSegmentInfo();
+            SegmentUpdate segmentUpdate = new SegmentUpdate(segment);
+            segmentUpdate.UpdateSegment((bool)effort);
 
             return RedirectToAction("Segment", "Segment", new { athlete = athlete, segment = segment, area = area });
         }
 
-        public ActionResult AreaUpdate(int area, int athlete, bool? recursive = false)
+        public ActionResult AreaUpdate(int area, int athlete, bool? effort = false)
         {
             DAL.Area.Update areaUpdate = new DAL.Area.Update(area);
-            areaUpdate.UpdateArea(false);
+            areaUpdate.UpdateArea((bool)effort);
 
             return RedirectToAction("Area", "Segment", new { athlete = athlete, area = area });
         }

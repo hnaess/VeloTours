@@ -86,7 +86,7 @@
 
 <p>
     @Html.ActionLink("Update from Strava", "AreaUpdate", routeValues: new { athlete = athleteID, area = areaID, recursive = false, }, htmlAttributes: null)<br />
-    @Html.ActionLink("Update all from Strava", "SegmentUpdate", routeValues: new { athlete = athleteID, area = areaID, recursive = true, }, htmlAttributes: null)<br />
+    @Html.ActionLink("Update all from Strava", "AreaUpdate", routeValues: new { athlete = athleteID, area = areaID, recursive = true, }, htmlAttributes: null)<br />
     @Html.ActionLink("Go back to overview", "/", new { athlete = athleteID })
 </p>
 

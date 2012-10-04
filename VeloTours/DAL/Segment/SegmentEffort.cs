@@ -7,10 +7,11 @@ namespace VeloTours.DAL.Segment
 {
     public class SegmentEffort : IComparable<SegmentEffort>
     {
+        public int ActivityId { get; set; }
         public int Id { get; set; }
         public int AthleteId { get; set; }
         public int ElapsedTime { get; set; }
-        public DateTime Start { get; set; }
+        public DateTime StartDate { get; set; }
 
         #region IComparable<Employee> Members
 

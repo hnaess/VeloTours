@@ -21,9 +21,9 @@ public partial class Athlete
     public Athlete()
     {
 
-        this.Effort = new HashSet<Effort>();
+        this.LeaderBoards = new HashSet<LeaderBoard>();
 
-        this.LeaderBoard = new HashSet<LeaderBoard>();
+        this.Efforts = new HashSet<Effort>();
 
     }
 
@@ -38,9 +38,9 @@ public partial class Athlete
 
 
 
-    public virtual ICollection<Effort> Effort { get; set; }
+    public virtual ICollection<LeaderBoard> LeaderBoards { get; set; }
 
-    public virtual ICollection<LeaderBoard> LeaderBoard { get; set; }
+    public virtual ICollection<Effort> Efforts { get; set; }
 
 }
 

@@ -19,9 +19,25 @@ namespace VeloTours.DAL
             {
                 context.Database.Create();
                 Init(context);
+                CreateIndexes(context);
             }
         }
-        
+
+        private static void CreateIndexes(TourModelContainer context)
+        {
+            CreateIndex(context, "StartDate", "Efforts", false);
+            CreateIndex(context, "ElapsedTime", "Efforts", false);
+        }
+
+        private static void CreateIndex(TourModelContainer context, string field, string table, bool unique = false)
+        {
+            context.Database.ExecuteSqlCommand(String.Format("CREATE {0}NONCLUSTERED INDEX IX_{1}_{2} ON {1} ({3})",
+                unique ? "UNIQUE " : "",
+                table,
+                field.Replace(",", "_"),
+                field));
+        } 
+
         private static void Init(TourModelContainer context)
         {
             var athletes = AthleteData.Athletes(context);
@@ -66,13 +82,15 @@ namespace VeloTours.DAL
 
         internal static Models.SegmentArea NewSegmentArea(TourModelContainer context, Models.Region region, List<Models.Segment> segments, string name)
         {
-            var result = new Models.Result { LastUpdated = DefaultDate };
+            //var result = new Models.Result { LastUpdated = DefaultDate };
+            Models.Result result = null;
             return new SegmentArea { Region = region, Name = name, Segments = segments, Result = result, LastUpdated = DefaultDate };
         }
 
         internal static Models.Segment NewSegment(TourModelContainer context, int segmentID, string name)
         {
-            var result = new Models.Result { LastUpdated = DefaultDate };
+            //var result = new Models.Result { LastUpdated = DefaultDate };
+            Models.Result result = null;
             return new Models.Segment { SegmentID = segmentID, Name = name, Result = result, LastUpdated = DefaultDate, };
         }
     }

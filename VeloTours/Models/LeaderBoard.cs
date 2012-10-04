@@ -22,8 +22,6 @@ public partial class LeaderBoard
 
     public int ResultID { get; set; }
 
-    public int EffortID { get; set; }
-
     public int AthleteID { get; set; }
 
     public int Rank { get; set; }
@@ -38,11 +36,9 @@ public partial class LeaderBoard
 
 
 
-    public virtual Athlete Athlete { get; set; }
-
-    public virtual Effort Effort { get; set; }
-
     public virtual Result Result { get; set; }
+
+    public virtual Athlete Athlete { get; set; }
 
 }
 

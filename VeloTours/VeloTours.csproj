@@ -84,6 +84,7 @@
     <Reference Include="System.Json">
       <HintPath>..\packages\System.Json.4.0.20126.16343\lib\net40\System.Json.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -189,9 +190,12 @@
     <Compile Include="DAL\All_InitDB\Norway\Norway.cs" />
     <Compile Include="DAL\All_InitDB\TourInitializer.cs" />
     <Compile Include="DAL\Area\Update.cs" />
+    <Compile Include="DAL\Athlete\AthleteShortInfo.cs" />
+    <Compile Include="DAL\Athlete\AthleteUpdate.cs" />
     <Compile Include="DAL\Country\Update.cs" />
     <Compile Include="DAL\Region\Update.cs" />
-    <Compile Include="DAL\Segment\Update.cs" />
+    <Compile Include="DAL\Segment\EffortUpdate.cs" />
+    <Compile Include="DAL\Segment\SegmentUpdate.cs" />
     <Compile Include="DAL\Segment\SegmentEffort.cs" />
     <Compile Include="DAL\Utils.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -311,7 +315,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TourModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\TourModelnit.sql" />
     <Content Include="Models\TourModel.edmx.sql" />
     <Content Include="Models\TourModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

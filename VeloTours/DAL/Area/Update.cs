@@ -33,7 +33,7 @@ namespace VeloTours.DAL.Area
             dbArea = db.SegmentAreas.Find(areaID);
         }
 
-        public void UpdateArea(bool recursive)
+        public void UpdateArea(bool updateEfforts)
         {
             dbArea.Distance = 0;
             dbArea.ElevationGain = 0;
@@ -41,15 +41,10 @@ namespace VeloTours.DAL.Area
 
             foreach (var segment in dbArea.Segments)
             {
-                Segment.Update updater = new Segment.Update(segment.SegmentID);
-                updater.StravaWebClientObj = StravaWebClientObj;
+                SegmentUpdate segmentUpdater = new SegmentUpdate(segment.SegmentID);
+                segmentUpdater.StravaWebClientObj = StravaWebClientObj;
 
-                if (recursive)
-                {
-                    updater.UpdateRides();
-                }
-
-                var info = updater.UpdateSegmentInfo();
+                var info = segmentUpdater.UpdateSegment(updateEfforts);
                 dbArea.Distance += info.Distance;
                 dbArea.ElevationGain += info.ElevationGain;
                 avgGradeTemp += Convert.ToDecimal(info.Distance) * Convert.ToDecimal(info.AvgGrade);

@@ -7,7 +7,7 @@
       <Diagram DiagramId="3975b6222e00432896c73502e8a2532b" Name="Diagram1" ZoomLevel="93" >
         <EntityTypeShape EntityType="TourModel.Athlete" Width="1.5" PointX="12.75" PointY="6.75" />
         <EntityTypeShape EntityType="TourModel.Country" Width="1.5" PointX="0.875" PointY="3.375" />
-        <EntityTypeShape EntityType="TourModel.LeaderBoard" Width="1.5" PointX="9.5" PointY="8.5" />
+        <EntityTypeShape EntityType="TourModel.LeaderBoard" Width="1.5" PointX="9.5" PointY="8.375" />
         <EntityTypeShape EntityType="TourModel.Region" Width="1.5" PointX="0.875" PointY="5.625" />
         <EntityTypeShape EntityType="TourModel.SegmentArea" Width="1.5" PointX="3.875" PointY="3.5" />
         <EntityTypeShape EntityType="TourModel.Segment" Width="1.5" PointX="6.5" PointY="3.5" />
@@ -15,13 +15,13 @@
         <AssociationConnector Association="TourModel.CountryRegion" />
         <AssociationConnector Association="TourModel.RegionSegmentArea" />
         <AssociationConnector Association="TourModel.SegmentAreasSegments" />
-        <AssociationConnector Association="TourModel.EffortAthlete" />
-        <AssociationConnector Association="TourModel.LeaderBoardAthlete" />
-        <AssociationConnector Association="TourModel.LeaderBoardEffort" />
         <EntityTypeShape EntityType="TourModel.Result" Width="1.5" PointX="5.875" PointY="8.375" />
         <AssociationConnector Association="TourModel.ResultLeaderBoard" />
         <AssociationConnector Association="TourModel.SegmentResult" />
         <AssociationConnector Association="TourModel.SegmentAreaResult" />
+        <AssociationConnector Association="TourModel.ResultEffort" />
+        <AssociationConnector Association="TourModel.AthleteLeaderBoard" />
+        <AssociationConnector Association="TourModel.AthleteEffort" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

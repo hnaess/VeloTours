@@ -44,7 +44,9 @@ public partial class TourModelContainer : DbContext
 
     public DbSet<Segment> Segments { get; set; }
 
-    public DbSet<Effort> Statistics { get; set; }
+    public DbSet<Effort> Efforts { get; set; }
+
+    public DbSet<Result> ResultSet { get; set; }
 
 }
 

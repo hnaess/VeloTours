@@ -21,7 +21,9 @@ public partial class Result
     public Result()
     {
 
-        this.LeaderBoard = new HashSet<LeaderBoard>();
+        this.LeaderBoards = new HashSet<LeaderBoard>();
+
+        this.Efforts = new HashSet<Effort>();
 
     }
 
@@ -32,11 +34,13 @@ public partial class Result
 
 
 
-    public virtual ICollection<LeaderBoard> LeaderBoard { get; set; }
-
     public virtual Segment Segment { get; set; }
 
     public virtual SegmentArea SegmentArea { get; set; }
+
+    public virtual ICollection<LeaderBoard> LeaderBoards { get; set; }
+
+    public virtual ICollection<Effort> Efforts { get; set; }
 
 }
 

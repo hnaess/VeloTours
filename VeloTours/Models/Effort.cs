@@ -18,33 +18,27 @@ using System;
 public partial class Effort
 {
 
-    public Effort()
-    {
-
-        this.LeaderBoard = new HashSet<LeaderBoard>();
-
-    }
-
-
     public int EffortID { get; set; }
+
+    public int ResultID { get; set; }
 
     public int AthleteID { get; set; }
 
-    public string StravaActivityID { get; set; }
+    public int StravaActivityID { get; set; }
 
-    public string StravaID { get; set; }
+    public int StravaID { get; set; }
 
     public System.DateTime StartDate { get; set; }
 
-    public Nullable<System.TimeSpan> ElapsedTime { get; set; }
+    public int ElapsedTime { get; set; }
 
     public Nullable<int> VAM { get; set; }
 
 
 
-    public virtual Athlete Athlete { get; set; }
+    public virtual Result Result { get; set; }
 
-    public virtual ICollection<LeaderBoard> LeaderBoard { get; set; }
+    public virtual Athlete Athlete { get; set; }
 
 }
 
