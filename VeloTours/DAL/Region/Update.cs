@@ -7,6 +7,7 @@ using Stravan;
 using Stravan.Json;
 using VeloTours.Models;
 using VeloTours.DAL.Segment;
+using VeloTours.DAL.Area;
 
 namespace VeloTours.DAL.Region
 {
@@ -37,7 +38,7 @@ namespace VeloTours.DAL.Region
         {
             foreach (var area in dbRegion.SegmentAreas)
             {
-                Area.Update updater = new Area.Update(area.SegmentAreaID);
+                AreaUpdate updater = new AreaUpdate(area.SegmentAreaID);
                 updater.StravaWebClientObj = StravaWebClientObj;
 
                 updater.UpdateArea(recursive);

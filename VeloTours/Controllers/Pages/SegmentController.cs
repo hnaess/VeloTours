@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VeloTours.DAL.Area;
 using VeloTours.DAL.Segment;
 using VeloTours.Models;
 using VeloTours.ViewModel;
@@ -120,7 +121,7 @@ namespace VeloTours.Controllers.Pages
 
         public ActionResult AreaUpdate(int area, int athlete, bool? effort = false)
         {
-            DAL.Area.Update areaUpdate = new DAL.Area.Update(area);
+            AreaUpdate areaUpdate = new AreaUpdate(area);
             areaUpdate.UpdateArea((bool)effort);
 
             return RedirectToAction("Area", "Segment", new { athlete = athlete, area = area });

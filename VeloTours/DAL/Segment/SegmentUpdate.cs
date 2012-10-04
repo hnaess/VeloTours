@@ -80,7 +80,6 @@ namespace VeloTours.DAL.Segment
         private void UpdateResults(Models.Segment dbSegment)
         {
             var result = AddResultSet(dbSegment);
-            //db.SaveChanges();
 
             var efforts = new List<Models.Effort>();
 
@@ -92,7 +91,9 @@ namespace VeloTours.DAL.Segment
         private Result AddResultSet(Models.Segment dbSegment)
         {
             var result = new Models.Result { Segment = dbSegment, LastUpdated = DateTime.Now };
-            return db.ResultSet.Add(result);
+            result = db.ResultSet.Add(result);
+            db.SaveChanges();
+            return result;
         }
     }
 }

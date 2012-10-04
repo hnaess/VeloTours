@@ -189,7 +189,7 @@
     <Compile Include="DAL\All_InitDB\Athlete.cs" />
     <Compile Include="DAL\All_InitDB\Norway\Norway.cs" />
     <Compile Include="DAL\All_InitDB\TourInitializer.cs" />
-    <Compile Include="DAL\Area\Update.cs" />
+    <Compile Include="DAL\Area\AreaUpdate.cs" />
     <Compile Include="DAL\Athlete\AthleteShortInfo.cs" />
     <Compile Include="DAL\Athlete\AthleteUpdate.cs" />
     <Compile Include="DAL\Country\Update.cs" />

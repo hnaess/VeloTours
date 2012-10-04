@@ -10,7 +10,7 @@ using VeloTours.DAL.Segment;
 
 namespace VeloTours.DAL.Area
 {
-    public class Update
+    public class AreaUpdate
     {
         private TourModelContainer db = new TourModelContainer();
         private int areaID; 
@@ -27,7 +27,7 @@ namespace VeloTours.DAL.Area
         
         #endregion
 
-        public Update(int areaID)
+        public AreaUpdate(int areaID)
         {
             this.areaID = areaID;
             dbArea = db.SegmentAreas.Find(areaID);

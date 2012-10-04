@@ -76,25 +76,9 @@ namespace VeloTours.DAL.Segment
 
         private void SaveEfforts(List<Models.Effort> efforts)
         {
-            //efforts.ForEach(effort => Debug.WriteLine(effort.AthleteID));
-            //foreach (var e in efforts)
-            //{
-            //    e.Athlete = db.Athletes.Find(e.AthleteID);
-            //}
-
             // Saving
             efforts.ForEach(effort => db.Efforts.Add(effort));
             db.SaveChanges();
-            
-            //OK
-
-            //db.SaveChanges();
-            //foreach (var e in efforts)
-            //{
-            //    //e.Athlete = db.Athletes.Find(e.AthleteID);
-            //    db.Efforts.Add(e);
-            //    db.SaveChanges();
-            //}
         }
 
         private List<Models.Effort> GetEfforts(SegmentService serv)
