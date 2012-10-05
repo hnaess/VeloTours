@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 10/04/2012 18:14:37
+-- Date Created: 10/04/2012 23:51:28
 -- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
@@ -29,23 +29,23 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_SegmentAreasSegments_Segments]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[SegmentAreasSegments] DROP CONSTRAINT [FK_SegmentAreasSegments_Segments];
 GO
-IF OBJECT_ID(N'[dbo].[FK_ResultLeaderBoard]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[LeaderBoards] DROP CONSTRAINT [FK_ResultLeaderBoard];
-GO
 IF OBJECT_ID(N'[dbo].[FK_SegmentResult]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ResultSet] DROP CONSTRAINT [FK_SegmentResult];
 GO
 IF OBJECT_ID(N'[dbo].[FK_SegmentAreaResult]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ResultSet] DROP CONSTRAINT [FK_SegmentAreaResult];
 GO
-IF OBJECT_ID(N'[dbo].[FK_ResultEffort]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Efforts] DROP CONSTRAINT [FK_ResultEffort];
-GO
 IF OBJECT_ID(N'[dbo].[FK_AthleteLeaderBoard]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[LeaderBoards] DROP CONSTRAINT [FK_AthleteLeaderBoard];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AthleteEffort]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Efforts] DROP CONSTRAINT [FK_AthleteEffort];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ResultEffort]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Efforts] DROP CONSTRAINT [FK_ResultEffort];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ResultLeaderBoard]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LeaderBoards] DROP CONSTRAINT [FK_ResultLeaderBoard];
 GO
 
 -- --------------------------------------------------
@@ -109,8 +109,7 @@ CREATE TABLE [dbo].[LeaderBoards] (
     [YellowPoints] int  NULL,
     [GreenPoints] int  NOT NULL,
     [PolkaDotPoints] int  NOT NULL,
-    [NoRidden] int  NOT NULL,
-    [Result_ResultID] int  NOT NULL
+    [NoRidden] int  NOT NULL
 );
 GO
 
@@ -167,8 +166,7 @@ CREATE TABLE [dbo].[Efforts] (
     [StravaID] int  NOT NULL,
     [StartDate] datetime  NOT NULL,
     [ElapsedTime] int  NOT NULL,
-    [VAM] int  NULL,
-    [Result_ResultID] int  NOT NULL
+    [VAM] int  NULL
 );
 GO
 
@@ -301,20 +299,6 @@ ON [dbo].[SegmentAreasSegments]
     ([Segments_SegmentID]);
 GO
 
--- Creating foreign key on [Result_ResultID] in table 'LeaderBoards'
-ALTER TABLE [dbo].[LeaderBoards]
-ADD CONSTRAINT [FK_ResultLeaderBoard]
-    FOREIGN KEY ([Result_ResultID])
-    REFERENCES [dbo].[ResultSet]
-        ([ResultID])
-    ON DELETE CASCADE ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_ResultLeaderBoard'
-CREATE INDEX [IX_FK_ResultLeaderBoard]
-ON [dbo].[LeaderBoards]
-    ([Result_ResultID]);
-GO
-
 -- Creating foreign key on [Segment_SegmentID] in table 'ResultSet'
 ALTER TABLE [dbo].[ResultSet]
 ADD CONSTRAINT [FK_SegmentResult]
@@ -343,20 +327,6 @@ ON [dbo].[ResultSet]
     ([SegmentArea_SegmentAreaID]);
 GO
 
--- Creating foreign key on [Result_ResultID] in table 'Efforts'
-ALTER TABLE [dbo].[Efforts]
-ADD CONSTRAINT [FK_ResultEffort]
-    FOREIGN KEY ([Result_ResultID])
-    REFERENCES [dbo].[ResultSet]
-        ([ResultID])
-    ON DELETE CASCADE ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_ResultEffort'
-CREATE INDEX [IX_FK_ResultEffort]
-ON [dbo].[Efforts]
-    ([Result_ResultID]);
-GO
-
 -- Creating foreign key on [AthleteID] in table 'LeaderBoards'
 ALTER TABLE [dbo].[LeaderBoards]
 ADD CONSTRAINT [FK_AthleteLeaderBoard]
@@ -383,6 +353,34 @@ ADD CONSTRAINT [FK_AthleteEffort]
 CREATE INDEX [IX_FK_AthleteEffort]
 ON [dbo].[Efforts]
     ([AthleteID]);
+GO
+
+-- Creating foreign key on [ResultID] in table 'Efforts'
+ALTER TABLE [dbo].[Efforts]
+ADD CONSTRAINT [FK_ResultEffort]
+    FOREIGN KEY ([ResultID])
+    REFERENCES [dbo].[ResultSet]
+        ([ResultID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ResultEffort'
+CREATE INDEX [IX_FK_ResultEffort]
+ON [dbo].[Efforts]
+    ([ResultID]);
+GO
+
+-- Creating foreign key on [ResultID] in table 'LeaderBoards'
+ALTER TABLE [dbo].[LeaderBoards]
+ADD CONSTRAINT [FK_ResultLeaderBoard]
+    FOREIGN KEY ([ResultID])
+    REFERENCES [dbo].[ResultSet]
+        ([ResultID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ResultLeaderBoard'
+CREATE INDEX [IX_FK_ResultLeaderBoard]
+ON [dbo].[LeaderBoards]
+    ([ResultID]);
 GO
 
 -- --------------------------------------------------

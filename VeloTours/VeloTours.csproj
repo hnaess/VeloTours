@@ -182,8 +182,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Account\AccountController.cs" />
     <Compile Include="Controllers\Pages\AdminController.cs" />
+    <Compile Include="Controllers\Pages\AreaController.cs" />
     <Compile Include="Controllers\Pages\HomeController.cs" />
     <Compile Include="Controllers\Pages\ProfileController.cs" />
+    <Compile Include="Controllers\Pages\CountryController.cs" />
     <Compile Include="Controllers\Pages\SegmentController.cs" />
     <Compile Include="DAL\All_InitDB\InitDB.cs" />
     <Compile Include="DAL\All_InitDB\Athlete.cs" />
@@ -192,8 +194,8 @@
     <Compile Include="DAL\Area\AreaUpdate.cs" />
     <Compile Include="DAL\Athlete\AthleteShortInfo.cs" />
     <Compile Include="DAL\Athlete\AthleteUpdate.cs" />
-    <Compile Include="DAL\Country\Update.cs" />
-    <Compile Include="DAL\Region\Update.cs" />
+    <Compile Include="DAL\Country\CountryUpdate.cs" />
+    <Compile Include="DAL\Region\RegionUpdate.cs" />
     <Compile Include="DAL\Segment\EffortUpdate.cs" />
     <Compile Include="DAL\Segment\SegmentUpdate.cs" />
     <Compile Include="DAL\Segment\SegmentEffort.cs" />
@@ -389,14 +391,18 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
-    <Content Include="Views\Segment\Segment.cshtml" />
-    <Content Include="Views\Segment\Area.cshtml" />
     <Content Include="Views\Segment\Index.cshtml" />
+    <Content Include="Views\Area\Index.cshtml" />
+    <Content Include="Views\Country\Index.cshtml" />
+    <Content Include="Views\Segment\SegmentPart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\Pages\Area\" />
+    <Folder Include="Controllers\Pages\Segment\" />
     <Folder Include="Controllers\Profile\" />
     <Folder Include="Controllers\Segment\" />
+    <Folder Include="Views\Region\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

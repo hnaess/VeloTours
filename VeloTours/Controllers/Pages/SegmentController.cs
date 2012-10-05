@@ -14,53 +14,44 @@ namespace VeloTours.Controllers.Pages
     {
         private TourModelContainer db = new TourModelContainer();
 
-        public ActionResult Segment(int segment, int athlete, int? area)
+        public ActionResult Index(int segment, int athlete, int? area)
         {
-            Segment segmentObj = db.Segments.Find(segment);
+            //Segment segmentModel = db.Segments.Find(segment);
+            SegmentViewModel segmentModel = GetSegmentViewModel(segment);
+
             ViewBag.Segment = segment;
             ViewBag.Athlete = athlete;
             ViewBag.Area = area;
-
-            return View(segmentObj);
+            return View(segmentModel);
         }
 
-        public ActionResult Area(int area, int? athlete)
+        public ActionResult Update(int segment, int athlete, int? area, bool? effort = false)
         {
-            //Models.SegmentArea segmentArea = db.SegmentAreas.Find(area);
+            SegmentUpdate segmentUpdate = new SegmentUpdate(segment);
+            segmentUpdate.UpdateSegment((bool)effort);
 
-            TourModelContainer db = new TourModelContainer();
-            Models.SegmentArea segmentArea = db.SegmentAreas.Find(area);
-
-            SegmentAreaViewModel viewModel = GetSegmentArea(segmentArea);
-            foreach (Models.Segment segment in segmentArea.Segments)
-            {
-                GetSegment(viewModel, segment);
-            }
-
-            ViewBag.Area = area;
-            ViewBag.Athlete = athlete;
-
-            return View(viewModel);
+            return RedirectToAction("Index", new { athlete = athlete, segment = segment, area = area });
         }
 
-        private static void GetSegment(SegmentAreaViewModel viewModel, Models.Segment segment)
+        private SegmentViewModel GetSegmentViewModel(int segmentID)
         {
-            viewModel.Segments.Add(new SegmentViewModel
+            Segment model = db.Segments.Find(segmentID);
+            return new SegmentViewModel
             {
-                AvgGrade = segment.AvgGrade,
-                ClimbCategory = segment.ClimbCategory,
-                Description = segment.Description,
-                Distance = segment.Distance,
-                ElevationGain = segment.ElevationGain,
-                ElevationHigh = segment.ElevationHigh,
-                ElevationLow = segment.ElevationLow,
-                GradeType = segment.GradeType,
-                LastUpdated = segment.LastUpdated,
-                Name = segment.Name,
-                NoRidden = segment.NoRidden,
-                NoRiders = segment.NoRiders,
-                PictureUri = segment.PictureUri,
-                SegmentID = segment.SegmentID,
+                AvgGrade = model.AvgGrade,
+                ClimbCategory = model.ClimbCategory,
+                Description = model.Description,
+                Distance = model.Distance,
+                ElevationGain = model.ElevationGain,
+                ElevationHigh = model.ElevationHigh,
+                ElevationLow = model.ElevationLow,
+                GradeType = model.GradeType,
+                LastUpdated = model.LastUpdated,
+                Name = model.Name,
+                NoRidden = model.NoRidden,
+                NoRiders = model.NoRiders,
+                PictureUri = model.PictureUri,
+                SegmentID = model.SegmentID,
 
                 // + new fields?
                 //KomSpeed =
@@ -71,60 +62,7 @@ namespace VeloTours.Controllers.Pages
                 //UsersTime =
                 //UsersTimePrevious =
                 //UsersChangePos =
-            });
-        }
-
-        private static SegmentAreaViewModel GetSegmentArea(Models.SegmentArea segmentArea)
-        {
-            SegmentAreaViewModel viewModel = new SegmentAreaViewModel()
-            {
-                AvgGrade = segmentArea.AvgGrade,
-                Description = segmentArea.Description,
-                Distance = segmentArea.Distance,
-                ElevationGain = segmentArea.ElevationGain,
-                LastUpdated = segmentArea.LastUpdated,
-                PictureUri = segmentArea.PictureUri,
-                SegmentAreaID = segmentArea.SegmentAreaID,
-
-                //
-                //NoRidden = segment.NoRidden,
-                //KomSpeed =
-                //BehindKom =
-                //BehindKomPercentage =
-                //UsersPosition =
-                //UsersPositionPercentage =
-                //UsersTime =
-                //UsersTimePrevious =
-                //UsersChangePos =
-
-                // example of a new
-                Position = 1234,
             };
-            return viewModel;
-        }
-
-        public ActionResult Index(int? athlete)
-        {
-            List<Country> countries = db.Countries.ToList();
-            ViewBag.Athlete = athlete;
-
-            return View(countries);
-        }
-
-        public ActionResult SegmentUpdate(int segment, int athlete, int? area, bool? effort = false)
-        {
-            SegmentUpdate segmentUpdate = new SegmentUpdate(segment);
-            segmentUpdate.UpdateSegment((bool)effort);
-
-            return RedirectToAction("Segment", "Segment", new { athlete = athlete, segment = segment, area = area });
-        }
-
-        public ActionResult AreaUpdate(int area, int athlete, bool? effort = false)
-        {
-            AreaUpdate areaUpdate = new AreaUpdate(area);
-            areaUpdate.UpdateArea((bool)effort);
-
-            return RedirectToAction("Area", "Segment", new { athlete = athlete, area = area });
         }
     }
 }

@@ -40,7 +40,7 @@
                 <td class="right">@item.UsersPosition</td>
                 <td class="right">@item.UsersPositionPercentage</td>
                 <td>
-                    @Html.ActionLink(item.Name, "Segment", new { segment = item.SegmentID, athlete = athleteID, area = @areaID })
+                    @Html.ActionLink(item.Name, "Index", "Segment", new { segment = item.SegmentID, athlete = athleteID, area = @areaID }, null)
 
                     @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-info-sign'></i></a>",
                         item.SegmentID, 0, 0))
@@ -85,9 +85,9 @@
 }
 
 <p>
-    @Html.ActionLink("Update from Strava", "AreaUpdate", routeValues: new { athlete = athleteID, area = areaID, effort = false, }, htmlAttributes: null)<br />
-    @Html.ActionLink("Update all from Strava", "AreaUpdate", routeValues: new { athlete = athleteID, area = areaID, effort = true, }, htmlAttributes: null)<br />
-    @Html.ActionLink("Go back to overview", "/", new { athlete = athleteID })
+    @Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = athleteID, area = areaID, effort = false })<br />
+    @Html.ActionLink("Update from Strava w/efforts", "Update", routeValues: new { athlete = athleteID, area = areaID, effort = true, }, htmlAttributes: null)<br />
+    @Html.ActionLink("Go back to overview", "Index", "Home", new { athlete = athleteID })
 </p>
 
 

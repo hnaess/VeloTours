@@ -16,12 +16,12 @@
         <AssociationConnector Association="TourModel.RegionSegmentArea" />
         <AssociationConnector Association="TourModel.SegmentAreasSegments" />
         <EntityTypeShape EntityType="TourModel.Result" Width="1.5" PointX="5.875" PointY="8.375" />
-        <AssociationConnector Association="TourModel.ResultLeaderBoard" />
         <AssociationConnector Association="TourModel.SegmentResult" />
         <AssociationConnector Association="TourModel.SegmentAreaResult" />
-        <AssociationConnector Association="TourModel.ResultEffort" />
         <AssociationConnector Association="TourModel.AthleteLeaderBoard" />
         <AssociationConnector Association="TourModel.AthleteEffort" />
+        <AssociationConnector Association="TourModel.ResultEffort" />
+        <AssociationConnector Association="TourModel.ResultLeaderBoard" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

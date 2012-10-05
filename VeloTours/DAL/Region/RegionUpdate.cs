@@ -7,14 +7,15 @@ using Stravan;
 using Stravan.Json;
 using VeloTours.Models;
 using VeloTours.DAL.Segment;
+using VeloTours.DAL.Area;
 
-namespace VeloTours.DAL.Country
+namespace VeloTours.DAL.Region
 {
-    public class Update
+    public class RegionUpdate
     {
         private TourModelContainer db = new TourModelContainer();
-        private int countryID;
-        private Models.Country dbcountry;
+        private int regionID;
+        private Models.Region dbRegion;
 
         #region Singletons
 
@@ -27,20 +28,20 @@ namespace VeloTours.DAL.Country
 
         #endregion
 
-        public Update(int countryID)
+        public RegionUpdate(int regionID)
         {
-            this.countryID = countryID;
-            dbcountry = db.Countries.Find(countryID);
+            this.regionID = regionID;
+            dbRegion = db.Regions.Find(regionID);
         }
 
-        public void UpdateCountry(bool recursive)
+        public void Update(bool recursive)
         {
-            foreach (var region in dbcountry.Regions)
+            foreach (var area in dbRegion.SegmentAreas)
             {
-                Region.Update updater = new Region.Update(region.RegionID);
+                AreaUpdate updater = new AreaUpdate(area.SegmentAreaID);
                 updater.StravaWebClientObj = StravaWebClientObj;
 
-                updater.UpdateRegion(recursive);
+                updater.UpdateArea(recursive);
             }
         }
     }

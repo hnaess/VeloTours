@@ -1,0 +1,30 @@
+﻿@model IEnumerable<VeloTours.Models.Country>
+@using VeloTours.Models;
+
+@{
+    ViewBag.Title = "Segment Area Overview";
+    int athleteID = ViewBag.Athlete ?? 0;
+}
+
+<h2>Segment Area Overview</h2>
+@foreach (Country country in Model)
+{
+    <h3>
+        <a href="@Url.Action("Update", new { athlete = athleteID, country = country.CountryID, })" style='vertical-align:middle;'><i class='icon-refresh'></i></a>
+        @country.Name
+    </h3>   
+    
+    foreach (Region region in country.Regions)
+    {
+        <h4>
+            <a href="@Url.Action("UpdateRegion", new { athlete = athleteID, region = region.RegionID, })" style='vertical-align:middle;'><i class='icon-refresh'></i></a>
+            @Html.ActionLink(region.Name, "Index", "Region", new { region = region.RegionID, athlete = athleteID } , null)
+        </h4>
+        
+        foreach (SegmentArea area in region.SegmentAreas)
+        {
+            @Html.ActionLink(area.Name, "Index", "Area", new { area = area.SegmentAreaID, athlete = ViewBag.Athlete }, null)
+            @Html.DisplayText(",&nbsp;");
+        }
+    }
+}

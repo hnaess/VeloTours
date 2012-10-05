@@ -84,7 +84,7 @@
                 <tbody>
                     <tr>
                         <td>
-                            @Html.ActionLink("Henrik N.", "", "Segment", routeValues: new { athlete = 352657 }, htmlAttributes: null )
+                            @Html.ActionLink("Henrik N.", "Index", "Country", routeValues: new { athlete = 352657 }, htmlAttributes: null )
                             @Html.Raw(String.Format("<a id='athlete{0}' data-athleteid='{0}' class='athleteLink' href='#' rel='popover'><i class='icon-user'></i></a>", 352657))
                         </td>
                         <td>&nbsp;</td>
@@ -94,6 +94,6 @@
             </table>
         }
 
-        Get an overview of all @Html.ActionLink("segments areas", "", "Segment", routeValues: new { athlete = athlete }, htmlAttributes: null )
+        Get an overview of all @Html.ActionLink("segments areas", "Index", "Country", routeValues: new { athlete = athlete }, htmlAttributes: null )
     </li>
 </ol>
