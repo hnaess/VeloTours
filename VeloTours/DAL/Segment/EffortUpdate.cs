@@ -30,7 +30,7 @@ namespace VeloTours.DAL.Segment
         private int segmentID;
         private double elevationGain;
 
-        public List<Models.Effort> Efforts { get; private set; }
+        private List<Models.Effort> Efforts;
 
         #region Constructors
 
@@ -46,10 +46,8 @@ namespace VeloTours.DAL.Segment
 
         internal void UpdateEfforts(DateTime startDate, DateTime endDate)
         {
-
+            throw new NotImplementedException("Update based on dates");
         }
-
-
 
         internal void UpdateEfforts()
         {
@@ -63,15 +61,18 @@ namespace VeloTours.DAL.Segment
             }           
         }
 
-        internal void UpdateLeaderboard()
+        internal void UpdateLeaderboard(string segmentClimbCategory)
         {
             List<Models.LeaderBoard> leaderBoards = new List<Models.LeaderBoard>();
-
-            Models.Segment dbSegments = db.Segments.Find(segmentID);
+            var sortedEfforts =
+                from n in db.Efforts
+                where n.ResultID == dbResult.ResultID
+                orderby n.ElapsedTime ascending
+                select new { n.AthleteID, n.ElapsedTime };
 
             Dictionary<int, List<int>> athleteEffortsList = new Dictionary<int, List<int>>();
             int rank = 0;
-            foreach (var e in Efforts)
+            foreach (var e in sortedEfforts)
             {
                 List<int> athleteEfforts;
                 athleteEffortsList.TryGetValue(e.AthleteID, out athleteEfforts);
@@ -86,14 +87,14 @@ namespace VeloTours.DAL.Segment
                 athleteEfforts.Add(e.ElapsedTime);
             }
 
+            int? elapsedTimeKOM = null;
             foreach(var l in leaderBoards)
             {
-                int athleteID = l.AthleteID;
-                List<int> effort = athleteEffortsList[athleteID];
+                List<int> effort = athleteEffortsList[l.AthleteID];
                 effort.Sort();
 
                 double stdev = effort.StandardDeviation();
-
+                int noRiders = athleteEffortsList.Count;
                 l.NoRidden = effort.Count;
                 l.ElapsedTimes = new ElapsedTimes
                 {
@@ -104,9 +105,13 @@ namespace VeloTours.DAL.Segment
                     Quartile = effort[Convert.ToInt32(Math.Round(effort.Count * 0.10))],
                     Stdev = Double.IsNaN(stdev) ? 1 : stdev,
                 };
-                l.YellowPoints = CalcYellowPoints(leaderBoards.First().ElapsedTimes.Min, l.ElapsedTimes.Min);
-                l.GreenPoints = CalcGreenPoints(l.Rank, dbSegments.ClimbCategory);
-                l.PolkaDotPoints = CalcPolkaDotPoints(l.Rank, dbSegments.ClimbCategory);
+
+                if (elapsedTimeKOM == null)
+                    elapsedTimeKOM = l.ElapsedTimes.Min;
+                
+                l.YellowPoints = LeaderboardCalc.CalcYellowPoints((int)elapsedTimeKOM, l.ElapsedTimes.Min);
+                l.GreenPoints = LeaderboardCalc.CalcGreenPoints(l.Rank, noRiders, segmentClimbCategory);
+                l.PolkaDotPoints = LeaderboardCalc.CalcPolkaDotPoints(l.Rank, noRiders, segmentClimbCategory);
             }
             
             leaderBoards.ForEach(items => db.LeaderBoards.Add(items));
@@ -165,7 +170,7 @@ namespace VeloTours.DAL.Segment
                     StartDate =  DateTime.Parse(effort.StartDate, new System.Globalization.CultureInfo("en-US")),
                     StravaActivityID = Convert.ToInt32(effort.ActivityId),
                     StravaID = effort.Id,
-                    VAM = CaclculateVAM(effort.ElapsedTime, elevationGain),
+                    VAM = LeaderboardCalc.VAM(effort.ElapsedTime, elevationGain),
                 };
                 EnsureSavingOfAthlete(effort.Athlete.Name, dbEffort.AthleteID);
 
@@ -192,12 +197,6 @@ namespace VeloTours.DAL.Segment
             {
                 AthleteUpdate.Athletes[athleteID] = new AthleteShortInfo() { Name = athleteName };
             }
-        }
-
-        private static int CaclculateVAM(int seconds, double elevation)
-        {
-            int vam = Convert.ToInt16(Math.Round(elevation * 3600 / seconds));
-            return vam;
         }
     }
 }

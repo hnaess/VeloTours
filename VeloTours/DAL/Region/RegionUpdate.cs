@@ -34,14 +34,14 @@ namespace VeloTours.DAL.Region
             dbRegion = db.Regions.Find(regionID);
         }
 
-        public void Update(bool recursive)
+        public void Update(bool updateEfforts)
         {
             foreach (var area in dbRegion.SegmentAreas)
             {
                 AreaUpdate updater = new AreaUpdate(area.SegmentAreaID);
                 updater.StravaWebClientObj = StravaWebClientObj;
 
-                updater.UpdateArea(recursive);
+                updater.UpdateArea(updateEfforts);
             }
         }
     }

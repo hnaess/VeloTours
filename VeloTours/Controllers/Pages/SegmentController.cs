@@ -16,7 +16,6 @@ namespace VeloTours.Controllers.Pages
 
         public ActionResult Index(int segment, int athlete, int? area)
         {
-            //Segment segmentModel = db.Segments.Find(segment);
             SegmentViewModel segmentModel = GetSegmentViewModel(segment);
 
             ViewBag.Segment = segment;
@@ -28,7 +27,9 @@ namespace VeloTours.Controllers.Pages
         public ActionResult Update(int segment, int athlete, int? area, bool? effort = false)
         {
             SegmentUpdate segmentUpdate = new SegmentUpdate(segment);
-            segmentUpdate.UpdateSegment((bool)effort);
+            segmentUpdate.UpdateSegment();
+            if ((bool)effort)
+                segmentUpdate.UpdateEfforts(segment);
 
             return RedirectToAction("Index", new { athlete = athlete, segment = segment, area = area });
         }

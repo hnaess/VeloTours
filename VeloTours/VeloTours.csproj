@@ -197,6 +197,7 @@
     <Compile Include="DAL\Country\CountryUpdate.cs" />
     <Compile Include="DAL\Region\RegionUpdate.cs" />
     <Compile Include="DAL\Segment\EffortUpdate.cs" />
+    <Compile Include="DAL\Segment\LeaderboardCalc.cs" />
     <Compile Include="DAL\Segment\SegmentUpdate.cs" />
     <Compile Include="DAL\Segment\SegmentEffort.cs" />
     <Compile Include="DAL\Utils.cs" />

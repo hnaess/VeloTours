@@ -44,7 +44,12 @@ namespace VeloTours.DAL.Area
                 SegmentUpdate segmentUpdater = new SegmentUpdate(segment.SegmentID);
                 segmentUpdater.StravaWebClientObj = StravaWebClientObj;
 
-                var info = segmentUpdater.UpdateSegment(updateEfforts);
+                var info = segmentUpdater.UpdateSegment();
+                if (updateEfforts)
+                {
+                    segmentUpdater.UpdateEfforts(info);
+                }
+                
                 dbArea.Distance += info.Distance;
                 dbArea.ElevationGain += info.ElevationGain;
                 avgGradeTemp += Convert.ToDecimal(info.Distance) * Convert.ToDecimal(info.AvgGrade);

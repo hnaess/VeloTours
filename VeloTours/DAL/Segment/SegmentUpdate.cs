@@ -44,7 +44,7 @@ namespace VeloTours.DAL.Segment
 
         #endregion
 
-        public Models.Segment UpdateSegment(bool effort)
+        public Models.Segment UpdateSegment()
         {
             List<SegmentEffort> rides = new List<SegmentEffort>();
             Stravan.Segment segmentinfo = null;
@@ -69,15 +69,21 @@ namespace VeloTours.DAL.Segment
             dbSegment.Name = segmentinfo.Name;
             dbSegment.LastUpdated = DateTime.UtcNow;
             db.SaveChanges();
-
-            if (effort)
-            {
-                UpdateResults(dbSegment);
-            }
             return dbSegment;
         }
 
-        private void UpdateResults(Models.Segment dbSegment)
+        public void UpdateEfforts(DateTime startDate, DateTime endDate)
+        {
+            throw new NotImplementedException("Update based on dates");
+        }
+
+        public void UpdateEfforts(int segmentID)
+        {
+            Models.Segment dbSegment = db.Segments.Find(segmentID);
+            UpdateEfforts(dbSegment);
+        }
+
+        public void UpdateEfforts(Models.Segment dbSegment)
         {
             var result = AddResultSet(dbSegment);
 
@@ -86,7 +92,7 @@ namespace VeloTours.DAL.Segment
             EffortUpdate effortUpdater = new EffortUpdate(db, result, dbSegment.SegmentID, (double)dbSegment.ElevationGain);
             effortUpdater.StravaWebClientObj = StravaWebClientObj;
             effortUpdater.UpdateEfforts();
-            effortUpdater.UpdateLeaderboard();
+            effortUpdater.UpdateLeaderboard(dbSegment.ClimbCategory);
         }
 
         private Result AddResultSet(Models.Segment dbSegment)
