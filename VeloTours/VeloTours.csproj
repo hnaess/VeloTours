@@ -200,6 +200,16 @@
     <Compile Include="DAL\Segment\SegmentUpdate.cs" />
     <Compile Include="DAL\Segment\SegmentEffort.cs" />
     <Compile Include="DAL\Utils.cs" />
+    <Compile Include="Extensions\EnumerableStats\EnumerableStats.cs" />
+    <Compile Include="Extensions\EnumerableStats\EnumerableStatsCovariance.cs" />
+    <Compile Include="Extensions\EnumerableStats\EnumerableStatsMedian.cs" />
+    <Compile Include="Extensions\EnumerableStats\EnumerableStatsMode.cs" />
+    <Compile Include="Extensions\EnumerableStats\EnumerableStatsPearson.cs" />
+    <Compile Include="Extensions\EnumerableStats\EnumerableStatsRange.cs" />
+    <Compile Include="Extensions\EnumerableStats\EnumerableStatsStandardDeviation.cs" />
+    <Compile Include="Extensions\EnumerableStats\EnumerableStatsStandardDeviationP.cs" />
+    <Compile Include="Extensions\EnumerableStats\EnumerableStatsVariance.cs" />
+    <Compile Include="Extensions\EnumerableStats\EnumerableStatsVarianceP.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -213,6 +223,9 @@
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Effort.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ElapsedTimes.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LeaderBoard.cs">

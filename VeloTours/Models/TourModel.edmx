@@ -83,6 +83,12 @@
     <Property Name="YellowPoints" Type="int" Nullable="true" />
     <Property Name="GreenPoints" Type="int" Nullable="false" />
     <Property Name="PolkaDotPoints" Type="int" Nullable="false" />
+    <Property Name="ElapsedTimes_Min" Type="int" Nullable="false" />
+    <Property Name="ElapsedTimes_Median" Type="int" Nullable="false" />
+    <Property Name="ElapsedTimes_Average" Type="int" Nullable="false" />
+    <Property Name="ElapsedTimes_Max" Type="int" Nullable="false" />
+    <Property Name="ElapsedTimes_Stdev" Type="float" Nullable="false" />
+    <Property Name="ElapsedTimes_Quartile" Type="int" Nullable="false" />
     <Property Name="NoRidden" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Regions">
@@ -363,6 +369,7 @@
           <Property Type="Int32" Name="YellowPoints" />
           <Property Type="Int32" Name="GreenPoints" Nullable="false" />
           <Property Type="Int32" Name="PolkaDotPoints" Nullable="false" />
+          <Property Name="ElapsedTimes" Type="TourModel.ElapsedTimes" Nullable="false" />
           <Property Type="Int32" Name="NoRidden" Nullable="false" />
           <NavigationProperty Name="Result" Relationship="TourModel.ResultLeaderBoard" FromRole="LeaderBoard" ToRole="Result" />
           <NavigationProperty Name="Athlete" Relationship="TourModel.AthleteLeaderBoard" FromRole="LeaderBoard" ToRole="Athlete" />
@@ -532,6 +539,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="ElapsedTimes" >
+          <Property Type="Int32" Name="Min" Nullable="false" />
+          <Property Type="Int32" Name="Median" Nullable="false" />
+          <Property Type="Int32" Name="Average" Nullable="false" />
+          <Property Type="Int32" Name="Max" Nullable="false" />
+          <Property Type="Double" Name="Stdev" Nullable="false" />
+          <Property Type="Int32" Name="Quartile" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -566,6 +581,14 @@
           <ScalarProperty Name="YellowPoints" ColumnName="YellowPoints" />
           <ScalarProperty Name="GreenPoints" ColumnName="GreenPoints" />
           <ScalarProperty Name="PolkaDotPoints" ColumnName="PolkaDotPoints" />
+          <ComplexProperty Name="ElapsedTimes" TypeName="TourModel.ElapsedTimes">
+            <ScalarProperty Name="Min" ColumnName="ElapsedTimes_Min" />
+            <ScalarProperty Name="Median" ColumnName="ElapsedTimes_Median" />
+            <ScalarProperty Name="Average" ColumnName="ElapsedTimes_Average" />
+            <ScalarProperty Name="Max" ColumnName="ElapsedTimes_Max" />
+            <ScalarProperty Name="Stdev" ColumnName="ElapsedTimes_Stdev" />
+            <ScalarProperty Name="Quartile" ColumnName="ElapsedTimes_Quartile" />
+          </ComplexProperty>
           <ScalarProperty Name="NoRidden" ColumnName="NoRidden" />
         </MappingFragment>
       </EntityTypeMapping>

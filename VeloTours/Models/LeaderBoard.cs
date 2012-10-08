@@ -18,6 +18,14 @@ using System;
 public partial class LeaderBoard
 {
 
+    public LeaderBoard()
+    {
+
+        this.ElapsedTimes = new ElapsedTimes();
+
+    }
+
+
     public int LeaderBoardID { get; set; }
 
     public int ResultID { get; set; }
@@ -33,6 +41,10 @@ public partial class LeaderBoard
     public int PolkaDotPoints { get; set; }
 
     public int NoRidden { get; set; }
+
+
+
+    public ElapsedTimes ElapsedTimes { get; set; }
 
 
 

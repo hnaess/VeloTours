@@ -8,6 +8,7 @@ using Stravan;
 using Stravan.Json;
 using VeloTours.DAL.Athlete;
 using VeloTours.Models;
+using LinqStatistics;
 
 namespace VeloTours.DAL.Segment
 {
@@ -29,6 +30,8 @@ namespace VeloTours.DAL.Segment
         private int segmentID;
         private double elevationGain;
 
+        public List<Models.Effort> Efforts { get; private set; }
+
         #region Constructors
 
         public EffortUpdate(TourModelContainer db, Models.Result dbResult, int segmentID, double elevationGain)
@@ -41,59 +44,111 @@ namespace VeloTours.DAL.Segment
 
         #endregion
 
+        internal void UpdateEfforts(DateTime startDate, DateTime endDate)
+        {
+
+        }
+
+
+
         internal void UpdateEfforts()
         {
-            List<Models.Effort> stravaEfforts = ImportEffortsFromStrava();
+            ImportEffortsFromStrava();
             
             // TODO: Delete previous results
-            if (stravaEfforts.Count == 0)
+            if (Efforts.Count == 0)
             {
                 // Marked as hazardious ?
                 throw new NotSupportedException("Not expected");
             }           
         }
 
-        private List<Models.Effort> ImportEffortsFromStrava()
+        internal void UpdateLeaderboard()
         {
-            List<Models.Effort> efforts = null;
+            List<Models.LeaderBoard> leaderBoards = new List<Models.LeaderBoard>();
+
+            Models.Segment dbSegments = db.Segments.Find(segmentID);
+
+            Dictionary<int, List<int>> athleteEffortsList = new Dictionary<int, List<int>>();
+            int rank = 0;
+            foreach (var e in Efforts)
+            {
+                List<int> athleteEfforts;
+                athleteEffortsList.TryGetValue(e.AthleteID, out athleteEfforts);
+                if (athleteEfforts == null)
+                {
+                    rank++;                    
+                    athleteEfforts = new List<int>();
+                    athleteEffortsList[e.AthleteID] = athleteEfforts;
+
+                    leaderBoards.Add(new Models.LeaderBoard() { AthleteID = e.AthleteID, Rank = rank, Result = dbResult });
+                }
+                athleteEfforts.Add(e.ElapsedTime);
+            }
+
+            foreach(var l in leaderBoards)
+            {
+                int athleteID = l.AthleteID;
+                List<int> effort = athleteEffortsList[athleteID];
+                effort.Sort();
+
+                double stdev = effort.StandardDeviation();
+
+                l.NoRidden = effort.Count;
+                l.ElapsedTimes = new ElapsedTimes
+                {
+                    Average = (int)effort.Average(),
+                    Max = effort.Max(),
+                    Min = effort.Min(),
+                    Median = (int)effort.Median(),
+                    Quartile = effort[Convert.ToInt32(Math.Round(effort.Count * 0.10))],
+                    Stdev = Double.IsNaN(stdev) ? 1 : stdev,
+                };
+                l.YellowPoints = CalcYellowPoints(leaderBoards.First().ElapsedTimes.Min, l.ElapsedTimes.Min);
+                l.GreenPoints = CalcGreenPoints(l.Rank, dbSegments.ClimbCategory);
+                l.PolkaDotPoints = CalcPolkaDotPoints(l.Rank, dbSegments.ClimbCategory);
+            }
+            
+            leaderBoards.ForEach(items => db.LeaderBoards.Add(items));
+            db.SaveChanges();
+        }
+
+        private void ImportEffortsFromStrava()
+        {
+            Efforts = new List<Models.Effort>();
             var originalCulture = Utils.SetStravaCultureAndReturnCurrentCulture();
             try
             {
                 SegmentService serv = new SegmentService(StravaWebClientObj);
                 Stravan.Segment segmentinfo = serv.Show(segmentID);
 
-                efforts = GetEfforts(serv);
+                GetEfforts(serv);
                 AthleteUpdate.UpdateAthlete();
-                SaveEfforts(efforts);
+                SaveEfforts();
             }
             finally
             {
                 Thread.CurrentThread.CurrentCulture = originalCulture;
             }
-
-            return efforts;
         }
 
-        private void SaveEfforts(List<Models.Effort> efforts)
+        private void SaveEfforts()
         {
-            // Saving
-            efforts.ForEach(effort => db.Efforts.Add(effort));
+            Efforts.ForEach(effort => db.Efforts.Add(effort));
             db.SaveChanges();
         }
 
-        private List<Models.Effort> GetEfforts(SegmentService serv)
+        private void GetEfforts(SegmentService serv)
         {
-            List<Models.Effort> efforts = new List<Models.Effort>();
             SegmentEfforts stravaEfforts;
             int offset = 0;
             do
             {
                 stravaEfforts = serv.Efforts(segmentID, offset: offset);
-            } while (GetEffortsLoop(ref efforts, ref stravaEfforts, ref offset));
-            return efforts;
+            } while (GetEffortsLoop(ref stravaEfforts, ref offset));
         }
 
-        private bool GetEffortsLoop(ref List<Models.Effort> rides, ref SegmentEfforts segmentEfforts, ref int offset)
+        private bool GetEffortsLoop(ref SegmentEfforts segmentEfforts, ref int offset)
         {
             if (segmentEfforts.Efforts.Count == 0)
                 return false;
@@ -114,7 +169,7 @@ namespace VeloTours.DAL.Segment
                 };
                 EnsureSavingOfAthlete(effort.Athlete.Name, dbEffort.AthleteID);
 
-                rides.Add(dbEffort);
+                Efforts.Add(dbEffort);
                 //Debug.WriteLine(String.Format("{0}, {1}, {2}, {3}", i, effort.Athlete.Name, effort.ElapsedTime, effort.StartDate.ToString()));
             }
             return true;

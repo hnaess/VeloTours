@@ -86,6 +86,7 @@ namespace VeloTours.DAL.Segment
             EffortUpdate effortUpdater = new EffortUpdate(db, result, dbSegment.SegmentID, (double)dbSegment.ElevationGain);
             effortUpdater.StravaWebClientObj = StravaWebClientObj;
             effortUpdater.UpdateEfforts();
+            effortUpdater.UpdateLeaderboard();
         }
 
         private Result AddResultSet(Models.Segment dbSegment)
