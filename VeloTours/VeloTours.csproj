@@ -410,7 +410,7 @@
     <Content Include="Views\Segment\Index.cshtml" />
     <Content Include="Views\Area\Index.cshtml" />
     <Content Include="Views\Country\Index.cshtml" />
-    <Content Include="Views\Segment\SegmentPart.cshtml" />
+    <Content Include="Views\Segment\Table.cshtml" />
     <Content Include="Views\Segment\YerseyPart.cshtml" />
     <Content Include="Views\Segment\Leaderboard.cshtml" />
   </ItemGroup>
