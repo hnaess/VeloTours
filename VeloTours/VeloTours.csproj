@@ -245,6 +245,9 @@
     <Compile Include="Models\SegmentArea.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Statistics.cs">
+      <DependentUpon>TourModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TourModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -410,9 +413,9 @@
     <Content Include="Views\Segment\Index.cshtml" />
     <Content Include="Views\Area\Index.cshtml" />
     <Content Include="Views\Country\Index.cshtml" />
-    <Content Include="Views\Segment\Table.cshtml" />
+    <Content Include="Views\Segment\TablePart.cshtml" />
     <Content Include="Views\Segment\YerseyPart.cshtml" />
-    <Content Include="Views\Segment\Leaderboard.cshtml" />
+    <Content Include="Views\Segment\LeaderboardPart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -22,6 +22,7 @@
         <AssociationConnector Association="TourModel.AthleteEffort" />
         <AssociationConnector Association="TourModel.ResultEffort" />
         <AssociationConnector Association="TourModel.ResultLeaderBoard" />
+        <AssociationConnector Association="TourModel.RegionResult" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

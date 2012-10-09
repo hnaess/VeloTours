@@ -55,11 +55,11 @@ namespace VeloTours.DAL
         {
             var regions = new List<Models.Region>
             {
-                new Models.Region { CountryID = 578, Name = "Oslo" },
-                new Models.Region { CountryID = 578, Name = "Bærum" },
-                new Models.Region { CountryID = 578, Name = "Asker" },
-                new Models.Region { CountryID = 578, Name = "Nesodden" },
-                new Models.Region { CountryID = 578, Name = "Trondheim" },
+                new Models.Region { CountryID = 578, Info = new Statistics() { Name = "Oslo" }},
+                new Models.Region { CountryID = 578, Info = new Statistics() { Name = "Bærum" }},
+                new Models.Region { CountryID = 578, Info = new Statistics() { Name = "Asker" }},
+                new Models.Region { CountryID = 578, Info = new Statistics() { Name = "Nesodden" }},
+                new Models.Region { CountryID = 578, Info = new Statistics() { Name = "Trondheim" }},
             };
             regions.ForEach(s => context.Regions.Add(s));
             context.SaveChanges();
@@ -84,14 +84,14 @@ namespace VeloTours.DAL
         {
             //var result = new Models.Result { LastUpdated = DefaultDate };
             Models.Result result = null;
-            return new SegmentArea { Region = region, Name = name, Segments = segments, Result = result, LastUpdated = DefaultDate };
+            return new SegmentArea { Region = region, Segments = segments, Result = result, Info = new Statistics { Name = name, LastUpdated = DefaultDate }, };
         }
 
         internal static Models.Segment NewSegment(TourModelContainer context, int segmentID, string name)
         {
             //var result = new Models.Result { LastUpdated = DefaultDate };
             Models.Result result = null;
-            return new Models.Segment { SegmentID = segmentID, Name = name, Result = result, LastUpdated = DefaultDate, };
+            return new Models.Segment { SegmentID = segmentID, Result = result, Info = new Statistics { Name = name, LastUpdated = DefaultDate }, };
         }
     }
 }

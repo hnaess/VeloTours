@@ -1,0 +1,45 @@
+﻿@using VeloTours.Models;
+@using System.Collections;
+
+@{
+    var leaderBoardList = @Model.LeaderBoard;
+}
+
+@*tablesorter*@
+<table id="SegmentsTable" class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
+    <thead>
+        <tr>
+            <th class="right" title="Rank">rank</th>
+            <th style="vertical-align:top" title="Athlete name">name</th>
+            <th class="right" title="Athlete's yellow points">yellow</th>
+            <th class="right" title="Athlete's green points">green</th>
+            <th class="right" title="Athlete's polka-dot points">polka-<br />dot</th>
+            <th class="right" title="Total number the segments has been ridden by uou">#</th>
+            <th class="right" title="Your minimum time on the segment">time<br />min</th>
+            <th class="right" title="Your percentil-90 time on the segment">time<br />p-90</th>
+            <th class="right" title="Your max on the segment">time<br />max</th>
+            <th class="right" title="Your median on the segment">time<br />med</th>
+            <th class="right" title="Your average on the segment">time<br />avg</th>
+            <th class="right" title="Your standard deviation on the segment">time<br />stdev</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(LeaderBoard lb in leaderBoardList)
+        {
+        <tr>
+            <td class="right">@lb.Rank</td>
+            <td>@lb.Athlete.Name</td>
+            <td class="right">@lb.YellowPoints</td>
+            <td class="right">@lb.GreenPoints</td>
+            <td class="right">@lb.PolkaDotPoints</td>
+            <td class="right">@lb.NoRidden</td>
+            <td class="right">@lb.ElapsedTimes.Min</td>
+            <td class="right">@lb.ElapsedTimes.Percentile90</td>
+            <td class="right">@lb.ElapsedTimes.Max</td>
+            <td class="right">@lb.ElapsedTimes.Median</td>
+            <td class="right">@lb.ElapsedTimes.Average</td>
+            <td class="right">@String.Format("{0:#}", @lb.ElapsedTimes.Stdev)</td>
+        </tr>
+        }
+    </tbody>
+</table>

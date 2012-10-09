@@ -60,14 +60,15 @@ namespace VeloTours.DAL.Segment
                 Thread.CurrentThread.CurrentCulture = originalCulture;
             }
 
-            dbSegment.AvgGrade = segmentinfo.AverageGrade;
-            dbSegment.ClimbCategory = segmentinfo.ClimbCategory;
-            dbSegment.Distance = segmentinfo.Distance;
-            dbSegment.ElevationGain = segmentinfo.ElevationGain;
-            dbSegment.ElevationHigh = segmentinfo.ElevationHigh;
-            dbSegment.ElevationLow = segmentinfo.ElevationLow;
-            dbSegment.Name = segmentinfo.Name;
-            dbSegment.LastUpdated = DateTime.UtcNow;
+            Statistics info = dbSegment.Info;
+            info.AvgGrade = segmentinfo.AverageGrade;
+            info.ClimbCategory = segmentinfo.ClimbCategory;
+            info.Distance = segmentinfo.Distance;
+            info.ElevationGain = segmentinfo.ElevationGain;
+            info.ElevationHigh = segmentinfo.ElevationHigh;
+            info.ElevationLow = segmentinfo.ElevationLow;
+            info.Name = segmentinfo.Name;
+            info.LastUpdated = DateTime.UtcNow;
             db.SaveChanges();
             return dbSegment;
         }
@@ -89,19 +90,20 @@ namespace VeloTours.DAL.Segment
 
             var efforts = new List<Models.Effort>();
 
-            EffortUpdate effortUpdater = new EffortUpdate(db, result, dbSegment.SegmentID, (double)dbSegment.ElevationGain);
+            EffortUpdate effortUpdater = new EffortUpdate(db, result, dbSegment.SegmentID, (double)dbSegment.Info.ElevationGain);
             effortUpdater.StravaWebClientObj = StravaWebClientObj;
 
             effortUpdater.UpdateEfforts();
             
-            EffortUpdateStatus rideInfo = effortUpdater.UpdateLeaderboard(dbSegment.ClimbCategory);
+            EffortUpdateStatus rideInfo = effortUpdater.UpdateLeaderboard(dbSegment.Info.ClimbCategory);
             UpdateRideInfoOnSegment(dbSegment, rideInfo);
         }
 
         private void UpdateRideInfoOnSegment(Models.Segment dbSegment, EffortUpdateStatus rideInfo)
         {
-            dbSegment.NoRidden = rideInfo.ridden;
-            dbSegment.NoRiders = rideInfo.riders;
+            Statistics info = dbSegment.Info;
+            info.NoRidden = rideInfo.ridden;
+            info.NoRiders = rideInfo.riders;
             db.SaveChanges();
         }
 

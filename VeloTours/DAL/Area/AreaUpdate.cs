@@ -38,8 +38,9 @@ namespace VeloTours.DAL.Area
             if (dbArea.Segments.Count == 0)
                 return; // TODO: Logging?
 
-            dbArea.Distance = 0;           
-            dbArea.ElevationGain = 0;
+            Statistics info = dbArea.Info;
+            info.Distance = 0;
+            info.ElevationGain = 0;
             decimal avgGradeTemp = 0;
 
             foreach (var segment in dbArea.Segments)
@@ -47,18 +48,18 @@ namespace VeloTours.DAL.Area
                 SegmentUpdate segmentUpdater = new SegmentUpdate(segment.SegmentID);
                 segmentUpdater.StravaWebClientObj = StravaWebClientObj;
 
-                var info = segmentUpdater.UpdateSegment();
+                var segmentInfo = segmentUpdater.UpdateSegment();
                 if (updateEfforts)
                 {
-                    segmentUpdater.UpdateEfforts(info);
+                    segmentUpdater.UpdateEfforts(segmentInfo);
                 }
-                
-                dbArea.Distance += info.Distance;
-                dbArea.ElevationGain += info.ElevationGain;
-                avgGradeTemp += Convert.ToDecimal(info.Distance) * Convert.ToDecimal(info.AvgGrade);
+
+                info.Distance += segmentInfo.Info.Distance;
+                info.ElevationGain += segmentInfo.Info.ElevationGain;
+                avgGradeTemp += Convert.ToDecimal(segmentInfo.Info.Distance) * Convert.ToDecimal(segmentInfo.Info.AvgGrade);
             }
 
-            dbArea.AvgGrade = Convert.ToDouble((avgGradeTemp / Convert.ToDecimal(dbArea.Distance)));
+            info.AvgGrade = Convert.ToDouble((avgGradeTemp / Convert.ToDecimal(info.Distance)));
             db.SaveChanges();
         }
     }

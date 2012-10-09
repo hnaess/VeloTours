@@ -45,7 +45,7 @@ namespace VeloTours.Controllers.Pages
             if (dbResult != null)
             {
                 Models.LeaderBoard lBoardsKOM = dbResult.LeaderBoards.First();
-                viewModel.KomSpeed = (viewModel.Segment.Distance / lBoardsKOM.ElapsedTimes.Min) * 3.6;
+                viewModel.KomSpeed = (viewModel.Segment.Info.Distance / lBoardsKOM.ElapsedTimes.Min) * 3.6;
                 
                 if(athlete > 0)
                 {

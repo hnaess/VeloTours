@@ -23,6 +23,8 @@ public partial class Region
 
         this.SegmentAreas = new HashSet<SegmentArea>();
 
+        this.Info = new Statistics();
+
     }
 
 
@@ -30,15 +32,17 @@ public partial class Region
 
     public int CountryID { get; set; }
 
-    public string Name { get; set; }
 
-    public string Distance { get; set; }
+
+    public Statistics Info { get; set; }
 
 
 
     public virtual Country Country { get; set; }
 
     public virtual ICollection<SegmentArea> SegmentAreas { get; set; }
+
+    public virtual Result Result { get; set; }
 
 }
 

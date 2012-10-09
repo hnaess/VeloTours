@@ -97,7 +97,7 @@ namespace VeloTours.DAL.Segment
                 if (elapsedTimeKOM == null)
                     elapsedTimeKOM = l.ElapsedTimes.Min;
 
-                l.YellowPoints = LeaderboardCalc.CalcYellowPoints((int)elapsedTimeKOM, l.ElapsedTimes.Min);
+                l.YellowPoints = LeaderboardCalc.CalcYellowPoints((int)elapsedTimeKOM, (int)l.ElapsedTimes.Min);
                 l.GreenPoints = LeaderboardCalc.CalcGreenPoints(l.Rank, rideInfo.riders, segmentClimbCategory);
                 l.PolkaDotPoints = LeaderboardCalc.CalcPolkaDotPoints(l.Rank, rideInfo.riders, segmentClimbCategory);
             }
@@ -114,7 +114,7 @@ namespace VeloTours.DAL.Segment
             var sortedEfforts =
                 from n in db.Efforts
                 where n.ResultID == dbResult.ResultID
-                orderby n.ElapsedTime ascending
+                orderby n.ElapsedTime ascending 
                 select new { n.AthleteID, n.ElapsedTime };
 
             int rank = 0;

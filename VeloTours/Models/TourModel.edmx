@@ -55,6 +55,10 @@
       <End Role="Result" EntitySet="ResultSet" />
       <End Role="LeaderBoard" EntitySet="LeaderBoards" />
     </AssociationSet>
+    <AssociationSet Name="RegionResult" Association="TourModel.Store.RegionResult">
+      <End Role="Region" EntitySet="Regions" />
+      <End Role="Result" EntitySet="ResultSet" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Athletes">
     <Key>
@@ -97,8 +101,18 @@
     </Key>
     <Property Name="RegionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CountryID" Type="int" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Distance" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Info_Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Info_Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Info_PictureUri" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Info_Distance" Type="float" Nullable="true" />
+    <Property Name="Info_AvgGrade" Type="float" Nullable="true" />
+    <Property Name="Info_ClimbCategory" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Info_ElevationHigh" Type="float" Nullable="true" />
+    <Property Name="Info_ElevationLow" Type="float" Nullable="true" />
+    <Property Name="Info_ElevationGain" Type="float" Nullable="true" />
+    <Property Name="Info_NoRiders" Type="int" Nullable="true" />
+    <Property Name="Info_NoRidden" Type="int" Nullable="true" />
+    <Property Name="Info_LastUpdated" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="SegmentAreas">
     <Key>
@@ -106,34 +120,37 @@
     </Key>
     <Property Name="SegmentAreaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RegionID" Type="int" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="PictureUri" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Distance" Type="float" Nullable="true" />
-    <Property Name="AvgGrade" Type="float" Nullable="true" />
-    <Property Name="ElevationGain" Type="float" Nullable="true" />
+    <Property Name="Info_Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Info_Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Info_PictureUri" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Info_Distance" Type="float" Nullable="true" />
+    <Property Name="Info_AvgGrade" Type="float" Nullable="true" />
+    <Property Name="Info_ClimbCategory" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Info_ElevationHigh" Type="float" Nullable="true" />
+    <Property Name="Info_ElevationLow" Type="float" Nullable="true" />
+    <Property Name="Info_ElevationGain" Type="float" Nullable="true" />
+    <Property Name="Info_NoRiders" Type="int" Nullable="true" />
+    <Property Name="Info_NoRidden" Type="int" Nullable="true" />
+    <Property Name="Info_LastUpdated" Type="datetime" Nullable="true" />
     <Property Name="SecretKey" Type="uniqueidentifier" Nullable="true" />
-    <Property Name="NoRiders" Type="int" Nullable="true" />
-    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Segments">
     <Key>
       <PropertyRef Name="SegmentID" />
     </Key>
     <Property Name="SegmentID" Type="int" Nullable="false" />
-    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="PictureUri" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="GradeType" Type="int" Nullable="false" />
-    <Property Name="Distance" Type="float" Nullable="true" />
-    <Property Name="AvgGrade" Type="float" Nullable="true" />
-    <Property Name="ClimbCategory" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="ElevationHigh" Type="float" Nullable="true" />
-    <Property Name="ElevationLow" Type="float" Nullable="true" />
-    <Property Name="ElevationGain" Type="float" Nullable="true" />
-    <Property Name="NoRiders" Type="int" Nullable="true" />
-    <Property Name="NoRidden" Type="int" Nullable="true" />
-    <Property Name="LastUpdated" Type="datetime" Nullable="false" />
+    <Property Name="Info_Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Info_Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Info_PictureUri" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Info_Distance" Type="float" Nullable="true" />
+    <Property Name="Info_AvgGrade" Type="float" Nullable="true" />
+    <Property Name="Info_ClimbCategory" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Info_ElevationHigh" Type="float" Nullable="true" />
+    <Property Name="Info_ElevationLow" Type="float" Nullable="true" />
+    <Property Name="Info_ElevationGain" Type="float" Nullable="true" />
+    <Property Name="Info_NoRiders" Type="int" Nullable="true" />
+    <Property Name="Info_NoRidden" Type="int" Nullable="true" />
+    <Property Name="Info_LastUpdated" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="Efforts">
     <Key>
@@ -156,6 +173,7 @@
     <Property Name="LastUpdated" Type="datetime" Nullable="false" />
     <Property Name="Segment_SegmentID" Type="int" Nullable="true" />
     <Property Name="SegmentArea_SegmentAreaID" Type="int" Nullable="true" />
+    <Property Name="Region_RegionID" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="SegmentAreasSegments">
     <Key>
@@ -265,6 +283,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="RegionResult">
+    <End Role="Region" Type="TourModel.Store.Regions" Multiplicity="0..1" />
+    <End Role="Result" Type="TourModel.Store.ResultSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Region">
+        <PropertyRef Name="RegionID" />
+      </Principal>
+      <Dependent Role="Result">
+        <PropertyRef Name="Region_RegionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_SegmentAreasSegments_SegmentAreas">
     <End Role="SegmentAreas" Type="TourModel.Store.SegmentAreas" Multiplicity="1" />
     <End Role="SegmentAreasSegments" Type="TourModel.Store.SegmentAreasSegments" Multiplicity="*" />
@@ -338,6 +368,10 @@
             <End Role="Result" EntitySet="ResultSet" />
             <End Role="LeaderBoard" EntitySet="LeaderBoards" />
           </AssociationSet>
+          <AssociationSet Name="RegionResult" Association="TourModel.RegionResult">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="Result" EntitySet="ResultSet" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Athlete">
           <Key>
@@ -380,10 +414,10 @@
           </Key>
           <Property Type="Int32" Name="RegionID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="CountryID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Country" Relationship="TourModel.CountryRegion" FromRole="Regions" ToRole="Countries" />
           <NavigationProperty Name="SegmentAreas" Relationship="TourModel.RegionSegmentArea" FromRole="Regions" ToRole="SegmentAreas" />
-          <Property Type="String" Name="Distance" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Result" Relationship="TourModel.RegionResult" FromRole="Region" ToRole="Result" />
+          <Property Name="Info" Type="TourModel.Statistics" Nullable="false" />
         </EntityType>
         <EntityType Name="SegmentArea">
           <Key>
@@ -391,15 +425,8 @@
           </Key>
           <Property Type="Int32" Name="SegmentAreaID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="RegionID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="PictureUri" Nullable="true" />
-          <Property Type="Double" Name="Distance" />
-          <Property Type="Double" Name="AvgGrade" />
-          <Property Type="Double" Name="ElevationGain" />
+          <Property Name="Info" Type="TourModel.Statistics" Nullable="false" />
           <Property Type="Guid" Name="SecretKey" Nullable="true" />
-          <Property Type="Int32" Name="NoRiders" />
-          <Property Type="DateTime" Name="LastUpdated" Nullable="false" Precision="3" />
           <NavigationProperty Name="Region" Relationship="TourModel.RegionSegmentArea" FromRole="SegmentAreas" ToRole="Regions" />
           <NavigationProperty Name="Segments" Relationship="TourModel.SegmentAreasSegments" FromRole="SegmentAreas" ToRole="Segments" />
           <NavigationProperty Name="Result" Relationship="TourModel.SegmentAreaResult" FromRole="SegmentArea" ToRole="Result" />
@@ -409,19 +436,7 @@
             <PropertyRef Name="SegmentID" />
           </Key>
           <Property Type="Int32" Name="SegmentID" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="PictureUri" Nullable="true" />
-          <Property Type="Int32" Name="GradeType" Nullable="false" />
-          <Property Type="Double" Name="Distance" />
-          <Property Type="Double" Name="AvgGrade" />
-          <Property Type="String" Name="ClimbCategory" />
-          <Property Type="Double" Name="ElevationHigh" />
-          <Property Type="Double" Name="ElevationLow" />
-          <Property Type="Double" Name="ElevationGain" />
-          <Property Type="Int32" Name="NoRiders" />
-          <Property Type="Int32" Name="NoRidden" />
-          <Property Type="DateTime" Name="LastUpdated" Nullable="false" Precision="3" />
+          <Property Name="Info" Type="TourModel.Statistics" Nullable="false" />
           <NavigationProperty Name="SegmentAreas" Relationship="TourModel.SegmentAreasSegments" FromRole="Segments" ToRole="SegmentAreas" />
           <NavigationProperty Name="Result" Relationship="TourModel.SegmentResult" FromRole="Segment" ToRole="Result" />
         </EntityType>
@@ -480,6 +495,7 @@
           <NavigationProperty Name="Segment" Relationship="TourModel.SegmentResult" FromRole="Result" ToRole="Segment" />
           <NavigationProperty Name="SegmentArea" Relationship="TourModel.SegmentAreaResult" FromRole="Result" ToRole="SegmentArea" />
           <Property Type="DateTime" Name="LastUpdated" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Region" Relationship="TourModel.RegionResult" FromRole="Result" ToRole="Region" />
           <NavigationProperty Name="Efforts" Relationship="TourModel.ResultEffort" FromRole="Result" ToRole="Effort" />
           <NavigationProperty Name="LeaderBoards" Relationship="TourModel.ResultLeaderBoard" FromRole="Result" ToRole="LeaderBoard" />
         </EntityType>
@@ -547,6 +563,24 @@
           <Property Type="Double" Name="Stdev" Nullable="true" />
           <Property Type="Int32" Name="Percentile90" Nullable="true" />
         </ComplexType>
+        <Association Name="RegionResult">
+          <End Type="TourModel.Region" Role="Region" Multiplicity="0..1" />
+          <End Type="TourModel.Result" Role="Result" Multiplicity="0..1" />
+        </Association>
+        <ComplexType Name="Statistics">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="PictureUri" Nullable="true" />
+          <Property Type="Double" Name="Distance" />
+          <Property Type="Double" Name="AvgGrade" Nullable="true" />
+          <Property Type="String" Name="ClimbCategory" Nullable="true" />
+          <Property Type="Double" Name="ElevationHigh" />
+          <Property Type="Double" Name="ElevationLow" />
+          <Property Type="Double" Name="ElevationGain" />
+          <Property Type="Int32" Name="NoRiders" />
+          <Property Type="Int32" Name="NoRidden" />
+          <Property Type="DateTime" Name="LastUpdated" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -598,8 +632,20 @@
         <MappingFragment StoreEntitySet="Regions">
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
           <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ComplexProperty Name="Info" TypeName="TourModel.Statistics">
+            <ScalarProperty Name="Name" ColumnName="Info_Name" />
+            <ScalarProperty Name="Description" ColumnName="Info_Description" />
+            <ScalarProperty Name="PictureUri" ColumnName="Info_PictureUri" />
+            <ScalarProperty Name="Distance" ColumnName="Info_Distance" />
+            <ScalarProperty Name="AvgGrade" ColumnName="Info_AvgGrade" />
+            <ScalarProperty Name="ClimbCategory" ColumnName="Info_ClimbCategory" />
+            <ScalarProperty Name="ElevationHigh" ColumnName="Info_ElevationHigh" />
+            <ScalarProperty Name="ElevationLow" ColumnName="Info_ElevationLow" />
+            <ScalarProperty Name="ElevationGain" ColumnName="Info_ElevationGain" />
+            <ScalarProperty Name="NoRiders" ColumnName="Info_NoRiders" />
+            <ScalarProperty Name="NoRidden" ColumnName="Info_NoRidden" />
+            <ScalarProperty Name="LastUpdated" ColumnName="Info_LastUpdated" />
+          </ComplexProperty>
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -608,15 +654,21 @@
         <MappingFragment StoreEntitySet="SegmentAreas">
           <ScalarProperty Name="SegmentAreaID" ColumnName="SegmentAreaID" />
           <ScalarProperty Name="RegionID" ColumnName="RegionID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="PictureUri" ColumnName="PictureUri" />
-          <ScalarProperty Name="Distance" ColumnName="Distance" />
-          <ScalarProperty Name="AvgGrade" ColumnName="AvgGrade" />
-          <ScalarProperty Name="ElevationGain" ColumnName="ElevationGain" />
+          <ComplexProperty Name="Info" TypeName="TourModel.Statistics">
+            <ScalarProperty Name="Name" ColumnName="Info_Name" />
+            <ScalarProperty Name="Description" ColumnName="Info_Description" />
+            <ScalarProperty Name="PictureUri" ColumnName="Info_PictureUri" />
+            <ScalarProperty Name="Distance" ColumnName="Info_Distance" />
+            <ScalarProperty Name="AvgGrade" ColumnName="Info_AvgGrade" />
+            <ScalarProperty Name="ClimbCategory" ColumnName="Info_ClimbCategory" />
+            <ScalarProperty Name="ElevationHigh" ColumnName="Info_ElevationHigh" />
+            <ScalarProperty Name="ElevationLow" ColumnName="Info_ElevationLow" />
+            <ScalarProperty Name="ElevationGain" ColumnName="Info_ElevationGain" />
+            <ScalarProperty Name="NoRiders" ColumnName="Info_NoRiders" />
+            <ScalarProperty Name="NoRidden" ColumnName="Info_NoRidden" />
+            <ScalarProperty Name="LastUpdated" ColumnName="Info_LastUpdated" />
+          </ComplexProperty>
           <ScalarProperty Name="SecretKey" ColumnName="SecretKey" />
-          <ScalarProperty Name="NoRiders" ColumnName="NoRiders" />
-          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -624,19 +676,20 @@
       <EntityTypeMapping TypeName="IsTypeOf(TourModel.Segment)">
         <MappingFragment StoreEntitySet="Segments">
           <ScalarProperty Name="SegmentID" ColumnName="SegmentID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="PictureUri" ColumnName="PictureUri" />
-          <ScalarProperty Name="GradeType" ColumnName="GradeType" />
-          <ScalarProperty Name="Distance" ColumnName="Distance" />
-          <ScalarProperty Name="AvgGrade" ColumnName="AvgGrade" />
-          <ScalarProperty Name="ClimbCategory" ColumnName="ClimbCategory" />
-          <ScalarProperty Name="ElevationHigh" ColumnName="ElevationHigh" />
-          <ScalarProperty Name="ElevationLow" ColumnName="ElevationLow" />
-          <ScalarProperty Name="ElevationGain" ColumnName="ElevationGain" />
-          <ScalarProperty Name="NoRiders" ColumnName="NoRiders" />
-          <ScalarProperty Name="NoRidden" ColumnName="NoRidden" />
-          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ComplexProperty Name="Info" TypeName="TourModel.Statistics">
+            <ScalarProperty Name="Name" ColumnName="Info_Name" />
+            <ScalarProperty Name="Description" ColumnName="Info_Description" />
+            <ScalarProperty Name="PictureUri" ColumnName="Info_PictureUri" />
+            <ScalarProperty Name="Distance" ColumnName="Info_Distance" />
+            <ScalarProperty Name="AvgGrade" ColumnName="Info_AvgGrade" />
+            <ScalarProperty Name="ClimbCategory" ColumnName="Info_ClimbCategory" />
+            <ScalarProperty Name="ElevationHigh" ColumnName="Info_ElevationHigh" />
+            <ScalarProperty Name="ElevationLow" ColumnName="Info_ElevationLow" />
+            <ScalarProperty Name="ElevationGain" ColumnName="Info_ElevationGain" />
+            <ScalarProperty Name="NoRiders" ColumnName="Info_NoRiders" />
+            <ScalarProperty Name="NoRidden" ColumnName="Info_NoRidden" />
+            <ScalarProperty Name="LastUpdated" ColumnName="Info_LastUpdated" />
+          </ComplexProperty>
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -687,6 +740,15 @@
         <ScalarProperty Name="ResultID" ColumnName="ResultID" />
       </EndProperty>
       <Condition ColumnName="SegmentArea_SegmentAreaID" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RegionResult" TypeName="TourModel.RegionResult" StoreEntitySet="ResultSet">
+      <EndProperty Name="Region">
+        <ScalarProperty Name="RegionID" ColumnName="Region_RegionID" />
+      </EndProperty>
+      <EndProperty Name="Result">
+        <ScalarProperty Name="ResultID" ColumnName="ResultID" />
+      </EndProperty>
+      <Condition ColumnName="Region_RegionID" IsNull="false" />
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>

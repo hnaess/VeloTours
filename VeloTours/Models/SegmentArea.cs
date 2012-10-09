@@ -23,6 +23,8 @@ public partial class SegmentArea
 
         this.Segments = new HashSet<Segment>();
 
+        this.Info = new Statistics();
+
     }
 
 
@@ -30,23 +32,11 @@ public partial class SegmentArea
 
     public int RegionID { get; set; }
 
-    public string Name { get; set; }
-
-    public string Description { get; set; }
-
-    public string PictureUri { get; set; }
-
-    public Nullable<double> Distance { get; set; }
-
-    public Nullable<double> AvgGrade { get; set; }
-
-    public Nullable<double> ElevationGain { get; set; }
-
     public Nullable<System.Guid> SecretKey { get; set; }
 
-    public Nullable<int> NoRiders { get; set; }
 
-    public System.DateTime LastUpdated { get; set; }
+
+    public Statistics Info { get; set; }
 
 
 

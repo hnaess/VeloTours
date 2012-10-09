@@ -19,6 +19,5 @@ namespace VeloTours.Models
 
         public Nullable<int> UsersTimePrevious { get; set; }    // TODO: Map field
         public Nullable<int> UsersChangePos { get; set; }       // TODO:Map field
-
     }
 }

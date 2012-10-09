@@ -10,5 +10,8 @@ namespace VeloTours.Models
         public AthleteRideInfo Athlete { get; set; }
 
         public List<SegmentViewModel> Segments { get; set; }
-   }
+        
+        public Statistics Info { get { return SegmentArea.Info; } }
+        public ICollection<Models.LeaderBoard> LeaderBoard { get { return SegmentArea.Result.LeaderBoards; } }
+    }
 }

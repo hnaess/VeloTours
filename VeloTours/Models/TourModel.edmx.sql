@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 10/09/2012 13:17:15
+-- Date Created: 10/09/2012 14:21:33
 -- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
@@ -46,6 +46,9 @@ IF OBJECT_ID(N'[dbo].[FK_ResultEffort]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_ResultLeaderBoard]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[LeaderBoards] DROP CONSTRAINT [FK_ResultLeaderBoard];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RegionResult]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ResultSet] DROP CONSTRAINT [FK_RegionResult];
 GO
 
 -- --------------------------------------------------
@@ -123,8 +126,18 @@ GO
 CREATE TABLE [dbo].[Regions] (
     [RegionID] int IDENTITY(1,1) NOT NULL,
     [CountryID] int  NOT NULL,
-    [Name] nvarchar(max)  NOT NULL,
-    [Distance] nvarchar(max)  NULL
+    [Info_Name] nvarchar(max)  NOT NULL,
+    [Info_Description] nvarchar(max)  NULL,
+    [Info_PictureUri] nvarchar(max)  NULL,
+    [Info_Distance] float  NULL,
+    [Info_AvgGrade] float  NULL,
+    [Info_ClimbCategory] nvarchar(max)  NULL,
+    [Info_ElevationHigh] float  NULL,
+    [Info_ElevationLow] float  NULL,
+    [Info_ElevationGain] float  NULL,
+    [Info_NoRiders] int  NULL,
+    [Info_NoRidden] int  NULL,
+    [Info_LastUpdated] datetime  NULL
 );
 GO
 
@@ -132,34 +145,37 @@ GO
 CREATE TABLE [dbo].[SegmentAreas] (
     [SegmentAreaID] int IDENTITY(1,1) NOT NULL,
     [RegionID] int  NOT NULL,
-    [Name] nvarchar(max)  NOT NULL,
-    [Description] nvarchar(max)  NULL,
-    [PictureUri] nvarchar(max)  NULL,
-    [Distance] float  NULL,
-    [AvgGrade] float  NULL,
-    [ElevationGain] float  NULL,
-    [SecretKey] uniqueidentifier  NULL,
-    [NoRiders] int  NULL,
-    [LastUpdated] datetime  NOT NULL
+    [Info_Name] nvarchar(max)  NOT NULL,
+    [Info_Description] nvarchar(max)  NULL,
+    [Info_PictureUri] nvarchar(max)  NULL,
+    [Info_Distance] float  NULL,
+    [Info_AvgGrade] float  NULL,
+    [Info_ClimbCategory] nvarchar(max)  NULL,
+    [Info_ElevationHigh] float  NULL,
+    [Info_ElevationLow] float  NULL,
+    [Info_ElevationGain] float  NULL,
+    [Info_NoRiders] int  NULL,
+    [Info_NoRidden] int  NULL,
+    [Info_LastUpdated] datetime  NULL,
+    [SecretKey] uniqueidentifier  NULL
 );
 GO
 
 -- Creating table 'Segments'
 CREATE TABLE [dbo].[Segments] (
     [SegmentID] int  NOT NULL,
-    [Name] nvarchar(max)  NOT NULL,
-    [Description] nvarchar(max)  NULL,
-    [PictureUri] nvarchar(max)  NULL,
-    [GradeType] int  NOT NULL,
-    [Distance] float  NULL,
-    [AvgGrade] float  NULL,
-    [ClimbCategory] nvarchar(max)  NULL,
-    [ElevationHigh] float  NULL,
-    [ElevationLow] float  NULL,
-    [ElevationGain] float  NULL,
-    [NoRiders] int  NULL,
-    [NoRidden] int  NULL,
-    [LastUpdated] datetime  NOT NULL
+    [Info_Name] nvarchar(max)  NOT NULL,
+    [Info_Description] nvarchar(max)  NULL,
+    [Info_PictureUri] nvarchar(max)  NULL,
+    [Info_Distance] float  NULL,
+    [Info_AvgGrade] float  NULL,
+    [Info_ClimbCategory] nvarchar(max)  NULL,
+    [Info_ElevationHigh] float  NULL,
+    [Info_ElevationLow] float  NULL,
+    [Info_ElevationGain] float  NULL,
+    [Info_NoRiders] int  NULL,
+    [Info_NoRidden] int  NULL,
+    [Info_LastUpdated] datetime  NULL
 );
 GO
 
@@ -181,7 +197,8 @@ CREATE TABLE [dbo].[ResultSet] (
     [ResultID] int IDENTITY(1,1) NOT NULL,
     [LastUpdated] datetime  NOT NULL,
     [Segment_SegmentID] int  NULL,
-    [SegmentArea_SegmentAreaID] int  NULL
+    [SegmentArea_SegmentAreaID] int  NULL,
+    [Region_RegionID] int  NULL
 );
 GO
 
@@ -387,6 +404,20 @@ ADD CONSTRAINT [FK_ResultLeaderBoard]
 CREATE INDEX [IX_FK_ResultLeaderBoard]
 ON [dbo].[LeaderBoards]
     ([ResultID]);
+GO
+
+-- Creating foreign key on [Region_RegionID] in table 'ResultSet'
+ALTER TABLE [dbo].[ResultSet]
+ADD CONSTRAINT [FK_RegionResult]
+    FOREIGN KEY ([Region_RegionID])
+    REFERENCES [dbo].[Regions]
+        ([RegionID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RegionResult'
+CREATE INDEX [IX_FK_RegionResult]
+ON [dbo].[ResultSet]
+    ([Region_RegionID]);
 GO
 
 -- --------------------------------------------------

@@ -17,17 +17,17 @@ using System;
 public partial class ElapsedTimes
 {
 
-    public int Min { get; set; }
+    public Nullable<int> Min { get; set; }
 
-    public int Median { get; set; }
+    public Nullable<int> Median { get; set; }
 
-    public int Average { get; set; }
+    public Nullable<int> Average { get; set; }
 
-    public int Max { get; set; }
+    public Nullable<int> Max { get; set; }
 
-    public double Stdev { get; set; }
+    public Nullable<double> Stdev { get; set; }
 
-    public int Percentile90 { get; set; }
+    public Nullable<int> Percentile90 { get; set; }
 
 }
 

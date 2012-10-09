@@ -38,6 +38,8 @@ public partial class Result
 
     public virtual SegmentArea SegmentArea { get; set; }
 
+    public virtual Region Region { get; set; }
+
     public virtual ICollection<Effort> Efforts { get; set; }
 
     public virtual ICollection<LeaderBoard> LeaderBoards { get; set; }
