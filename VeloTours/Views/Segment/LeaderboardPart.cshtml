@@ -1,5 +1,10 @@
-﻿@using VeloTours.Models;
-@using System.Collections;
+﻿@using System.Collections;
+@using PagedList; 
+@using PagedList.Mvc; 
+@using VeloTours.Models;
+
+<!-- import the included stylesheet for some (very basic) default styling -->
+@*<link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
 
 @{
     var leaderBoardList = @Model.LeaderBoard;
@@ -24,7 +29,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(LeaderBoard lb in leaderBoardList)
+        @foreach (LeaderBoard lb in leaderBoardList)
         {
         <tr>
             <td class="right">@lb.Rank</td>
@@ -43,3 +48,7 @@
         }
     </tbody>
 </table>
+@Html.PagedListPager((IPagedList)@Model.LeaderBoard , 
+    page => Url.Action("Index", new { page = page, athlete = ViewBag.Athlete, area = ViewBag.Area, segment = ViewBag.Segment }), 
+    PagedListRenderOptions.PageNumbersOnly)
+

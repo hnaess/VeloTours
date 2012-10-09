@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PagedList;
 
 namespace VeloTours.Models
 {
@@ -10,6 +11,8 @@ namespace VeloTours.Models
         public AthleteRideInfo Athlete { get; set; }
 
         public Statistics Info { get { return Segment.Info; } }
-        public ICollection<Models.LeaderBoard> LeaderBoard { get { return Segment.Result.LeaderBoards; } }
+        
+        //public ICollection<Models.LeaderBoard> LeaderBoard { get { return Segment.Result.LeaderBoards; } }
+        public IPagedList<Models.LeaderBoard> LeaderBoard { get; set; }
     }
 }

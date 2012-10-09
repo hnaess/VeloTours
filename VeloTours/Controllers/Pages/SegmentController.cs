@@ -7,15 +7,20 @@ using VeloTours.DAL.Area;
 using VeloTours.DAL.Segment;
 using VeloTours.Models;
 using VeloTours.ViewModel;
+using PagedList;
 
 namespace VeloTours.Controllers.Pages
 {
     public class SegmentController : Controller
     {
+        int? page = null;
+        int pageSize = 20;
+
         private TourModelContainer db = new TourModelContainer();
 
-        public ActionResult Index(int segment, int athlete, int? area)
+        public ActionResult Index(int segment, int athlete, int? area, int? page)
         {
+            this.page = page;
             SegmentViewModel segmentModel = GetSegmentViewModel(segment, athlete);
 
             ViewBag.Segment = segment;
@@ -44,8 +49,12 @@ namespace VeloTours.Controllers.Pages
             var dbResult = dbSegment.Result;
             if (dbResult != null)
             {
+                //http://www.asp.net/mvc/tutorials/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application
+                //https://github.com/TroyGoode/PagedList
+                
                 Models.LeaderBoard lBoardsKOM = dbResult.LeaderBoards.First();
                 viewModel.KomSpeed = (viewModel.Segment.Info.Distance / lBoardsKOM.ElapsedTimes.Min) * 3.6;
+                viewModel.LeaderBoard = viewModel.Segment.Result.LeaderBoards.ToPagedList(page ?? 1, pageSize);
                 
                 if(athlete > 0)
                 {
