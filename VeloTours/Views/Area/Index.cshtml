@@ -1,14 +1,18 @@
 ﻿@model VeloTours.Models.SegmentAreaViewModel
+@using VeloTours.Models;
 @using VeloTours.Helpers;
 @using System.Globalization;
 
 @{
     ViewBag.Title = "Area";
-    int areaID = @Model.SegmentAreaID;
+    int areaID = @Model.SegmentArea.SegmentAreaID;
     int athleteID = ViewBag.Athlete ?? 0;
+
+    VeloTours.Models.SegmentArea main = @Model.SegmentArea;
+    
 }
 
-<h2>Resultboard for @Model.Name</h2>
+<h2>Resultboard for @main.Name</h2>
 
 <p>@Model.Description</p>
 

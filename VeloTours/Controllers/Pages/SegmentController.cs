@@ -16,7 +16,7 @@ namespace VeloTours.Controllers.Pages
 
         public ActionResult Index(int segment, int athlete, int? area)
         {
-            SegmentViewModel segmentModel = GetSegmentViewModel(segment);
+            SegmentViewModel segmentModel = GetSegmentViewModel(segment, athlete);
 
             ViewBag.Segment = segment;
             ViewBag.Athlete = athlete;
@@ -34,36 +34,42 @@ namespace VeloTours.Controllers.Pages
             return RedirectToAction("Index", new { athlete = athlete, segment = segment, area = area });
         }
 
-        private SegmentViewModel GetSegmentViewModel(int segmentID)
+        private SegmentViewModel GetSegmentViewModel(int segmentID, int athlete)
         {
-            Segment model = db.Segments.Find(segmentID);
-            return new SegmentViewModel
-            {
-                AvgGrade = model.AvgGrade,
-                ClimbCategory = model.ClimbCategory,
-                Description = model.Description,
-                Distance = model.Distance,
-                ElevationGain = model.ElevationGain,
-                ElevationHigh = model.ElevationHigh,
-                ElevationLow = model.ElevationLow,
-                GradeType = model.GradeType,
-                LastUpdated = model.LastUpdated,
-                Name = model.Name,
-                NoRidden = model.NoRidden,
-                NoRiders = model.NoRiders,
-                PictureUri = model.PictureUri,
-                SegmentID = model.SegmentID,
+            Segment dbSegment = db.Segments.Find(segmentID);
+            var viewModel = new SegmentViewModel { Segment = dbSegment, Athlete = new AthleteRideInfo(), };
+            viewModel.Athlete.ElapsedTimes = new ElapsedTimes(); //TODO;
 
-                // + new fields?
-                //KomSpeed =
-                //BehindKom =
-                //BehindKomPercentage =
-                //UsersPosition =
-                //UsersPositionPercentage =
-                //UsersTime =
-                //UsersTimePrevious =
-                //UsersChangePos =
-            };
+            // Update from other
+            var dbResult = dbSegment.Result;
+            if (dbResult != null)
+            {
+                Models.LeaderBoard lBoardsKOM = dbResult.LeaderBoards.First();
+                viewModel.KomSpeed = (viewModel.Segment.Distance / lBoardsKOM.ElapsedTimes.Min) * 3.6;
+                
+                if(athlete > 0)
+                {
+                    var lBoardAthlete =
+                        from l in db.LeaderBoards
+                        where l.AthleteID == athlete 
+                           && l.ResultID == dbResult.ResultID
+                        select l;
+
+                    if(lBoardAthlete.Count() == 1)
+                    {
+                        Models.LeaderBoard lAthlete = lBoardAthlete.First();
+                        viewModel.Athlete.BehindKom = lAthlete.ElapsedTimes.Min - lBoardsKOM.ElapsedTimes.Min;
+                        viewModel.Athlete.BehindKomPercentage = ((double)lAthlete.ElapsedTimes.Min / (double)lBoardsKOM.ElapsedTimes.Min - 1) * 100;
+                        viewModel.Athlete.ElapsedTimes = lAthlete.ElapsedTimes;
+                        viewModel.Athlete.NoRidden = lAthlete.NoRidden;
+                        viewModel.Athlete.Position = lAthlete.Rank;
+                        viewModel.Athlete.PositionPercentage = (double)lAthlete.Rank / (double)dbResult.LeaderBoards.Count() * 100;
+                        //viewModel.UsersTimePrevious =
+                        //viewModel.UsersChangePos =
+                    }
+                }
+            }
+            return viewModel;
         }
     }
 }

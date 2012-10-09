@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 10/07/2012 23:21:29
+-- Date Created: 10/09/2012 13:17:15
 -- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
@@ -109,12 +109,12 @@ CREATE TABLE [dbo].[LeaderBoards] (
     [YellowPoints] int  NULL,
     [GreenPoints] int  NOT NULL,
     [PolkaDotPoints] int  NOT NULL,
-    [ElapsedTimes_Min] int  NOT NULL,
-    [ElapsedTimes_Median] int  NOT NULL,
-    [ElapsedTimes_Average] int  NOT NULL,
-    [ElapsedTimes_Max] int  NOT NULL,
-    [ElapsedTimes_Stdev] float  NOT NULL,
-    [ElapsedTimes_Quartile] int  NOT NULL,
+    [ElapsedTimes_Min] int  NULL,
+    [ElapsedTimes_Median] int  NULL,
+    [ElapsedTimes_Average] int  NULL,
+    [ElapsedTimes_Max] int  NULL,
+    [ElapsedTimes_Stdev] float  NULL,
+    [ElapsedTimes_Percentile90] int  NULL,
     [NoRidden] int  NOT NULL
 );
 GO

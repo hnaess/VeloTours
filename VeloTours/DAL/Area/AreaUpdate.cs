@@ -35,7 +35,10 @@ namespace VeloTours.DAL.Area
 
         public void UpdateArea(bool updateEfforts)
         {
-            dbArea.Distance = 0;
+            if (dbArea.Segments.Count == 0)
+                return; // TODO: Logging?
+
+            dbArea.Distance = 0;           
             dbArea.ElevationGain = 0;
             decimal avgGradeTemp = 0;
 

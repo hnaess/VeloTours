@@ -3,15 +3,19 @@
 
 @{
     ViewBag.Title = "Segment";
-    int segmentID = @Model.SegmentID;
+    int segmentID = @Model.Segment.SegmentID;
     int athleteID = ViewBag.Athlete;
     int areaID = ViewBag.Area;
+    
 }
 
-<h2>@Model.Name</h2>
-<p>@Model.Description</p>
+<h2>@Model.Segment.Name</h2>
+<p>@Model.Segment.Description</p>
 
-<h3>Segments in the areas</h3>
+<h2>Segment info</h2>
+@RenderPage("~/Views/Segment/YerseyPart.cshtml", ViewData.Model);
+
+<h3>Segment info</h3>
 @*tablesorter*@
 <table id="SegmentsTable" class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
     <thead>
@@ -24,35 +28,47 @@
             <th class="right">grade<br />%</th>
             <th class="right" title="Grade category. This influence the Yersey calculations.">grade<br />cat</th>
             <th class="right" title="Total number of riders that have completed this segment">riders</th>
-            <th class="right" title="Total number the segments has been ridden">ridden</th>
+            <th class="right" title="Total number the segments has been ridden">ridden<br />total</th>
             <th class="right" title="Speed on segment, ridden by KOM">KOM<br />km/h</th>
-            <th class="right" title="Your time on the segment">time</th>
             <th class="right" title="The time your personal best is currently behind the current KOM.">behind<br />KOM s.</th>
             <th class="right" title="Percentage of time your personal best is currently behind the current KOM.">behind<br />KOM %</th>
+            <th class="right" title="Total number the segments has been ridden by uou">ridden<br />you</th>
+            <th class="right" title="Your minimum time on the segment">time<br />min</th>
+            <th class="right" title="Your percentil-90 time on the segment">time<br />p-90</th>
+            <th class="right" title="Your max on the segment">time<br />max</th>
+            <th class="right" title="Your median on the segment">time<br />med</th>
+            <th class="right" title="Your average on the segment">time<br />avg</th>
+            <th class="right" title="Your standard deviation on the segment">time<br />stdev</th>
             <th class="right" title="Position change on the leaderboard">change</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td class="right">@Model.UsersPosition</td>
-            <td class="right">@Model.UsersPositionPercentage</td>
+            <td class="right">@Model.Athlete.Position</td>
+            <td class="right">@String.Format("{0:#0.#}", @Model.Athlete.PositionPercentage)</td>
             @*<th style="vertical-align:top">Name</th>*@
-            <td class="right">@String.Format("{0:#0.##}", @Model.Distance / 1000)</td>
-            <td class="right">@Math.Round(Model.ElevationGain ?? 0)</td>
-            <td class="right">@String.Format("{0:#0.#}", Model.AvgGrade)</td>
-            <td class="right">@Model.GradeType</td>
-            <td class="right">@Model.NoRidden</td>
-            <td class="right">@Model.NoRiders</td>
-            <td class="right">@Model.KomSpeed</td>
-            <td class="right">@Model.UsersTime<br />@Model.UsersTimePrevious</td>
-            <td class="right">@Model.BehindKom</td>
-            <td class="right">@Model.BehindKomPercentage</td>
-            <td class="right">@Model.UsersChangePos</td>
+            <td class="right">@String.Format("{0:#0.##}", @Model.Segment.Distance / 1000)</td>
+            <td class="right">@Math.Round(Model.Segment.ElevationGain ?? 0)</td>
+            <td class="right">@String.Format("{0:#0.#}", Model.Segment.AvgGrade)</td>
+            <td class="right">@Model.Segment.GradeType</td>
+            <td class="right">@Model.Segment.NoRidden</td>
+            <td class="right">@Model.Segment.NoRiders</td>
+            <td class="right">@String.Format("{0:#0.##}", Model.KomSpeed)</td>
+            <td class="right">@Model.Athlete.BehindKom</td>
+            <td class="right">@String.Format("{0:#0.##}", Model.Athlete.BehindKomPercentage)</td>
+            <td class="right">@Model.Athlete.NoRidden</td>
+            <td class="right">@Model.Athlete.ElapsedTimes.Min<br />@Model.Athlete.UsersTimePrevious</td>
+            <td class="right">@Model.Athlete.ElapsedTimes.Percentile90</td>
+            <td class="right">@Model.Athlete.ElapsedTimes.Max</td>
+            <td class="right">@Model.Athlete.ElapsedTimes.Median</td>
+            <td class="right">@Model.Athlete.ElapsedTimes.Average</td>
+            <td class="right">@String.Format("{0:#}", @Model.Athlete.ElapsedTimes.Stdev)</td>
+            <td class="right">@Model.Athlete.UsersChangePos</td>
         </tr>
     </tbody>
 </table>
 
-<h2>Strava Segments for @Model.Name</h2>
+<h2>Strava Segments for @Model.Segment.Name</h2>
 
 <iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@segmentID/embed" width="450"></iframe>
 
@@ -62,7 +78,7 @@
     @{
         if( areaID > 0)
         {
-            @Html.ActionLink("Go back to area", "Index", "Area", new { area = areaID, athlete = athleteID })
+            @Html.ActionLink("Go back to area", "Index", "Area", routeValues: new { area = areaID, athlete = athleteID }, htmlAttributes: null)
         }
     }
 </p>

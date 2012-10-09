@@ -72,10 +72,10 @@ namespace VeloTours.DAL.Segment
             return dbSegment;
         }
 
-        public void UpdateEfforts(DateTime startDate, DateTime endDate)
-        {
-            throw new NotImplementedException("Update based on dates");
-        }
+        //public void UpdateEfforts(DateTime startDate, DateTime endDate)
+        //{
+        //    throw new NotImplementedException("Update based on dates");
+        //}
 
         public void UpdateEfforts(int segmentID)
         {
@@ -91,8 +91,18 @@ namespace VeloTours.DAL.Segment
 
             EffortUpdate effortUpdater = new EffortUpdate(db, result, dbSegment.SegmentID, (double)dbSegment.ElevationGain);
             effortUpdater.StravaWebClientObj = StravaWebClientObj;
+
             effortUpdater.UpdateEfforts();
-            effortUpdater.UpdateLeaderboard(dbSegment.ClimbCategory);
+            
+            EffortUpdateStatus rideInfo = effortUpdater.UpdateLeaderboard(dbSegment.ClimbCategory);
+            UpdateRideInfoOnSegment(dbSegment, rideInfo);
+        }
+
+        private void UpdateRideInfoOnSegment(Models.Segment dbSegment, EffortUpdateStatus rideInfo)
+        {
+            dbSegment.NoRidden = rideInfo.ridden;
+            dbSegment.NoRiders = rideInfo.riders;
+            db.SaveChanges();
         }
 
         private Result AddResultSet(Models.Segment dbSegment)

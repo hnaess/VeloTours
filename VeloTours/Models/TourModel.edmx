@@ -83,12 +83,12 @@
     <Property Name="YellowPoints" Type="int" Nullable="true" />
     <Property Name="GreenPoints" Type="int" Nullable="false" />
     <Property Name="PolkaDotPoints" Type="int" Nullable="false" />
-    <Property Name="ElapsedTimes_Min" Type="int" Nullable="false" />
-    <Property Name="ElapsedTimes_Median" Type="int" Nullable="false" />
-    <Property Name="ElapsedTimes_Average" Type="int" Nullable="false" />
-    <Property Name="ElapsedTimes_Max" Type="int" Nullable="false" />
-    <Property Name="ElapsedTimes_Stdev" Type="float" Nullable="false" />
-    <Property Name="ElapsedTimes_Quartile" Type="int" Nullable="false" />
+    <Property Name="ElapsedTimes_Min" Type="int" Nullable="true" />
+    <Property Name="ElapsedTimes_Median" Type="int" Nullable="true" />
+    <Property Name="ElapsedTimes_Average" Type="int" Nullable="true" />
+    <Property Name="ElapsedTimes_Max" Type="int" Nullable="true" />
+    <Property Name="ElapsedTimes_Stdev" Type="float" Nullable="true" />
+    <Property Name="ElapsedTimes_Percentile90" Type="int" Nullable="true" />
     <Property Name="NoRidden" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Regions">
@@ -540,12 +540,12 @@
           </ReferentialConstraint>
         </Association>
         <ComplexType Name="ElapsedTimes" >
-          <Property Type="Int32" Name="Min" Nullable="false" />
-          <Property Type="Int32" Name="Median" Nullable="false" />
-          <Property Type="Int32" Name="Average" Nullable="false" />
-          <Property Type="Int32" Name="Max" Nullable="false" />
-          <Property Type="Double" Name="Stdev" Nullable="false" />
-          <Property Type="Int32" Name="Quartile" Nullable="false" />
+          <Property Type="Int32" Name="Min" Nullable="true" />
+          <Property Type="Int32" Name="Median" Nullable="true" />
+          <Property Type="Int32" Name="Average" Nullable="true" />
+          <Property Type="Int32" Name="Max" Nullable="true" />
+          <Property Type="Double" Name="Stdev" Nullable="true" />
+          <Property Type="Int32" Name="Percentile90" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -587,7 +587,7 @@
             <ScalarProperty Name="Average" ColumnName="ElapsedTimes_Average" />
             <ScalarProperty Name="Max" ColumnName="ElapsedTimes_Max" />
             <ScalarProperty Name="Stdev" ColumnName="ElapsedTimes_Stdev" />
-            <ScalarProperty Name="Quartile" ColumnName="ElapsedTimes_Quartile" />
+            <ScalarProperty Name="Percentile90" ColumnName="ElapsedTimes_Percentile90" />
           </ComplexProperty>
           <ScalarProperty Name="NoRidden" ColumnName="NoRidden" />
         </MappingFragment>

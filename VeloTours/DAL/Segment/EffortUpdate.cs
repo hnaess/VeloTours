@@ -60,41 +60,29 @@ namespace VeloTours.DAL.Segment
                 throw new NotSupportedException("Not expected");
             }           
         }
-
-        internal void UpdateLeaderboard(string segmentClimbCategory)
+      
+        internal EffortUpdateStatus UpdateLeaderboard(string segmentClimbCategory)
         {
-            List<Models.LeaderBoard> leaderBoards = new List<Models.LeaderBoard>();
-            var sortedEfforts =
-                from n in db.Efforts
-                where n.ResultID == dbResult.ResultID
-                orderby n.ElapsedTime ascending
-                select new { n.AthleteID, n.ElapsedTime };
+            List<Models.LeaderBoard> leaderBoards;
+            Dictionary<int, List<int>> athleteEffortsList;
 
-            Dictionary<int, List<int>> athleteEffortsList = new Dictionary<int, List<int>>();
-            int rank = 0;
-            foreach (var e in sortedEfforts)
-            {
-                List<int> athleteEfforts;
-                athleteEffortsList.TryGetValue(e.AthleteID, out athleteEfforts);
-                if (athleteEfforts == null)
-                {
-                    rank++;                    
-                    athleteEfforts = new List<int>();
-                    athleteEffortsList[e.AthleteID] = athleteEfforts;
+            EffortUpdateStatus rideInfo = 
+                GetSortedAthleteEfforts(out leaderBoards, out athleteEffortsList);
+            
+            UpdateLeaderBoard(segmentClimbCategory, leaderBoards, athleteEffortsList, rideInfo);
 
-                    leaderBoards.Add(new Models.LeaderBoard() { AthleteID = e.AthleteID, Rank = rank, Result = dbResult });
-                }
-                athleteEfforts.Add(e.ElapsedTime);
-            }
+            return rideInfo;
+        }
 
+        private void UpdateLeaderBoard(string segmentClimbCategory, List<Models.LeaderBoard> leaderBoards, Dictionary<int, List<int>> athleteEffortsList, EffortUpdateStatus rideInfo)
+        {
             int? elapsedTimeKOM = null;
-            foreach(var l in leaderBoards)
+            foreach (var l in leaderBoards)
             {
                 List<int> effort = athleteEffortsList[l.AthleteID];
                 effort.Sort();
 
                 double stdev = effort.StandardDeviation();
-                int noRiders = athleteEffortsList.Count;
                 l.NoRidden = effort.Count;
                 l.ElapsedTimes = new ElapsedTimes
                 {
@@ -102,20 +90,51 @@ namespace VeloTours.DAL.Segment
                     Max = effort.Max(),
                     Min = effort.Min(),
                     Median = (int)effort.Median(),
-                    Quartile = effort[Convert.ToInt32(Math.Round(effort.Count * 0.10))],
+                    Percentile90 = effort[Convert.ToInt32(Math.Round(effort.Count * 0.10))],
                     Stdev = Double.IsNaN(stdev) ? 1 : stdev,
                 };
 
                 if (elapsedTimeKOM == null)
                     elapsedTimeKOM = l.ElapsedTimes.Min;
-                
+
                 l.YellowPoints = LeaderboardCalc.CalcYellowPoints((int)elapsedTimeKOM, l.ElapsedTimes.Min);
-                l.GreenPoints = LeaderboardCalc.CalcGreenPoints(l.Rank, noRiders, segmentClimbCategory);
-                l.PolkaDotPoints = LeaderboardCalc.CalcPolkaDotPoints(l.Rank, noRiders, segmentClimbCategory);
+                l.GreenPoints = LeaderboardCalc.CalcGreenPoints(l.Rank, rideInfo.riders, segmentClimbCategory);
+                l.PolkaDotPoints = LeaderboardCalc.CalcPolkaDotPoints(l.Rank, rideInfo.riders, segmentClimbCategory);
             }
-            
+
             leaderBoards.ForEach(items => db.LeaderBoards.Add(items));
             db.SaveChanges();
+        }
+
+        private EffortUpdateStatus GetSortedAthleteEfforts(out List<Models.LeaderBoard> leaderBoards, out Dictionary<int, List<int>> athleteEffortsList)
+        {
+            leaderBoards = new List<Models.LeaderBoard>();
+            athleteEffortsList = new Dictionary<int, List<int>>();
+
+            var sortedEfforts =
+                from n in db.Efforts
+                where n.ResultID == dbResult.ResultID
+                orderby n.ElapsedTime ascending
+                select new { n.AthleteID, n.ElapsedTime };
+
+            int rank = 0;
+            int rides = 0;
+            foreach (var e in sortedEfforts)
+            {
+                rides++;
+                List<int> athleteEfforts;
+                athleteEffortsList.TryGetValue(e.AthleteID, out athleteEfforts);
+                if (athleteEfforts == null)
+                {
+                    rank++;
+                    athleteEfforts = new List<int>();
+                    athleteEffortsList[e.AthleteID] = athleteEfforts;
+
+                    leaderBoards.Add(new Models.LeaderBoard() { AthleteID = e.AthleteID, Rank = rank, Result = dbResult });
+                }
+                athleteEfforts.Add(e.ElapsedTime);
+            }
+            return new EffortUpdateStatus(rank, rides);
         }
 
         private void ImportEffortsFromStrava()

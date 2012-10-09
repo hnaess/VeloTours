@@ -27,7 +27,7 @@ public partial class ElapsedTimes
 
     public double Stdev { get; set; }
 
-    public int Quartile { get; set; }
+    public int Percentile90 { get; set; }
 
 }
 
