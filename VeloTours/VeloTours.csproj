@@ -205,6 +205,7 @@
     <Compile Include="DAL\Segment\SegmentEffort.cs" />
     <Compile Include="DAL\Segment\EffortUpdateStatus.cs" />
     <Compile Include="DAL\Utils.cs" />
+    <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\EnumerableStats\EnumerableStats.cs" />
     <Compile Include="Extensions\EnumerableStats\EnumerableStatsCovariance.cs" />
     <Compile Include="Extensions\EnumerableStats\EnumerableStatsMedian.cs" />

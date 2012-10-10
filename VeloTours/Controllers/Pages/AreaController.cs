@@ -21,6 +21,7 @@ namespace VeloTours.Controllers.Pages
                 Athlete = new AthleteRideInfo(), // TODO
             };
             viewModel.Athlete.ElapsedTimes = new ElapsedTimes(); //TODO;
+            viewModel.Segments = new List<SegmentViewModel>();
             foreach (Models.Segment segment in dbArea.Segments)
             {
                 viewModel.Segments.Add(new SegmentViewModel { Segment = segment });
@@ -36,7 +37,7 @@ namespace VeloTours.Controllers.Pages
             AreaUpdate areaUpdate = new AreaUpdate(area);
             areaUpdate.UpdateArea((bool)effort);
 
-            return RedirectToAction("Area", "Segment", new { athlete = athlete, area = area });
+            return RedirectToAction("Index", "Segment", new { athlete = athlete, area = area });
         }
     }
 }

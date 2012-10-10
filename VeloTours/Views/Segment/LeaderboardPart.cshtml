@@ -48,7 +48,6 @@
         }
     </tbody>
 </table>
-@Html.PagedListPager((IPagedList)@Model.LeaderBoard , 
-    page => Url.Action("Index", new { page = page, athlete = ViewBag.Athlete, area = ViewBag.Area, segment = ViewBag.Segment }), 
+@Html.PagedListPager((IPagedList)@Model.LeaderBoard, 
+    page => Url.Action("Index", new { lbPage = page, athlete = ViewBag.Athlete, area = ViewBag.Area, segment = ViewBag.Segment }), 
     PagedListRenderOptions.PageNumbersOnly)
-
