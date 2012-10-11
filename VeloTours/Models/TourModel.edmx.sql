@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 10/09/2012 14:21:33
+-- Date Created: 10/11/2012 07:18:18
 -- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
@@ -109,15 +109,15 @@ CREATE TABLE [dbo].[LeaderBoards] (
     [ResultID] int  NOT NULL,
     [AthleteID] int  NOT NULL,
     [Rank] int  NOT NULL,
-    [YellowPoints] int  NULL,
+    [YellowPoints] int  NOT NULL,
     [GreenPoints] int  NOT NULL,
     [PolkaDotPoints] int  NOT NULL,
-    [ElapsedTimes_Min] int  NULL,
-    [ElapsedTimes_Median] int  NULL,
-    [ElapsedTimes_Average] int  NULL,
-    [ElapsedTimes_Max] int  NULL,
-    [ElapsedTimes_Stdev] float  NULL,
-    [ElapsedTimes_Percentile90] int  NULL,
+    [ElapsedTimes_Min] int  NOT NULL,
+    [ElapsedTimes_Median] int  NOT NULL,
+    [ElapsedTimes_Average] int  NOT NULL,
+    [ElapsedTimes_Max] int  NOT NULL,
+    [ElapsedTimes_Stdev] float  NOT NULL,
+    [ElapsedTimes_Percentile90] int  NOT NULL,
     [NoRidden] int  NOT NULL
 );
 GO
@@ -129,14 +129,14 @@ CREATE TABLE [dbo].[Regions] (
     [Info_Name] nvarchar(max)  NOT NULL,
     [Info_Description] nvarchar(max)  NULL,
     [Info_PictureUri] nvarchar(max)  NULL,
-    [Info_Distance] float  NULL,
-    [Info_AvgGrade] float  NULL,
+    [Info_Distance] float  NOT NULL,
+    [Info_AvgGrade] float  NOT NULL,
     [Info_ClimbCategory] nvarchar(max)  NULL,
     [Info_ElevationHigh] float  NULL,
     [Info_ElevationLow] float  NULL,
     [Info_ElevationGain] float  NULL,
-    [Info_NoRiders] int  NULL,
-    [Info_NoRidden] int  NULL,
+    [Info_NoRiders] int  NOT NULL,
+    [Info_NoRidden] int  NOT NULL,
     [Info_LastUpdated] datetime  NULL
 );
 GO
@@ -148,14 +148,14 @@ CREATE TABLE [dbo].[SegmentAreas] (
     [Info_Name] nvarchar(max)  NOT NULL,
     [Info_Description] nvarchar(max)  NULL,
     [Info_PictureUri] nvarchar(max)  NULL,
-    [Info_Distance] float  NULL,
-    [Info_AvgGrade] float  NULL,
+    [Info_Distance] float  NOT NULL,
+    [Info_AvgGrade] float  NOT NULL,
     [Info_ClimbCategory] nvarchar(max)  NULL,
     [Info_ElevationHigh] float  NULL,
     [Info_ElevationLow] float  NULL,
     [Info_ElevationGain] float  NULL,
-    [Info_NoRiders] int  NULL,
-    [Info_NoRidden] int  NULL,
+    [Info_NoRiders] int  NOT NULL,
+    [Info_NoRidden] int  NOT NULL,
     [Info_LastUpdated] datetime  NULL,
     [SecretKey] uniqueidentifier  NULL
 );
@@ -167,14 +167,14 @@ CREATE TABLE [dbo].[Segments] (
     [Info_Name] nvarchar(max)  NOT NULL,
     [Info_Description] nvarchar(max)  NULL,
     [Info_PictureUri] nvarchar(max)  NULL,
-    [Info_Distance] float  NULL,
-    [Info_AvgGrade] float  NULL,
+    [Info_Distance] float  NOT NULL,
+    [Info_AvgGrade] float  NOT NULL,
     [Info_ClimbCategory] nvarchar(max)  NULL,
     [Info_ElevationHigh] float  NULL,
     [Info_ElevationLow] float  NULL,
     [Info_ElevationGain] float  NULL,
-    [Info_NoRiders] int  NULL,
-    [Info_NoRidden] int  NULL,
+    [Info_NoRiders] int  NOT NULL,
+    [Info_NoRidden] int  NOT NULL,
     [Info_LastUpdated] datetime  NULL
 );
 GO

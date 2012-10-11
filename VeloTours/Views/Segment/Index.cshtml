@@ -18,6 +18,7 @@
 
 <h3>Table</h3>
 @RenderPage("~/Views/Segment/TablePart.cshtml", ViewData.Model)
+<p>@Model.ImprovementHint</p>
 
 @if (ViewData.Model.LeaderBoard != null && ViewData.Model.LeaderBoard.Count > 0) {
     @RenderPage("~/Views/Segment/LeaderboardPart.cshtml", ViewData.Model);

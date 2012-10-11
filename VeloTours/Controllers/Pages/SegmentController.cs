@@ -8,6 +8,7 @@ using VeloTours.DAL.Segment;
 using VeloTours.Models;
 using VeloTours.ViewModel;
 using PagedList;
+using System.Diagnostics;
 
 namespace VeloTours.Controllers.Pages
 {
@@ -56,7 +57,8 @@ namespace VeloTours.Controllers.Pages
 
             // Update from other
             var dbResult = dbSegment.Result;
-            if (dbResult != null)
+            bool leaderBoardExists = dbResult != null && dbResult.LeaderBoards != null && dbResult.LeaderBoards.Count > 0;
+            if (leaderBoardExists)
             {
                 //http://www.asp.net/mvc/tutorials/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application
                 //https://github.com/TroyGoode/PagedList
@@ -76,15 +78,12 @@ namespace VeloTours.Controllers.Pages
 
                     if (lBoardAthlete.Count() == 1)
                     {
-                        Models.LeaderBoard lAthlete = lBoardAthlete.First();
-                        viewModel.Athlete.BehindKom = lAthlete.ElapsedTimes.Min - lBoardsKOM.ElapsedTimes.Min;
-                        viewModel.Athlete.BehindKomPercentage = ((double)lAthlete.ElapsedTimes.Min / (double)lBoardsKOM.ElapsedTimes.Min - 1) * 100;
-                        viewModel.Athlete.ElapsedTimes = lAthlete.ElapsedTimes;
-                        viewModel.Athlete.NoRidden = lAthlete.NoRidden;
-                        viewModel.Athlete.Position = lAthlete.Rank;
-                        viewModel.Athlete.PositionPercentage = (double)lAthlete.Rank / (double)dbResult.LeaderBoards.Count() * 100;
-                        //viewModel.UsersTimePrevious =
-                        //viewModel.UsersChangePos =
+                        UpdateViewModelWithAthleteInfo(viewModel, dbResult.LeaderBoards.Count(), lBoardsKOM, lBoardAthlete.First());
+                        viewModel.ImprovementHint = CreateImprovementHint(viewModel.Athlete.ElapsedTimes.Min, dbResult.LeaderBoards, lBoardAthlete.First());
+                    }
+                    else
+                    {
+                        Debug.Fail("What?");
                     }
                 }
             }
@@ -93,6 +92,30 @@ namespace VeloTours.Controllers.Pages
                 viewModel.LeaderBoard = new List<Models.LeaderBoard>().ToPagedList(1, 1);
             }
             return viewModel;
+        }
+
+        private static void UpdateViewModelWithAthleteInfo(SegmentViewModel viewModel, int riders, Models.LeaderBoard lBoardsKOM, Models.LeaderBoard lAthlete)
+        {
+            viewModel.Athlete.BehindKom = lAthlete.ElapsedTimes.Min - lBoardsKOM.ElapsedTimes.Min;
+            viewModel.Athlete.BehindKomPercentage = ((double)lAthlete.ElapsedTimes.Min / (double)lBoardsKOM.ElapsedTimes.Min - 1) * 100;
+            viewModel.Athlete.ElapsedTimes = lAthlete.ElapsedTimes;
+            viewModel.Athlete.NoRidden = lAthlete.NoRidden;
+            viewModel.Athlete.Position = lAthlete.Rank;
+            viewModel.Athlete.PositionPercentage = (double)lAthlete.Rank / (double)riders * 100;
+            //viewModel.UsersTimePrevious =
+            //viewModel.UsersChangePos =
+        }
+
+        private static string CreateImprovementHint(int duration, ICollection<LeaderBoard> lBoard, Models.LeaderBoard lAthlete)
+        {
+            int improveA = duration < 300 ? 3 : 10;
+            int improveB = duration < 300 ? 10 : 30;
+            int rankImproveA = (from lb in lBoard where lb.ElapsedTimes.Min <= (duration - improveA) select lb.Rank).Last();
+            int rankImproveB = (from lb in lBoard where lb.ElapsedTimes.Min <= (duration - improveB) select lb.Rank).Last();
+
+            string s = String.Format("Ride {0} seconds faster and improve {1} positions, or {2} seconds faster and improve {3}",
+                improveA, (lAthlete.Rank - rankImproveA - 1), improveB, (lAthlete.Rank - rankImproveB - 1));
+            return s;
         }
 
         private IPagedList<Models.LeaderBoard> GetSortedLeaderBoards(int resultID, string sortBy)

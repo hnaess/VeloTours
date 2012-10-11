@@ -237,6 +237,7 @@
     <Compile Include="Models\LeaderBoard.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LeaderBoardPartial.cs" />
     <Compile Include="Models\Region.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>

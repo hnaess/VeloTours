@@ -34,7 +34,7 @@ public partial class LeaderBoard
 
     public int Rank { get; set; }
 
-    public Nullable<int> YellowPoints { get; set; }
+    public int YellowPoints { get; set; }
 
     public int GreenPoints { get; set; }
 

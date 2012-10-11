@@ -84,15 +84,15 @@
     <Property Name="ResultID" Type="int" Nullable="false" />
     <Property Name="AthleteID" Type="int" Nullable="false" />
     <Property Name="Rank" Type="int" Nullable="false" />
-    <Property Name="YellowPoints" Type="int" Nullable="true" />
+    <Property Name="YellowPoints" Type="int" Nullable="false" />
     <Property Name="GreenPoints" Type="int" Nullable="false" />
     <Property Name="PolkaDotPoints" Type="int" Nullable="false" />
-    <Property Name="ElapsedTimes_Min" Type="int" Nullable="true" />
-    <Property Name="ElapsedTimes_Median" Type="int" Nullable="true" />
-    <Property Name="ElapsedTimes_Average" Type="int" Nullable="true" />
-    <Property Name="ElapsedTimes_Max" Type="int" Nullable="true" />
-    <Property Name="ElapsedTimes_Stdev" Type="float" Nullable="true" />
-    <Property Name="ElapsedTimes_Percentile90" Type="int" Nullable="true" />
+    <Property Name="ElapsedTimes_Min" Type="int" Nullable="false" />
+    <Property Name="ElapsedTimes_Median" Type="int" Nullable="false" />
+    <Property Name="ElapsedTimes_Average" Type="int" Nullable="false" />
+    <Property Name="ElapsedTimes_Max" Type="int" Nullable="false" />
+    <Property Name="ElapsedTimes_Stdev" Type="float" Nullable="false" />
+    <Property Name="ElapsedTimes_Percentile90" Type="int" Nullable="false" />
     <Property Name="NoRidden" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Regions">
@@ -104,14 +104,14 @@
     <Property Name="Info_Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Info_Description" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Info_PictureUri" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Info_Distance" Type="float" Nullable="true" />
-    <Property Name="Info_AvgGrade" Type="float" Nullable="true" />
+    <Property Name="Info_Distance" Type="float" Nullable="false" />
+    <Property Name="Info_AvgGrade" Type="float" Nullable="false" />
     <Property Name="Info_ClimbCategory" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Info_ElevationHigh" Type="float" Nullable="true" />
     <Property Name="Info_ElevationLow" Type="float" Nullable="true" />
     <Property Name="Info_ElevationGain" Type="float" Nullable="true" />
-    <Property Name="Info_NoRiders" Type="int" Nullable="true" />
-    <Property Name="Info_NoRidden" Type="int" Nullable="true" />
+    <Property Name="Info_NoRiders" Type="int" Nullable="false" />
+    <Property Name="Info_NoRidden" Type="int" Nullable="false" />
     <Property Name="Info_LastUpdated" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="SegmentAreas">
@@ -123,14 +123,14 @@
     <Property Name="Info_Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Info_Description" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Info_PictureUri" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Info_Distance" Type="float" Nullable="true" />
-    <Property Name="Info_AvgGrade" Type="float" Nullable="true" />
+    <Property Name="Info_Distance" Type="float" Nullable="false" />
+    <Property Name="Info_AvgGrade" Type="float" Nullable="false" />
     <Property Name="Info_ClimbCategory" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Info_ElevationHigh" Type="float" Nullable="true" />
     <Property Name="Info_ElevationLow" Type="float" Nullable="true" />
     <Property Name="Info_ElevationGain" Type="float" Nullable="true" />
-    <Property Name="Info_NoRiders" Type="int" Nullable="true" />
-    <Property Name="Info_NoRidden" Type="int" Nullable="true" />
+    <Property Name="Info_NoRiders" Type="int" Nullable="false" />
+    <Property Name="Info_NoRidden" Type="int" Nullable="false" />
     <Property Name="Info_LastUpdated" Type="datetime" Nullable="true" />
     <Property Name="SecretKey" Type="uniqueidentifier" Nullable="true" />
   </EntityType>
@@ -142,14 +142,14 @@
     <Property Name="Info_Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Info_Description" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Info_PictureUri" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Info_Distance" Type="float" Nullable="true" />
-    <Property Name="Info_AvgGrade" Type="float" Nullable="true" />
+    <Property Name="Info_Distance" Type="float" Nullable="false" />
+    <Property Name="Info_AvgGrade" Type="float" Nullable="false" />
     <Property Name="Info_ClimbCategory" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Info_ElevationHigh" Type="float" Nullable="true" />
     <Property Name="Info_ElevationLow" Type="float" Nullable="true" />
     <Property Name="Info_ElevationGain" Type="float" Nullable="true" />
-    <Property Name="Info_NoRiders" Type="int" Nullable="true" />
-    <Property Name="Info_NoRidden" Type="int" Nullable="true" />
+    <Property Name="Info_NoRiders" Type="int" Nullable="false" />
+    <Property Name="Info_NoRidden" Type="int" Nullable="false" />
     <Property Name="Info_LastUpdated" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="Efforts">
@@ -400,7 +400,7 @@
           <Property Type="Int32" Name="ResultID" Nullable="false" />
           <Property Type="Int32" Name="AthleteID" Nullable="false" />
           <Property Type="Int32" Name="Rank" Nullable="false" />
-          <Property Type="Int32" Name="YellowPoints" />
+          <Property Type="Int32" Name="YellowPoints" Nullable="false" />
           <Property Type="Int32" Name="GreenPoints" Nullable="false" />
           <Property Type="Int32" Name="PolkaDotPoints" Nullable="false" />
           <Property Name="ElapsedTimes" Type="TourModel.ElapsedTimes" Nullable="false" />
@@ -556,12 +556,12 @@
           </ReferentialConstraint>
         </Association>
         <ComplexType Name="ElapsedTimes" >
-          <Property Type="Int32" Name="Min" Nullable="true" />
-          <Property Type="Int32" Name="Median" Nullable="true" />
-          <Property Type="Int32" Name="Average" Nullable="true" />
-          <Property Type="Int32" Name="Max" Nullable="true" />
-          <Property Type="Double" Name="Stdev" Nullable="true" />
-          <Property Type="Int32" Name="Percentile90" Nullable="true" />
+          <Property Type="Int32" Name="Min" Nullable="false" />
+          <Property Type="Int32" Name="Median" Nullable="false" />
+          <Property Type="Int32" Name="Average" Nullable="false" />
+          <Property Type="Int32" Name="Max" Nullable="false" />
+          <Property Type="Double" Name="Stdev" Nullable="false" />
+          <Property Type="Int32" Name="Percentile90" Nullable="false" />
         </ComplexType>
         <Association Name="RegionResult">
           <End Type="TourModel.Region" Role="Region" Multiplicity="0..1" />
@@ -571,14 +571,14 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Description" Nullable="true" />
           <Property Type="String" Name="PictureUri" Nullable="true" />
-          <Property Type="Double" Name="Distance" />
-          <Property Type="Double" Name="AvgGrade" Nullable="true" />
+          <Property Type="Double" Name="Distance" Nullable="false" />
+          <Property Type="Double" Name="AvgGrade" Nullable="false" />
           <Property Type="String" Name="ClimbCategory" Nullable="true" />
-          <Property Type="Double" Name="ElevationHigh" />
-          <Property Type="Double" Name="ElevationLow" />
-          <Property Type="Double" Name="ElevationGain" />
-          <Property Type="Int32" Name="NoRiders" />
-          <Property Type="Int32" Name="NoRidden" />
+          <Property Type="Double" Name="ElevationHigh" Nullable="true" />
+          <Property Type="Double" Name="ElevationLow" Nullable="true" />
+          <Property Type="Double" Name="ElevationGain" Nullable="true" />
+          <Property Type="Int32" Name="NoRiders" Nullable="false" />
+          <Property Type="Int32" Name="NoRidden" Nullable="false" />
           <Property Type="DateTime" Name="LastUpdated" />
         </ComplexType>
         </Schema>

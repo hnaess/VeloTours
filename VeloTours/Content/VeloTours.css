@@ -10,5 +10,6 @@ tr th.right {
 tr td.right {
     text-align: right;
     vertical-align: top;
+    padding-left: 20px;
 }
 

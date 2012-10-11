@@ -23,9 +23,9 @@ public partial class Statistics
 
     public string PictureUri { get; set; }
 
-    public Nullable<double> Distance { get; set; }
+    public double Distance { get; set; }
 
-    public Nullable<double> AvgGrade { get; set; }
+    public double AvgGrade { get; set; }
 
     public string ClimbCategory { get; set; }
 
@@ -35,9 +35,9 @@ public partial class Statistics
 
     public Nullable<double> ElevationGain { get; set; }
 
-    public Nullable<int> NoRiders { get; set; }
+    public int NoRiders { get; set; }
 
-    public Nullable<int> NoRidden { get; set; }
+    public int NoRidden { get; set; }
 
     public Nullable<System.DateTime> LastUpdated { get; set; }
 

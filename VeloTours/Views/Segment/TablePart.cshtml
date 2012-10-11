@@ -47,12 +47,12 @@
             <td class="right">@athleteInfo.BehindKom</td>
             <td class="right">@String.Format("{0:#0.##}", athleteInfo.BehindKomPercentage)</td>
             <td class="right">@athleteInfo.NoRidden</td>
-            <td class="right">@athleteInfo.ElapsedTimes.Min<br />@athleteInfo.UsersTimePrevious</td>
-            <td class="right">@athleteInfo.ElapsedTimes.Percentile90</td>
-            <td class="right">@athleteInfo.ElapsedTimes.Max</td>
-            <td class="right">@athleteInfo.ElapsedTimes.Median</td>
-            <td class="right">@athleteInfo.ElapsedTimes.Average</td>
-            <td class="right">@String.Format("{0:#}", @athleteInfo.ElapsedTimes.Stdev)</td>
+            <td class="right">@athleteInfo.Min<br />@athleteInfo.UsersTimePrevious</td>
+            <td class="right">@athleteInfo.Percentile90</td>
+            <td class="right">@athleteInfo.Max</td>
+            <td class="right">@athleteInfo.Median</td>
+            <td class="right">@athleteInfo.Average</td>
+            <td class="right">@athleteInfo.Stdev</td>
             <td class="right">@athleteInfo.UsersChangePos</td>
         </tr>
     </tbody>

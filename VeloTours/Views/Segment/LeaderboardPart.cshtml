@@ -2,12 +2,15 @@
 @using PagedList; 
 @using PagedList.Mvc; 
 @using VeloTours.Models;
+@using VeloTours.Models.Extensions;
 
 <!-- import the included stylesheet for some (very basic) default styling -->
 @*<link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
 
 @{
+    int athleteID = ViewBag.Athlete;
     var leaderBoardList = @Model.LeaderBoard;
+    var style = "";
 }
 
 @*tablesorter*@
@@ -29,25 +32,24 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (LeaderBoard lb in leaderBoardList)
-        {
+        @foreach (LeaderBoard lb in leaderBoardList) {
         <tr>
             <td class="right">@lb.Rank</td>
-            <td>@lb.Athlete.Name</td>
-            <td class="right">@lb.YellowPoints</td>
+            <td style="@style">@lb.Athlete.Name</td>
+            <td class="right">@lb.Yellow</td>
             <td class="right">@lb.GreenPoints</td>
             <td class="right">@lb.PolkaDotPoints</td>
             <td class="right">@lb.NoRidden</td>
-            <td class="right">@lb.ElapsedTimes.Min</td>
-            <td class="right">@lb.ElapsedTimes.Percentile90</td>
-            <td class="right">@lb.ElapsedTimes.Max</td>
-            <td class="right">@lb.ElapsedTimes.Median</td>
-            <td class="right">@lb.ElapsedTimes.Average</td>
-            <td class="right">@String.Format("{0:#}", @lb.ElapsedTimes.Stdev)</td>
+            <td class="right">@lb.Min</td>
+            <td class="right">@lb.Percentile90</td>
+            <td class="right">@lb.Max</td>
+            <td class="right">@lb.Median</td>
+            <td class="right">@lb.Average</td>
+            <td class="right">@lb.Stdev</td>
         </tr>
         }
     </tbody>
 </table>
 @Html.PagedListPager((IPagedList)@Model.LeaderBoard, 
     page => Url.Action("Index", new { lbPage = page, athlete = ViewBag.Athlete, area = ViewBag.Area, segment = ViewBag.Segment }), 
-    PagedListRenderOptions.PageNumbersOnly)
+    PagedListRenderOptions.DefaultPlusFirstAndLast)

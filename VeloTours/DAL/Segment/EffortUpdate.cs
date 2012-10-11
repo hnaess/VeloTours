@@ -114,11 +114,12 @@ namespace VeloTours.DAL.Segment
             var sortedEfforts =
                 from n in db.Efforts
                 where n.ResultID == dbResult.ResultID
-                orderby n.ElapsedTime ascending 
+                orderby n.ElapsedTime ascending, n.AthleteID  
                 select new { n.AthleteID, n.ElapsedTime };
 
             int rank = 0;
             int rides = 0;
+            int prevDuration = 0;
             foreach (var e in sortedEfforts)
             {
                 rides++;
@@ -126,15 +127,18 @@ namespace VeloTours.DAL.Segment
                 athleteEffortsList.TryGetValue(e.AthleteID, out athleteEfforts);
                 if (athleteEfforts == null)
                 {
-                    rank++;
+                    if (prevDuration != e.ElapsedTime)
+                        rank = athleteEffortsList.Count + 1;
+
                     athleteEfforts = new List<int>();
                     athleteEffortsList[e.AthleteID] = athleteEfforts;
 
                     leaderBoards.Add(new Models.LeaderBoard() { AthleteID = e.AthleteID, Rank = rank, Result = dbResult });
                 }
                 athleteEfforts.Add(e.ElapsedTime);
+                prevDuration = e.ElapsedTime;
             }
-            return new EffortUpdateStatus(rank, rides);
+            return new EffortUpdateStatus(athleteEffortsList.Count, rides);
         }
 
         private void ImportEffortsFromStrava()

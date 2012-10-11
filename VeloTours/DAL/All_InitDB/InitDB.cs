@@ -14,7 +14,7 @@ namespace VeloTours.DAL
 
         public static void CreateAndInitIfEmpty(TourModelContainer context)
         {
-            //context.Database.Delete();
+            context.Database.Delete();
             if (!context.Database.Exists())
             {
                 context.Database.Create();
@@ -26,7 +26,7 @@ namespace VeloTours.DAL
         private static void CreateIndexes(TourModelContainer context)
         {
             CreateIndex(context, "StartDate", "Efforts", false);
-            CreateIndex(context, "ElapsedTime", "Efforts", false);
+            CreateIndex(context, "ElapsedTime", "Efforts", false); // TODO: Review stil lvalid?
         }
 
         private static void CreateIndex(TourModelContainer context, string field, string table, bool unique = false)
@@ -55,16 +55,17 @@ namespace VeloTours.DAL
         {
             var regions = new List<Models.Region>
             {
-                new Models.Region { CountryID = 578, Info = new Statistics() { Name = "Oslo" }},
-                new Models.Region { CountryID = 578, Info = new Statistics() { Name = "Bærum" }},
-                new Models.Region { CountryID = 578, Info = new Statistics() { Name = "Asker" }},
-                new Models.Region { CountryID = 578, Info = new Statistics() { Name = "Nesodden" }},
-                new Models.Region { CountryID = 578, Info = new Statistics() { Name = "Trondheim" }},
+                new Models.Region { CountryID = 578, Info = NewStatistics(context, "Oslo")},
+                new Models.Region { CountryID = 578, Info = NewStatistics(context, "Bærum")},
+                new Models.Region { CountryID = 578, Info = NewStatistics(context, "Asker")},
+                new Models.Region { CountryID = 578, Info = NewStatistics(context, "Nesodden" )},
+                new Models.Region { CountryID = 578, Info = NewStatistics(context, "Trondheim")},
             };
             regions.ForEach(s => context.Regions.Add(s));
             context.SaveChanges();
             return regions;
         }
+
 
         private static List<Models.Country> Countries(TourModelContainer context)
         {
@@ -80,18 +81,23 @@ namespace VeloTours.DAL
             return countries;
         }
 
+        private static Statistics NewStatistics(TourModelContainer context, string name)
+        {
+            return new Statistics() { Name = name, AvgGrade = 0, Distance = 0, NoRidden = 0, NoRiders = 0, LastUpdated = DefaultDate };
+        }
+
         internal static Models.SegmentArea NewSegmentArea(TourModelContainer context, Models.Region region, List<Models.Segment> segments, string name)
         {
             //var result = new Models.Result { LastUpdated = DefaultDate };
             Models.Result result = null;
-            return new SegmentArea { Region = region, Segments = segments, Result = result, Info = new Statistics { Name = name, LastUpdated = DefaultDate }, };
+            return new SegmentArea { Region = region, Segments = segments, Result = result, Info = NewStatistics(context, name), };
         }
 
         internal static Models.Segment NewSegment(TourModelContainer context, int segmentID, string name)
         {
             //var result = new Models.Result { LastUpdated = DefaultDate };
             Models.Result result = null;
-            return new Models.Segment { SegmentID = segmentID, Result = result, Info = new Statistics { Name = name, LastUpdated = DefaultDate }, };
+            return new Models.Segment { SegmentID = segmentID, Result = result, Info = NewStatistics(context, name), };
         }
     }
 }
