@@ -1,1 +1,32 @@
-﻿<p>Yersey Part</p>
+﻿@model VeloTours.Models.SegmentViewModel
+@using VeloTours.Models;
+
+@{
+    var isClimb = @Model.Segment.IsClimb;
+    var yellow = @Model.Segment.Result.LeaderBoards.First();
+}
+
+<table>
+    <thead>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <img src="~/Content/images/yersey/yellow.png" />
+                @if (isClimb)
+                {
+                    <img src="~/Content/images/yersey/polkadot.png" />
+                }
+                else
+                {
+                    <img src="~/Content/images/yersey/green.png" />
+                }
+            </td>
+            <td style="vertical-align:top">
+                <b>@yellow.Athlete.Name</b><br />
+                Speed: @String.Format("{0:#0.#} km/h", @Model.CalculateSpeed(yellow))<br />
+                Ridden: @yellow.NoRidden<br />
+            </td>
+        </tr>
+    </tbody>
+</table>

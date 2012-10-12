@@ -13,19 +13,20 @@
 <h2>@title</h2>
 <p>@Model.Segment.Info.Description</p>
 
-<h3>Yersey</h3>
-@RenderPage("~/Views/Segment/YerseyPart.cshtml", ViewData.Model)
+@if (ViewData.Model.LeaderBoard != null && ViewData.Model.LeaderBoard.Count > 0) 
+{
+    <h3>Yersey</h3>
+    @RenderPage("~/Views/Segment/YerseyPart.cshtml", ViewData.Model)
 
-<h3>Table</h3>
-@RenderPage("~/Views/Segment/TablePart.cshtml", ViewData.Model)
-<p>@Model.ImprovementHint</p>
+    <h3>Table</h3>
+    @RenderPage("~/Views/Segment/TablePart.cshtml", ViewData.Model)
+    <p>@Model.ImprovementHint</p>
 
-@if (ViewData.Model.LeaderBoard != null && ViewData.Model.LeaderBoard.Count > 0) {
     @RenderPage("~/Views/Segment/LeaderboardPart.cshtml", ViewData.Model);
 }
 
-<h3>Strava Segments for @title</h3>
-<iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@segmentID/embed" width="450"></iframe>
+@*<h3>Strava Segments for @title</h3>
+<iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@segmentID/embed" width="450"></iframe>*@
 
 <p>
     @Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = @athleteID, area = @areaID, segment = @segmentID, effort = false, }, htmlAttributes: null)<br />

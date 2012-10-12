@@ -7,7 +7,7 @@
 @*Hide things with CSS (area/segment)*@
 
 @*tablesorter*@
-<table id="SegmentsTable" class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
+<table class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
     <thead>
         <tr>
             <th class="right" title="Your position on the segment; the last time you updated.">pos</th>
@@ -43,9 +43,9 @@
             <td class="right">@info.ClimbCategory</td>
             <td class="right">@info.NoRidden</td>
             <td class="right">@info.NoRiders</td>
-            <td class="right">@String.Format("{0:#0.##}", Model.KomSpeed ?? 0)</td>
+            <td class="right">@String.Format("{0:#0.#}", Model.KomSpeed ?? 0)</td>
             <td class="right">@athleteInfo.BehindKom</td>
-            <td class="right">@String.Format("{0:#0.##}", athleteInfo.BehindKomPercentage)</td>
+            <td class="right">@String.Format("{0:#0.#}", athleteInfo.BehindKomPercentage)</td>
             <td class="right">@athleteInfo.NoRidden</td>
             <td class="right">@athleteInfo.Min<br />@athleteInfo.UsersTimePrevious</td>
             <td class="right">@athleteInfo.Percentile90</td>

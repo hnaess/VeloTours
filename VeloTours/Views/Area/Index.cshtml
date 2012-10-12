@@ -14,6 +14,9 @@
 <h2>Resultboard for @title</h2>
 <p>@Model.SegmentArea.Info.Description</p>
 
+<h3>Yersey</h3>
+@RenderPage("~/Views/Area/YerseyPart.cshtml", ViewData.Model)
+
 <h3>Segments in the areas</h3>
 @*tablesorter*@
 <table id="SegmentsTable" class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
@@ -79,17 +82,17 @@
 </table>
 
 
-<h2>Strava Segments for @title</h2>
+@*<h2>Strava Segments for @title</h2>
 
 @foreach (var item in Model.Segments)
 {
     <iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@item.Segment.SegmentID/embed" width="450"></iframe>
-}
+}*@
 
 <p>
     @Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = athleteID, area = areaID, effort = false })<br />
     @Html.ActionLink("Update from Strava w/efforts", "Update", routeValues: new { athlete = athleteID, area = areaID, effort = true, }, htmlAttributes: null)<br />
-    @Html.ActionLink("Go back to overview", "Index", "Home", new { athlete = athleteID }, htmlAttributes: null)
+    @Html.ActionLink("Go back to overview", "Index", "Home", routeValues: new { athlete = athleteID }, htmlAttributes: null)
 </p>
 
 

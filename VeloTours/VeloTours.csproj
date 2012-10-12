@@ -225,6 +225,7 @@
     <Compile Include="Models\Athlete.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SegmentPartial.cs" />
     <Compile Include="Models\Country.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
@@ -281,6 +282,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\images\yersey\green.png" />
+    <Content Include="Content\images\yersey\polkadot.png" />
+    <Content Include="Content\images\yersey\yellow.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -422,6 +426,7 @@
     <Content Include="Views\Segment\TablePart.cshtml" />
     <Content Include="Views\Segment\YerseyPart.cshtml" />
     <Content Include="Views\Segment\LeaderboardPart.cshtml" />
+    <Content Include="Views\Area\YerseyPart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -71,7 +71,17 @@ namespace VeloTours.DAL.Segment
             
             UpdateLeaderBoard(segmentClimbCategory, leaderBoards, athleteEffortsList, rideInfo);
 
+            var komAthlete = leaderBoards.First();
+            UpdateResultTableWithPoints(komAthlete);
+
             return rideInfo;
+        }
+
+        private void UpdateResultTableWithPoints(LeaderBoard komAthlete)
+        {
+            int i = 1;
+            //db.ResultSet.Add(dbResult);
+            //db.SaveChanges();
         }
 
         private void UpdateLeaderBoard(string segmentClimbCategory, List<Models.LeaderBoard> leaderBoards, Dictionary<int, List<int>> athleteEffortsList, EffortUpdateStatus rideInfo)
@@ -80,7 +90,7 @@ namespace VeloTours.DAL.Segment
             foreach (var l in leaderBoards)
             {
                 List<int> effort = athleteEffortsList[l.AthleteID];
-                effort.Sort();
+                effort.Sort(); // TODO: Review, need this - isn't it already sorted?
 
                 double stdev = effort.StandardDeviation();
                 l.NoRidden = effort.Count;
@@ -134,9 +144,9 @@ namespace VeloTours.DAL.Segment
                     athleteEffortsList[e.AthleteID] = athleteEfforts;
 
                     leaderBoards.Add(new Models.LeaderBoard() { AthleteID = e.AthleteID, Rank = rank, Result = dbResult });
+                    prevDuration = e.ElapsedTime;
                 }
                 athleteEfforts.Add(e.ElapsedTime);
-                prevDuration = e.ElapsedTime;
             }
             return new EffortUpdateStatus(athleteEffortsList.Count, rides);
         }

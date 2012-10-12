@@ -16,5 +16,10 @@ namespace VeloTours.Models
         
         //public ICollection<Models.LeaderBoard> LeaderBoard { get { return Segment.Result.LeaderBoards; } }
         public IPagedList<Models.LeaderBoard> LeaderBoard { get; set; }
+
+        public double CalculateSpeed(Models.LeaderBoard leaderBoard)
+        {
+            return (this.Segment.Info.Distance / leaderBoard.ElapsedTimes.Min) * 3.6;
+        }
     }
 }

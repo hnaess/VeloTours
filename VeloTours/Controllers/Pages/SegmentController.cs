@@ -76,6 +76,7 @@ namespace VeloTours.Controllers.Pages
                            && l.ResultID == dbResult.ResultID
                         select l;
 
+                    
                     if (lBoardAthlete.Count() == 1)
                     {
                         UpdateViewModelWithAthleteInfo(viewModel, dbResult.LeaderBoards.Count(), lBoardsKOM, lBoardAthlete.First());
@@ -108,14 +109,31 @@ namespace VeloTours.Controllers.Pages
 
         private static string CreateImprovementHint(int duration, ICollection<LeaderBoard> lBoard, Models.LeaderBoard lAthlete)
         {
-            int improveA = duration < 300 ? 3 : 10;
-            int improveB = duration < 300 ? 10 : 30;
-            int rankImproveA = (from lb in lBoard where lb.ElapsedTimes.Min <= (duration - improveA) select lb.Rank).Last();
-            int rankImproveB = (from lb in lBoard where lb.ElapsedTimes.Min <= (duration - improveB) select lb.Rank).Last();
+            string hint = "";
+            int secondsA = duration < 300 ? 3 : 10;
+            int secondsB = duration < 300 ? 10 : 30;
 
-            string s = String.Format("Ride {0} seconds faster and improve {1} positions, or {2} seconds faster and improve {3}",
-                improveA, (lAthlete.Rank - rankImproveA - 1), improveB, (lAthlete.Rank - rankImproveB - 1));
-            return s;
+            int rankA = lAthlete.Rank - CalcRankingImprovementPlacing(secondsA, duration, lBoard) - 1;
+            int rankB = lAthlete.Rank - CalcRankingImprovementPlacing(secondsB, duration, lBoard) - 1;
+
+            if (rankA > 0)
+            {
+                hint += String.Format("Ride {0} seconds faster, improve {1} pos. ", secondsA, rankA);
+            }
+            if (rankB > 0)
+            {
+                hint += String.Format("Ride {0} seconds faster, improve {1} pos.", secondsB, rankB);
+            }
+            return hint;
+        }
+
+        private static int CalcRankingImprovementPlacing(int seconds, int duration, ICollection<LeaderBoard> lBoard)
+        {
+            var improveAquery = (from lb in lBoard where lb.ElapsedTimes.Min <= (duration - seconds) select lb.Rank);
+            if (improveAquery.Count() == 0)
+                return 0;
+
+            return improveAquery.Last();
         }
 
         private IPagedList<Models.LeaderBoard> GetSortedLeaderBoards(int resultID, string sortBy)
