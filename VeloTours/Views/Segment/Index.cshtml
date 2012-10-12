@@ -8,33 +8,36 @@
     int? areaID = ViewBag.Area;
 
     string title = @Model.Segment.Info.Name;
+    bool hasLeaderBoard = (@Model.LeaderBoard != null && @Model.LeaderBoard.Count > 0);
 }
 
 <h2>@title</h2>
 <p>@Model.Segment.Info.Description</p>
+@*PictureUrl*@
 
-@if (ViewData.Model.LeaderBoard != null && ViewData.Model.LeaderBoard.Count > 0) 
+
+@if (hasLeaderBoard) 
 {
     <h3>Yersey</h3>
-    @RenderPage("~/Views/Segment/YerseyPart.cshtml", ViewData.Model)
+    @RenderPage("~/Views/Segment/YerseyPart.cshtml", @Model)
 
-    <h3>Table</h3>
-    @RenderPage("~/Views/Segment/TablePart.cshtml", ViewData.Model)
+    <h3>Athlete's Info</h3>
+    @RenderPage("~/Views/Segment/AthleteInfoPart.cshtml", @Model)
     <p>@Model.ImprovementHint</p>
 
-    @RenderPage("~/Views/Segment/LeaderboardPart.cshtml", ViewData.Model);
+    <h3>LeaderBoard</h3>
+    @RenderPage("~/Views/Segment/LeaderboardPart.cshtml", @Model);
 }
 
-@*<h3>Strava Segments for @title</h3>
-<iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@segmentID/embed" width="450"></iframe>*@
+<p>
+    @if (areaID > 0)
+    {
+        @Html.ActionLink("Go back to area", "Index", "Area", routeValues: new { area = areaID, athlete = athleteID }, htmlAttributes: null)
+    }
+</p>
 
+<h3>Admin</h3>
 <p>
     @Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = @athleteID, area = @areaID, segment = @segmentID, effort = false, }, htmlAttributes: null)<br />
     @Html.ActionLink("Update from Strava w/efforts", "Update", routeValues: new { athlete = athleteID, area = @areaID, segment = @segmentID, effort = true, }, htmlAttributes: null)<br />
-    @{
-        if( areaID > 0)
-        {
-            @Html.ActionLink("Go back to area", "Index", "Area", routeValues: new { area = areaID, athlete = athleteID }, htmlAttributes: null)
-        }
-    }
 </p>

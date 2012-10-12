@@ -110,30 +110,24 @@ namespace VeloTours.Controllers.Pages
         private static string CreateImprovementHint(int duration, ICollection<LeaderBoard> lBoard, Models.LeaderBoard lAthlete)
         {
             string hint = "";
-            int secondsA = duration < 300 ? 3 : 10;
-            int secondsB = duration < 300 ? 10 : 30;
-
-            int rankA = lAthlete.Rank - CalcRankingImprovementPlacing(secondsA, duration, lBoard) - 1;
-            int rankB = lAthlete.Rank - CalcRankingImprovementPlacing(secondsB, duration, lBoard) - 1;
-
-            if (rankA > 0)
-            {
-                hint += String.Format("Ride {0} seconds faster, improve {1} pos. ", secondsA, rankA);
-            }
-            if (rankB > 0)
-            {
-                hint += String.Format("Ride {0} seconds faster, improve {1} pos.", secondsB, rankB);
-            }
+            hint += CreateImprovementHintElement(duration < 500 ? 3 : 10, duration, lBoard, lAthlete.Rank);
+            hint += CreateImprovementHintElement(duration < 500 ? 10 : 30, duration, lBoard, lAthlete.Rank);
             return hint;
         }
 
-        private static int CalcRankingImprovementPlacing(int seconds, int duration, ICollection<LeaderBoard> lBoard)
+        private static string CreateImprovementHintElement(int seconds, int duration, ICollection<LeaderBoard> lBoard, int rank)
         {
+            int newRank = 0;
             var improveAquery = (from lb in lBoard where lb.ElapsedTimes.Min <= (duration - seconds) select lb.Rank);
-            if (improveAquery.Count() == 0)
-                return 0;
+            if (improveAquery.Count() > 0)
+                newRank = improveAquery.Last();
 
-            return improveAquery.Last();
+            int rankImprovement = rank - newRank - 1;
+            
+            if (rankImprovement > 0)
+                return String.Format("Ride {0} seconds faster, improve {1} position to #{2}", seconds, rankImprovement, newRank);
+
+            return string.Empty; ;
         }
 
         private IPagedList<Models.LeaderBoard> GetSortedLeaderBoards(int resultID, string sortBy)

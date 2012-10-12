@@ -8,10 +8,7 @@ namespace VeloTours.Models
     {
         public bool IsClimb
         {
-            get
-            {
-                return this.Info.ClimbCategory != "NC";
-            }
+            get { return this.Info.ClimbCategory != "NC"; }
         }
     }
 }

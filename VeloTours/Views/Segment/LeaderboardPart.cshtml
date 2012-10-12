@@ -1,6 +1,7 @@
 ﻿@using System.Collections;
 @using PagedList; 
 @using PagedList.Mvc; 
+@using VeloTours.Helpers;
 @using VeloTours.Models;
 @using VeloTours.Models.Extensions;
 
@@ -35,7 +36,7 @@
         @foreach (LeaderBoard lb in leaderBoardList) {
         <tr>
             <td class="right">@lb.Rank</td>
-            <td style="@style">@lb.Athlete.Name</td>
+            <td style="@style">@Html.Raw(HtmlFormatters.AthleteIconLink(@lb.AthleteID))@lb.Athlete.Name</td>
             <td class="right">@lb.Yellow</td>
             <td class="right">@lb.GreenPoints</td>
             <td class="right">@lb.PolkaDotPoints</td>

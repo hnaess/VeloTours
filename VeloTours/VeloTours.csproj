@@ -78,7 +78,7 @@
       <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="Stravan">
-      <HintPath>..\..\StravaTools\Stravan\Stravan\bin\Debug\Stravan.dll</HintPath>
+      <HintPath>..\..\Stravan-\Stravan\Stravan\bin\Debug\Stravan.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -220,8 +220,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HtmlFormatters.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\Account\AccountModels.cs" />
+    <Compile Include="Models\AthletePartial.cs" />
     <Compile Include="Models\Athlete.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
@@ -423,7 +425,7 @@
     <Content Include="Views\Segment\Index.cshtml" />
     <Content Include="Views\Area\Index.cshtml" />
     <Content Include="Views\Country\Index.cshtml" />
-    <Content Include="Views\Segment\TablePart.cshtml" />
+    <Content Include="Views\Segment\AthleteInfoPart.cshtml" />
     <Content Include="Views\Segment\YerseyPart.cshtml" />
     <Content Include="Views\Segment\LeaderboardPart.cshtml" />
     <Content Include="Views\Area\YerseyPart.cshtml" />
