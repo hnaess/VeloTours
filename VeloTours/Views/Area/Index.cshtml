@@ -1,17 +1,15 @@
 ﻿@model VeloTours.Models.SegmentAreaViewModel
 @using VeloTours.Models;
 @using VeloTours.Helpers;
-@using System.Globalization;
 
 @{
-    ViewBag.Title = "Area";
     int areaID = @Model.SegmentArea.SegmentAreaID;
     int athleteID = ViewBag.Athlete ?? 0;
 
-    string title = @Model.SegmentArea.Info.Name;
+    bool hasLeaderBoard = (@Model.SegmentArea.Result != null && @Model.LeaderBoard != null && @Model.LeaderBoard.Count > 0);
 }
 
-<h2>Resultboard for @title</h2>
+<h2>@Model.Info.Name</h2>
 <p>@Model.SegmentArea.Info.Description</p>
 
 <h3>Yersey</h3>
@@ -81,14 +79,12 @@
     </tbody>
 </table>
 
+<p>
+    Go back to area: 
+    @Html.ActionLink(@Model.SegmentArea.Region.Info.Name, "Index", "Region", routeValues: new { region = @Model.SegmentArea.RegionID, athlete = athleteID }, htmlAttributes: null)
+</p>
 
-@*<h2>Strava Segments for @title</h2>
-
-@foreach (var item in Model.Segments)
-{
-    <iframe seamless="seamless" height="370" src="http://app.strava.com/segments/@item.Segment.SegmentID/embed" width="450"></iframe>
-}*@
-
+<h3>Admin</h3>
 <p>
     @Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = athleteID, area = areaID, effort = false })<br />
     @Html.ActionLink("Update from Strava w/efforts", "Update", routeValues: new { athlete = athleteID, area = areaID, effort = true, }, htmlAttributes: null)<br />
@@ -97,7 +93,8 @@
 
 
 <script>
-    var athleteId = @athleteID
+
+    var athleteId = @athleteID
     $('.segmentLink').each(function () {
         var links = '<a target="_blank" data-parentid="segment' + $(this).data("segmentid") + '" class="popoverLink" href="http://www.strava.com/segments/' + $(this).data("segmentid") + '" title="View segment on Strava (external link)">View on Strava</a><br/>';
         links += '<a target="_blank" data-parentid="segment' + $(this).data("segmentid") + '" class="popoverLink" href="http://www.jonathanokeeffe.com/strava/segmentDetails.php?segmentId=' + $(this).data("segmentid") + '" title="View as much detail about this segment as you could possible imagine (external link)">O\'Keeffe\'s Segment History</a><br/>';

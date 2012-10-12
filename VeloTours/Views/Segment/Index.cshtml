@@ -2,16 +2,14 @@
 @using VeloTours.Models;
 
 @{
-    ViewBag.Title = "Segment";
     int segmentID = @Model.Segment.SegmentID;
     int athleteID = ViewBag.Athlete;
-    int? areaID = ViewBag.Area;
 
     string title = @Model.Segment.Info.Name;
     bool hasLeaderBoard = (@Model.LeaderBoard != null && @Model.LeaderBoard.Count > 0);
 }
 
-<h2>@title</h2>
+<h2>@Model.Info.Name</h2>
 <p>@Model.Segment.Info.Description</p>
 @*PictureUrl*@
 
@@ -39,6 +37,6 @@
 
 <h3>Admin</h3>
 <p>
-    @Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = @athleteID, area = @areaID, segment = @segmentID, effort = false, }, htmlAttributes: null)<br />
-    @Html.ActionLink("Update from Strava w/efforts", "Update", routeValues: new { athlete = athleteID, area = @areaID, segment = @segmentID, effort = true, }, htmlAttributes: null)<br />
+    @Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = @athleteID,segment = @segmentID, effort = false, }, htmlAttributes: null)<br />
+    @Html.ActionLink("Update from Strava w/efforts", "Update", routeValues: new { athlete = athleteID, segment = @segmentID, effort = true, }, htmlAttributes: null)<br />
 </p>

@@ -28,25 +28,24 @@ namespace VeloTours.Controllers.Pages
             set { ViewBag.SortOrder = value; }
         }
 
-        public ActionResult Index(int segment, int athlete, int? area, int? lbPage, string lbSortBy)
+        public ActionResult Index(int segment, int athlete, int? lbPage, string lbSortBy)
         {
             this.lbPage = lbPage;
             SegmentViewModel segmentModel = GetSegmentViewModel(segment, athlete, lbSortBy ?? DefaultLBoardSortOrder);
 
             ViewBag.Segment = segment;
             ViewBag.Athlete = athlete;
-            ViewBag.Area = area;
             return View(segmentModel);
         }
 
-        public ActionResult Update(int segment, int athlete, int? area, bool? effort = false)
+        public ActionResult Update(int segment, int athlete, bool? effort = false)
         {
             SegmentUpdate segmentUpdate = new SegmentUpdate(segment);
             segmentUpdate.UpdateSegment();
             if ((bool)effort)
                 segmentUpdate.UpdateEfforts(segment);
 
-            return RedirectToAction("Index", new { athlete = athlete, segment = segment, area = area });
+            return RedirectToAction("Index", new { athlete = athlete, segment = segment });
         }
 
         private SegmentViewModel GetSegmentViewModel(int segmentID, int athlete, string sortBy)
@@ -125,10 +124,10 @@ namespace VeloTours.Controllers.Pages
 
             int rankImprovement = rank - newRank - 1;
             
-            if (rankImprovement > 0)
-                return String.Format("Ride {0} seconds faster, improve {1} position to #{2}", seconds, rankImprovement, newRank);
+            if (rankImprovement > 0) // TODO: Verify rank correct
+                return String.Format("Ride {0} seconds faster, improve {1} position to #{2}. ", seconds, rankImprovement, newRank + 1);
 
-            return string.Empty; ;
+            return string.Empty;
         }
 
         private IPagedList<Models.LeaderBoard> GetSortedLeaderBoards(int resultID, string sortBy)
