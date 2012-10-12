@@ -59,6 +59,18 @@
       <End Role="Region" EntitySet="Regions" />
       <End Role="Result" EntitySet="ResultSet" />
     </AssociationSet>
+    <AssociationSet Name="GreenYersey" Association="TourModel.Store.GreenYersey">
+      <End Role="Result" EntitySet="ResultSet" />
+      <End Role="LeaderBoard" EntitySet="LeaderBoards" />
+    </AssociationSet>
+    <AssociationSet Name="LeaderBoardResult" Association="TourModel.Store.LeaderBoardResult">
+      <End Role="LeaderBoard" EntitySet="LeaderBoards" />
+      <End Role="Result" EntitySet="ResultSet" />
+    </AssociationSet>
+    <AssociationSet Name="YellowYersey" Association="TourModel.Store.YellowYersey">
+      <End Role="Result" EntitySet="ResultSet" />
+      <End Role="LeaderBoard" EntitySet="LeaderBoards" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Athletes">
     <Key>
@@ -94,6 +106,8 @@
     <Property Name="ElapsedTimes_Stdev" Type="float" Nullable="false" />
     <Property Name="ElapsedTimes_Percentile90" Type="int" Nullable="false" />
     <Property Name="NoRidden" Type="int" Nullable="false" />
+    <Property Name="GreenYersey_LeaderBoard_ResultID" Type="int" Nullable="true" />
+    <Property Name="YellowYersey_LeaderBoard_ResultID" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="Regions">
     <Key>
@@ -174,6 +188,7 @@
     <Property Name="Segment_SegmentID" Type="int" Nullable="true" />
     <Property Name="SegmentArea_SegmentAreaID" Type="int" Nullable="true" />
     <Property Name="Region_RegionID" Type="int" Nullable="true" />
+    <Property Name="PolkaDotYersey_LeaderBoardID" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="SegmentAreasSegments">
     <Key>
@@ -295,6 +310,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="GreenYersey">
+    <End Role="Result" Type="TourModel.Store.ResultSet" Multiplicity="0..1" />
+    <End Role="LeaderBoard" Type="TourModel.Store.LeaderBoards" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Result">
+        <PropertyRef Name="ResultID" />
+      </Principal>
+      <Dependent Role="LeaderBoard">
+        <PropertyRef Name="GreenYersey_LeaderBoard_ResultID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LeaderBoardResult">
+    <End Role="LeaderBoard" Type="TourModel.Store.LeaderBoards" Multiplicity="0..1" />
+    <End Role="Result" Type="TourModel.Store.ResultSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LeaderBoard">
+        <PropertyRef Name="LeaderBoardID" />
+      </Principal>
+      <Dependent Role="Result">
+        <PropertyRef Name="PolkaDotYersey_LeaderBoardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="YellowYersey">
+    <End Role="Result" Type="TourModel.Store.ResultSet" Multiplicity="0..1" />
+    <End Role="LeaderBoard" Type="TourModel.Store.LeaderBoards" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Result">
+        <PropertyRef Name="ResultID" />
+      </Principal>
+      <Dependent Role="LeaderBoard">
+        <PropertyRef Name="YellowYersey_LeaderBoard_ResultID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_SegmentAreasSegments_SegmentAreas">
     <End Role="SegmentAreas" Type="TourModel.Store.SegmentAreas" Multiplicity="1" />
     <End Role="SegmentAreasSegments" Type="TourModel.Store.SegmentAreasSegments" Multiplicity="*" />
@@ -371,6 +422,18 @@
           <AssociationSet Name="RegionResult" Association="TourModel.RegionResult">
             <End Role="Region" EntitySet="Regions" />
             <End Role="Result" EntitySet="ResultSet" />
+          </AssociationSet>
+          <AssociationSet Name="GreenYersey" Association="TourModel.GreenYersey">
+            <End Role="Result" EntitySet="ResultSet" />
+            <End Role="LeaderBoard" EntitySet="LeaderBoards" />
+          </AssociationSet>
+          <AssociationSet Name="LeaderBoardResult" Association="TourModel.LeaderBoardResult">
+            <End Role="LeaderBoard" EntitySet="LeaderBoards" />
+            <End Role="Result" EntitySet="ResultSet" />
+          </AssociationSet>
+          <AssociationSet Name="YellowYersey" Association="TourModel.YellowYersey">
+            <End Role="Result" EntitySet="ResultSet" />
+            <End Role="LeaderBoard" EntitySet="LeaderBoards" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Athlete">
@@ -498,6 +561,9 @@
           <NavigationProperty Name="Region" Relationship="TourModel.RegionResult" FromRole="Result" ToRole="Region" />
           <NavigationProperty Name="Efforts" Relationship="TourModel.ResultEffort" FromRole="Result" ToRole="Effort" />
           <NavigationProperty Name="LeaderBoards" Relationship="TourModel.ResultLeaderBoard" FromRole="Result" ToRole="LeaderBoard" />
+          <NavigationProperty Name="YellowYersey" Relationship="TourModel.YellowYersey" FromRole="Result" ToRole="LeaderBoard" />
+          <NavigationProperty Name="GreenYersey" Relationship="TourModel.GreenYersey" FromRole="Result" ToRole="LeaderBoard" />
+          <NavigationProperty Name="PolkaDotYersey" Relationship="TourModel.LeaderBoardResult" FromRole="Result" ToRole="LeaderBoard" />
         </EntityType>
         <Association Name="SegmentResult">
           <End Type="TourModel.Segment" Role="Segment" Multiplicity="0..1" />
@@ -581,6 +647,18 @@
           <Property Type="Int32" Name="NoRidden" Nullable="false" />
           <Property Type="DateTime" Name="LastUpdated" />
         </ComplexType>
+        <Association Name="GreenYersey">
+          <End Type="TourModel.Result" Role="Result" Multiplicity="0..1" />
+          <End Type="TourModel.LeaderBoard" Role="LeaderBoard" Multiplicity="0..1" />
+        </Association>
+        <Association Name="LeaderBoardResult">
+          <End Type="TourModel.LeaderBoard" Role="LeaderBoard" Multiplicity="0..1" />
+          <End Type="TourModel.Result" Role="Result" Multiplicity="0..1" />
+        </Association>
+        <Association Name="YellowYersey">
+          <End Type="TourModel.Result" Role="Result" Multiplicity="0..1" />
+          <End Type="TourModel.LeaderBoard" Role="LeaderBoard" Multiplicity="0..1" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -749,6 +827,33 @@
         <ScalarProperty Name="ResultID" ColumnName="ResultID" />
       </EndProperty>
       <Condition ColumnName="Region_RegionID" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GreenYersey" TypeName="TourModel.GreenYersey" StoreEntitySet="LeaderBoards">
+      <EndProperty Name="Result">
+        <ScalarProperty Name="ResultID" ColumnName="GreenYersey_LeaderBoard_ResultID" />
+      </EndProperty>
+      <EndProperty Name="LeaderBoard">
+        <ScalarProperty Name="LeaderBoardID" ColumnName="LeaderBoardID" />
+      </EndProperty>
+      <Condition ColumnName="GreenYersey_LeaderBoard_ResultID" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="LeaderBoardResult" TypeName="TourModel.LeaderBoardResult" StoreEntitySet="ResultSet">
+      <EndProperty Name="LeaderBoard">
+        <ScalarProperty Name="LeaderBoardID" ColumnName="PolkaDotYersey_LeaderBoardID" />
+      </EndProperty>
+      <EndProperty Name="Result">
+        <ScalarProperty Name="ResultID" ColumnName="ResultID" />
+      </EndProperty>
+      <Condition ColumnName="PolkaDotYersey_LeaderBoardID" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="YellowYersey" TypeName="TourModel.YellowYersey" StoreEntitySet="LeaderBoards">
+      <EndProperty Name="Result">
+        <ScalarProperty Name="ResultID" ColumnName="YellowYersey_LeaderBoard_ResultID" />
+      </EndProperty>
+      <EndProperty Name="LeaderBoard">
+        <ScalarProperty Name="LeaderBoardID" ColumnName="LeaderBoardID" />
+      </EndProperty>
+      <Condition ColumnName="YellowYersey_LeaderBoard_ResultID" IsNull="false" />
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>

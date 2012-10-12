@@ -30,10 +30,11 @@
 }
 
 <p>
-    @if (areaID > 0)
+    Go back to area: 
+    @foreach (var segmentArea in @Model.SegmentAreas)
     {
-        @Html.ActionLink("Go back to area", "Index", "Area", routeValues: new { area = areaID, athlete = athleteID }, htmlAttributes: null)
-    }
+        @Html.ActionLink(segmentArea.Info.Name, "Index", "Area", routeValues: new { area = segmentArea.SegmentAreaID, athlete = athleteID }, htmlAttributes: null)
+    }    
 </p>
 
 <h3>Admin</h3>

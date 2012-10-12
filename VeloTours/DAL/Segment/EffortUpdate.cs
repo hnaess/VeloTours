@@ -68,29 +68,24 @@ namespace VeloTours.DAL.Segment
 
             EffortUpdateStatus rideInfo = 
                 GetSortedAthleteEfforts(out leaderBoards, out athleteEffortsList);
-            
-            UpdateLeaderBoard(segmentClimbCategory, leaderBoards, athleteEffortsList, rideInfo);
 
-            var komAthlete = leaderBoards.First();
-            UpdateResultTableWithPoints(komAthlete);
+            bool isClimb = SegmentViewModel.IsClimbCat(segmentClimbCategory);
+            UpdateLeaderBoardAndResult(isClimb, leaderBoards, athleteEffortsList, rideInfo);
 
             return rideInfo;
         }
 
-        private void UpdateResultTableWithPoints(LeaderBoard komAthlete)
-        {
-            int i = 1;
-            //db.ResultSet.Add(dbResult);
-            //db.SaveChanges();
-        }
-
-        private void UpdateLeaderBoard(string segmentClimbCategory, List<Models.LeaderBoard> leaderBoards, Dictionary<int, List<int>> athleteEffortsList, EffortUpdateStatus rideInfo)
+        /// <summary>
+        /// Update leaderboard and result set.
+        /// </summary>
+        /// <param name="rideInfo">sorted list efforts</param>
+        private void UpdateLeaderBoardAndResult(bool isClimb, List<LeaderBoard> leaderBoards, Dictionary<int, List<int>> athleteEffortsList, EffortUpdateStatus rideInfo)
         {
             int? elapsedTimeKOM = null;
             foreach (var l in leaderBoards)
             {
                 List<int> effort = athleteEffortsList[l.AthleteID];
-                effort.Sort(); // TODO: Review, need this - isn't it already sorted?
+                //effort.Sort(); // TODO: Review, need this - isn't it already sorted?
 
                 double stdev = effort.StandardDeviation();
                 l.NoRidden = effort.Count;
@@ -105,15 +100,27 @@ namespace VeloTours.DAL.Segment
                 };
 
                 if (elapsedTimeKOM == null)
+                {
                     elapsedTimeKOM = l.ElapsedTimes.Min;
+                }
 
                 l.YellowPoints = LeaderboardCalc.CalcYellowPoints((int)elapsedTimeKOM, (int)l.ElapsedTimes.Min);
-                l.GreenPoints = LeaderboardCalc.CalcGreenPoints(l.Rank, rideInfo.riders, segmentClimbCategory);
-                l.PolkaDotPoints = LeaderboardCalc.CalcPolkaDotPoints(l.Rank, rideInfo.riders, segmentClimbCategory);
+                l.GreenPoints = LeaderboardCalc.CalcGreenPoints(l.Rank, rideInfo.riders, isClimb);
+                l.PolkaDotPoints = LeaderboardCalc.CalcPolkaDotPoints(l.Rank, rideInfo.riders, isClimb);
             }
 
             leaderBoards.ForEach(items => db.LeaderBoards.Add(items));
+            SetSegmentYerseys(isClimb, leaderBoards);
             db.SaveChanges();
+        }
+
+        private void SetSegmentYerseys(bool isClimb, List<LeaderBoard> leaderBoards)
+        {
+            dbResult.YellowYersey = leaderBoards.First();
+            if (isClimb)
+                dbResult.PolkaDotYersey = leaderBoards.First();
+            else
+                dbResult.GreenYersey = leaderBoards.First();
         }
 
         private EffortUpdateStatus GetSortedAthleteEfforts(out List<Models.LeaderBoard> leaderBoards, out Dictionary<int, List<int>> athleteEffortsList)

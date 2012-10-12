@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 10/11/2012 07:18:18
--- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
+-- Date Created: 10/12/2012 21:54:10
+-- Generated from EDMX file: C:\data\src\GitHub\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -49,6 +49,15 @@ IF OBJECT_ID(N'[dbo].[FK_ResultLeaderBoard]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_RegionResult]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ResultSet] DROP CONSTRAINT [FK_RegionResult];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GreenYersey]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LeaderBoards] DROP CONSTRAINT [FK_GreenYersey];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LeaderBoardResult]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ResultSet] DROP CONSTRAINT [FK_LeaderBoardResult];
+GO
+IF OBJECT_ID(N'[dbo].[FK_YellowYersey]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LeaderBoards] DROP CONSTRAINT [FK_YellowYersey];
 GO
 
 -- --------------------------------------------------
@@ -118,7 +127,9 @@ CREATE TABLE [dbo].[LeaderBoards] (
     [ElapsedTimes_Max] int  NOT NULL,
     [ElapsedTimes_Stdev] float  NOT NULL,
     [ElapsedTimes_Percentile90] int  NOT NULL,
-    [NoRidden] int  NOT NULL
+    [NoRidden] int  NOT NULL,
+    [GreenYersey_LeaderBoard_ResultID] int  NULL,
+    [YellowYersey_LeaderBoard_ResultID] int  NULL
 );
 GO
 
@@ -198,7 +209,8 @@ CREATE TABLE [dbo].[ResultSet] (
     [LastUpdated] datetime  NOT NULL,
     [Segment_SegmentID] int  NULL,
     [SegmentArea_SegmentAreaID] int  NULL,
-    [Region_RegionID] int  NULL
+    [Region_RegionID] int  NULL,
+    [PolkaDotYersey_LeaderBoardID] int  NULL
 );
 GO
 
@@ -418,6 +430,48 @@ ADD CONSTRAINT [FK_RegionResult]
 CREATE INDEX [IX_FK_RegionResult]
 ON [dbo].[ResultSet]
     ([Region_RegionID]);
+GO
+
+-- Creating foreign key on [GreenYersey_LeaderBoard_ResultID] in table 'LeaderBoards'
+ALTER TABLE [dbo].[LeaderBoards]
+ADD CONSTRAINT [FK_GreenYersey]
+    FOREIGN KEY ([GreenYersey_LeaderBoard_ResultID])
+    REFERENCES [dbo].[ResultSet]
+        ([ResultID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_GreenYersey'
+CREATE INDEX [IX_FK_GreenYersey]
+ON [dbo].[LeaderBoards]
+    ([GreenYersey_LeaderBoard_ResultID]);
+GO
+
+-- Creating foreign key on [PolkaDotYersey_LeaderBoardID] in table 'ResultSet'
+ALTER TABLE [dbo].[ResultSet]
+ADD CONSTRAINT [FK_LeaderBoardResult]
+    FOREIGN KEY ([PolkaDotYersey_LeaderBoardID])
+    REFERENCES [dbo].[LeaderBoards]
+        ([LeaderBoardID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LeaderBoardResult'
+CREATE INDEX [IX_FK_LeaderBoardResult]
+ON [dbo].[ResultSet]
+    ([PolkaDotYersey_LeaderBoardID]);
+GO
+
+-- Creating foreign key on [YellowYersey_LeaderBoard_ResultID] in table 'LeaderBoards'
+ALTER TABLE [dbo].[LeaderBoards]
+ADD CONSTRAINT [FK_YellowYersey]
+    FOREIGN KEY ([YellowYersey_LeaderBoard_ResultID])
+    REFERENCES [dbo].[ResultSet]
+        ([ResultID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_YellowYersey'
+CREATE INDEX [IX_FK_YellowYersey]
+ON [dbo].[LeaderBoards]
+    ([YellowYersey_LeaderBoard_ResultID]);
 GO
 
 -- --------------------------------------------------

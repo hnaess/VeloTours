@@ -1,9 +1,10 @@
 ﻿@model VeloTours.Models.SegmentViewModel
 @using VeloTours.Models;
+@using VeloTours.Helpers;
 
 @{
-    var isClimb = @Model.Segment.IsClimb;
-    var yellow = @Model.Segment.Result.LeaderBoards.First();
+    var isClimb = @Model.IsClimb;
+    var yellow = @Model.YellowYersey;
 }
 
 <table>
@@ -23,7 +24,7 @@
                 }
             </td>
             <td style="vertical-align:top">
-                <b>@yellow.Athlete.Name</b><br />
+                <b>@Html.Raw(HtmlFormatters.AthleteNameLink(yellow.Athlete.Name, yellow.AthleteID))</b><br />
                 Speed: @String.Format("{0:#0.#} km/h", @Model.CalculateSpeed(yellow))<br />
                 Ridden: @yellow.NoRidden<br />
             </td>

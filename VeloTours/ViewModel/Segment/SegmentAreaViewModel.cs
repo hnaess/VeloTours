@@ -13,5 +13,9 @@ namespace VeloTours.Models
         
         public Statistics Info { get { return SegmentArea.Info; } }
         public ICollection<Models.LeaderBoard> LeaderBoard { get { return SegmentArea.Result.LeaderBoards; } }
+
+        public LeaderBoard YellowYersey { get; set; }
+        public LeaderBoard GreenYersey { get; set; }
+        public LeaderBoard PolkaDotYersey { get; set; }
     }
 }

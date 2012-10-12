@@ -114,5 +114,5 @@ namespace VeloTours.DAL.Segment
             db.SaveChanges();
             return result;
         }
-    }
+   }
 }

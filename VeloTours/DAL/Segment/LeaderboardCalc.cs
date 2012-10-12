@@ -12,27 +12,16 @@ namespace VeloTours.DAL.Segment
             return eleapsedTime - elapsedTimeKOM;
         }
 
-        internal static int CalcPolkaDotPoints(int rank, int riders, string climbCategory)
+        internal static int CalcPolkaDotPoints(int rank, int riders, bool isClimb)
         {
-            int points = 0;
-            if (IsClimb(climbCategory))
-                points = PointsPerRank(rank, riders);
-
+            int points = isClimb ? PointsPerRank(rank, riders) : 0;
             return points;
         }
 
-        internal static int CalcGreenPoints(int rank, int riders, string climbCategory)
+        internal static int CalcGreenPoints(int rank, int riders, bool isClimb)
         {
-            int points = 0;
-            if (!IsClimb(climbCategory))
-                points = PointsPerRank(rank, riders);
-
+            int points = isClimb ? PointsPerRank(rank, riders) : 0;
             return points;
-        }
-
-        internal static bool IsClimb(string climbCategory)
-        {
-            return !climbCategory.Equals("NC");
         }
 
         /// <summary>

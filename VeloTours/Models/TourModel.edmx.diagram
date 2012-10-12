@@ -23,6 +23,9 @@
         <AssociationConnector Association="TourModel.ResultEffort" />
         <AssociationConnector Association="TourModel.ResultLeaderBoard" />
         <AssociationConnector Association="TourModel.RegionResult" />
+        <AssociationConnector Association="TourModel.GreenYersey" />
+        <AssociationConnector Association="TourModel.LeaderBoardResult" />
+        <AssociationConnector Association="TourModel.YellowYersey" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

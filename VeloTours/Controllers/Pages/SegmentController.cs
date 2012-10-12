@@ -53,15 +53,17 @@ namespace VeloTours.Controllers.Pages
         {
             Segment dbSegment = db.Segments.Find(segmentID);
             var viewModel = new SegmentViewModel { Segment = dbSegment, Athlete = new AthleteRideInfo(), };
+            
             viewModel.Athlete.ElapsedTimes = new ElapsedTimes(); //TODO;
+            viewModel.SegmentAreas = dbSegment.SegmentAreas;
 
-            // Update from other
             var dbResult = dbSegment.Result;
             bool leaderBoardExists = dbResult != null && dbResult.LeaderBoards != null && dbResult.LeaderBoards.Count > 0;
             if (leaderBoardExists)
             {
-                //http://www.asp.net/mvc/tutorials/getting-started-with-ef-using-mvc/sorting-filtering-and-paging-with-the-entity-framework-in-an-asp-net-mvc-application
-                //https://github.com/TroyGoode/PagedList
+                viewModel.YellowYersey = dbResult.YellowYersey;
+                viewModel.GreenYersey = dbResult.GreenYersey;
+                viewModel.PolkaDotYersey = dbResult.PolkaDotYersey;
 
                 Models.LeaderBoard lBoardsKOM = dbResult.LeaderBoards.First();
                 viewModel.KomSpeed = (viewModel.Segment.Info.Distance / lBoardsKOM.ElapsedTimes.Min) * 3.6;
@@ -75,14 +77,13 @@ namespace VeloTours.Controllers.Pages
                         where l.AthleteID == athlete
                            && l.ResultID == dbResult.ResultID
                         select l;
-
                     
                     if (lBoardAthlete.Count() == 1)
                     {
                         UpdateViewModelWithAthleteInfo(viewModel, dbResult.LeaderBoards.Count(), lBoardsKOM, lBoardAthlete.First());
                         viewModel.ImprovementHint = CreateImprovementHint(viewModel.Athlete.ElapsedTimes.Min, dbResult.LeaderBoards, lBoardAthlete.First());
                     }
-                    else
+                    else if (lBoardAthlete.Count() > 1)
                     {
                         Debug.Fail("What?");
                     }
