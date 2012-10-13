@@ -20,7 +20,7 @@ namespace VeloTours.DAL.Segment
 
         internal static int CalcGreenPoints(int rank, int riders, bool isClimb)
         {
-            int points = isClimb ? PointsPerRank(rank, riders) : 0;
+            int points = isClimb ? 0 : PointsPerRank(rank, riders);
             return points;
         }
 
