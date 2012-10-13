@@ -15,7 +15,9 @@ namespace VeloTours.DAL.Segment
         private TourModelContainer db = new TourModelContainer();
         private Models.Segment dbSegment;
         private int segmentID;
-        public Dictionary<int, AthleteShortInfo> athletes;
+        public Dictionary<int, AthleteShortInfo> Athletes;
+
+        public EffortUpdate EffortUpdater { get; private set; }
 
         #region Singletons
 
@@ -90,12 +92,12 @@ namespace VeloTours.DAL.Segment
 
             var efforts = new List<Models.Effort>();
 
-            EffortUpdate effortUpdater = new EffortUpdate(db, result, dbSegment.SegmentID, (double)dbSegment.Info.ElevationGain);
-            effortUpdater.StravaWebClientObj = StravaWebClientObj;
+            EffortUpdater = new EffortUpdate(db, result, dbSegment.SegmentID, (double)dbSegment.Info.ElevationGain);
+            EffortUpdater.StravaWebClientObj = StravaWebClientObj;
 
-            effortUpdater.UpdateEfforts();
+            EffortUpdater.UpdateEfforts();
             
-            EffortUpdateStatus rideInfo = effortUpdater.UpdateLeaderboard(dbSegment.Info.ClimbCategory);
+            EffortUpdateStatus rideInfo = EffortUpdater.UpdateLeaderboard(dbSegment.Info.ClimbCategory);
             UpdateRideInfoOnSegment(dbSegment, rideInfo);
         }
 

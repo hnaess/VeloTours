@@ -30,7 +30,10 @@ namespace VeloTours.DAL.Segment
         private int segmentID;
         private double elevationGain;
 
-        private List<Models.Effort> Efforts;
+        public Dictionary<int, List<int>> AthleteEffortsList { get; private set; }
+        public List<Models.LeaderBoard> LeaderBoards { get; private set; }
+
+        private List<Models.Effort> efforts;
 
         #region Constructors
 
@@ -40,6 +43,9 @@ namespace VeloTours.DAL.Segment
             this.dbResult = dbResult;
             this.segmentID = segmentID;
             this.elevationGain = elevationGain;
+
+            LeaderBoards = new List<Models.LeaderBoard>();
+            AthleteEffortsList = new Dictionary<int, List<int>>();
         }
 
         #endregion
@@ -54,7 +60,7 @@ namespace VeloTours.DAL.Segment
             ImportEffortsFromStrava();
             
             // TODO: Delete previous results
-            if (Efforts.Count == 0)
+            if (efforts.Count == 0)
             {
                 // Marked as hazardious ?
                 throw new NotSupportedException("Not expected");
@@ -63,14 +69,10 @@ namespace VeloTours.DAL.Segment
       
         internal EffortUpdateStatus UpdateLeaderboard(string segmentClimbCategory)
         {
-            List<Models.LeaderBoard> leaderBoards;
-            Dictionary<int, List<int>> athleteEffortsList;
-
-            EffortUpdateStatus rideInfo = 
-                GetSortedAthleteEfforts(out leaderBoards, out athleteEffortsList);
+            EffortUpdateStatus rideInfo = SortAthleteEfforts();
 
             bool isClimb = SegmentViewModel.IsClimbCat(segmentClimbCategory);
-            UpdateLeaderBoardAndResult(isClimb, leaderBoards, athleteEffortsList, rideInfo);
+            UpdateLeaderBoardAndResult(isClimb, rideInfo);
 
             return rideInfo;
         }
@@ -79,12 +81,12 @@ namespace VeloTours.DAL.Segment
         /// Update leaderboard and result set.
         /// </summary>
         /// <param name="rideInfo">sorted list efforts</param>
-        private void UpdateLeaderBoardAndResult(bool isClimb, List<LeaderBoard> leaderBoards, Dictionary<int, List<int>> athleteEffortsList, EffortUpdateStatus rideInfo)
+        private void UpdateLeaderBoardAndResult(bool isClimb, EffortUpdateStatus rideInfo)
         {
             int? elapsedTimeKOM = null;
-            foreach (var l in leaderBoards)
+            foreach (var l in LeaderBoards)
             {
-                List<int> effort = athleteEffortsList[l.AthleteID];
+                List<int> effort = AthleteEffortsList[l.AthleteID];
                 //effort.Sort(); // TODO: Review, need this - isn't it already sorted?
 
                 double stdev = effort.StandardDeviation();
@@ -109,8 +111,8 @@ namespace VeloTours.DAL.Segment
                 l.PolkaDotPoints = LeaderboardCalc.CalcPolkaDotPoints(l.Rank, rideInfo.riders, isClimb);
             }
 
-            leaderBoards.ForEach(items => db.LeaderBoards.Add(items));
-            SetSegmentYerseys(isClimb, leaderBoards);
+            LeaderBoards.ForEach(items => db.LeaderBoards.Add(items));
+            SetSegmentYerseys(isClimb, LeaderBoards);
             db.SaveChanges();
         }
 
@@ -123,11 +125,8 @@ namespace VeloTours.DAL.Segment
                 dbResult.GreenYersey = leaderBoards.First();
         }
 
-        private EffortUpdateStatus GetSortedAthleteEfforts(out List<Models.LeaderBoard> leaderBoards, out Dictionary<int, List<int>> athleteEffortsList)
+        private EffortUpdateStatus SortAthleteEfforts()
         {
-            leaderBoards = new List<Models.LeaderBoard>();
-            athleteEffortsList = new Dictionary<int, List<int>>();
-
             var sortedEfforts =
                 from n in db.Efforts
                 where n.ResultID == dbResult.ResultID
@@ -141,26 +140,26 @@ namespace VeloTours.DAL.Segment
             {
                 rides++;
                 List<int> athleteEfforts;
-                athleteEffortsList.TryGetValue(e.AthleteID, out athleteEfforts);
+                AthleteEffortsList.TryGetValue(e.AthleteID, out athleteEfforts);
                 if (athleteEfforts == null)
                 {
                     if (prevDuration != e.ElapsedTime)
-                        rank = athleteEffortsList.Count + 1;
+                        rank = AthleteEffortsList.Count + 1;
 
                     athleteEfforts = new List<int>();
-                    athleteEffortsList[e.AthleteID] = athleteEfforts;
+                    AthleteEffortsList[e.AthleteID] = athleteEfforts;
 
-                    leaderBoards.Add(new Models.LeaderBoard() { AthleteID = e.AthleteID, Rank = rank, Result = dbResult });
+                    LeaderBoards.Add(new Models.LeaderBoard() { AthleteID = e.AthleteID, Rank = rank, Result = dbResult });
                     prevDuration = e.ElapsedTime;
                 }
                 athleteEfforts.Add(e.ElapsedTime);
             }
-            return new EffortUpdateStatus(athleteEffortsList.Count, rides);
+            return new EffortUpdateStatus(AthleteEffortsList.Count, rides);
         }
 
         private void ImportEffortsFromStrava()
         {
-            Efforts = new List<Models.Effort>();
+            efforts = new List<Models.Effort>();
             var originalCulture = Utils.SetStravaCultureAndReturnCurrentCulture();
             try
             {
@@ -179,7 +178,7 @@ namespace VeloTours.DAL.Segment
 
         private void SaveEfforts()
         {
-            Efforts.ForEach(effort => db.Efforts.Add(effort));
+            efforts.ForEach(effort => db.Efforts.Add(effort));
             db.SaveChanges();
         }
 
@@ -214,7 +213,7 @@ namespace VeloTours.DAL.Segment
                 };
                 EnsureSavingOfAthlete(effort.Athlete.Name, dbEffort.AthleteID);
 
-                Efforts.Add(dbEffort);
+                efforts.Add(dbEffort);
                 //Debug.WriteLine(String.Format("{0}, {1}, {2}, {3}", i, effort.Athlete.Name, effort.ElapsedTime, effort.StartDate.ToString()));
             }
             return true;

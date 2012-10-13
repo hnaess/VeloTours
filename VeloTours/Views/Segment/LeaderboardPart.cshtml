@@ -5,9 +5,6 @@
 @using VeloTours.Models;
 @using VeloTours.Models.Extensions;
 
-<!-- import the included stylesheet for some (very basic) default styling -->
-@*<link href="/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
-
 @{
     int athleteID = ViewBag.Athlete;
     var leaderBoardList = @Model.LeaderBoard;
@@ -36,7 +33,7 @@
         @foreach (LeaderBoard lb in leaderBoardList) {
         <tr>
             <td class="right">@lb.Rank</td>
-            <td style="@style">@Html.Raw(HtmlFormatters.AthleteIconLink(@lb.AthleteID))@lb.Athlete.Name</td>
+            <td>@Html.Raw(HtmlFormatters.AthleteIconLink(@lb.AthleteID))@lb.Athlete.Name</td>
             <td class="right">@lb.Yellow</td>
             <td class="right">@lb.GreenPoints</td>
             <td class="right">@lb.PolkaDotPoints</td>

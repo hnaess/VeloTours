@@ -37,7 +37,7 @@ namespace VeloTours.Controllers.Pages
             AreaUpdate areaUpdate = new AreaUpdate(area);
             areaUpdate.UpdateArea((bool)effort);
 
-            return RedirectToAction("Index", "Segment", new { athlete = athlete, area = area });
+            return RedirectToAction("Index", "Area", new { athlete = athlete, area = area });
         }
     }
 }

@@ -1,0 +1,57 @@
+﻿@using System.Collections;
+@using VeloTours.Helpers;
+@using VeloTours.Models;
+@using VeloTours.Models.Extensions;
+
+@{
+    int athleteID = ViewBag.Athlete;
+    var segmentList = @Model.Segments;
+}
+
+
+<table id="SegmentsTable" class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
+    <thead>
+        <tr>
+            <th class="right" title="Your position on the segment; the last time you updated.">pos</th>
+            <th class="right" title="Your placing's percentile position of the total number of riders.">pos %</th>
+            <th style="vertical-align:top">Name</th>
+            <th class="right" title="Distance, measured in kilometers">dist<br />km.</th>
+            <th class="right" title="Elevation difference">elev<br />gain</th>
+            <th class="right">grade<br />%</th>
+            <th class="right" title="Grade category. This influence the Yersey calculations.">grade<br />cat</th>
+            <th class="right" title="Total number of riders that have completed this segment">riders</th>
+            <th class="right" title="Total number the segments has been ridden">ridden</th>
+            <th class="right" title="Speed on segment, ridden by KOM">KOM<br />km/h</th>
+            <th class="right" title="Your time on the segment">time</th>
+            <th class="right" title="The time your personal best is currently behind the current KOM.">behind<br />KOM s.</th>
+            <th class="right" title="Percentage of time your personal best is currently behind the current KOM.">behind<br />KOM %</th>
+            @*<th class="right" title="Position change on the leaderboard">change</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Segments)
+        {
+            string segmentName = item.Info.Name;
+            <tr>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td>
+                    @Html.ActionLink(segmentName, "Index", "Segment", routeValues: new { athlete = athleteID, segment = item.Segment.SegmentID, }, htmlAttributes: null)
+
+                    @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-info-sign'></i></a>",
+                        item.Segment.SegmentID, 0, 0))
+                </td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">item.Info.Distance</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+                <td class="right">&nbsp;</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -38,6 +38,8 @@ namespace VeloTours.DAL.Area
             if (dbArea.Segments.Count == 0)
                 return; // TODO: Logging?
 
+            Dictionary<int, List<Models.LeaderBoard>> athletesLeaderBoards = new Dictionary<int, List<LeaderBoard>>();
+
             Statistics info = dbArea.Info;
             info.Distance = 0;
             info.ElevationGain = 0;
@@ -52,6 +54,24 @@ namespace VeloTours.DAL.Area
                 if (updateEfforts)
                 {
                     segmentUpdater.UpdateEfforts(segmentInfo);
+
+                    // Update Leaderboard (dictionary)
+                    var segmentLboards = segmentUpdater.EffortUpdater.LeaderBoards;
+                    foreach (var segmentLboard in segmentLboards)
+                    {
+                        int athleteId = segmentLboard.AthleteID;
+                        List<LeaderBoard> athleteLBoards;
+                        if (athletesLeaderBoards.ContainsKey(athleteId))
+                            athleteLBoards = athletesLeaderBoards[athleteId];
+                        else
+                            athleteLBoards = new List<LeaderBoard>();
+                        
+                        athleteLBoards.Add(segmentLboard);
+                    }
+
+                    // Update Area Info
+                    info.NoRidden += segmentLboards.Count(); // verify it works as expected
+                    //info.NoRiders =
                 }
 
                 info.Distance += segmentInfo.Info.Distance;
@@ -61,6 +81,16 @@ namespace VeloTours.DAL.Area
 
             info.AvgGrade = Convert.ToDouble((avgGradeTemp / Convert.ToDecimal(info.Distance)));
             db.SaveChanges();
+
+            // TODO
+            UpdateLeaderBoardForArea(dbArea, athletesLeaderBoards);
+            db.SaveChanges();
+            
+        }
+
+        private void UpdateLeaderBoardForArea(SegmentArea dbArea, Dictionary<int, List<LeaderBoard>> athletesLeaderBoards)
+        {
+            // TODO
         }
     }
 }

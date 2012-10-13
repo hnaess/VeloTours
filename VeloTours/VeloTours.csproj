@@ -428,6 +428,7 @@
     <Content Include="Views\Segment\YerseyPart.cshtml" />
     <Content Include="Views\Segment\LeaderboardPart.cshtml" />
     <Content Include="Views\Area\YerseyPart.cshtml" />
+    <Content Include="Views\Area\SegmentsPart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
