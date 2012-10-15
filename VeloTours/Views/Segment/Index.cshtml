@@ -5,14 +5,12 @@
     int segmentID = @Model.Segment.SegmentID;
     int athleteID = ViewBag.Athlete;
 
-    string title = @Model.Segment.Info.Name;
     bool hasLeaderBoard = (@Model.LeaderBoard != null && @Model.LeaderBoard.Count > 0);
 }
 
 <h2>@Model.Info.Name</h2>
 <p>@Model.Segment.Info.Description</p>
 @*PictureUrl*@
-
 
 @if (hasLeaderBoard) 
 {

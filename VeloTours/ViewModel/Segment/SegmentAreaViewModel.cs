@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PagedList;
 
 namespace VeloTours.Models
 {
@@ -13,6 +14,7 @@ namespace VeloTours.Models
         
         public Statistics Info { get { return SegmentArea.Info; } }
         public ICollection<Models.LeaderBoard> LeaderBoard { get { return SegmentArea.Result != null ? SegmentArea.Result.LeaderBoards : null; } }
+        //public IPagedList<Models.LeaderBoard> LeaderBoard { get; set; } // TODO
 
         public LeaderBoard YellowYersey { get; set; }
         public LeaderBoard GreenYersey { get; set; }

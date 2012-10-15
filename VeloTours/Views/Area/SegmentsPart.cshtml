@@ -1,4 +1,5 @@
-﻿@using System.Collections;
+﻿@model VeloTours.Models.SegmentAreaViewModel
+@using System.Collections;
 @using VeloTours.Helpers;
 @using VeloTours.Models;
 @using VeloTours.Models.Extensions;
@@ -18,7 +19,6 @@
             <th class="right" title="Distance, measured in kilometers">dist<br />km.</th>
             <th class="right" title="Elevation difference">elev<br />gain</th>
             <th class="right">grade<br />%</th>
-            <th class="right" title="Grade category. This influence the Yersey calculations.">grade<br />cat</th>
             <th class="right" title="Total number of riders that have completed this segment">riders</th>
             <th class="right" title="Total number the segments has been ridden">ridden</th>
             <th class="right" title="Speed on segment, ridden by KOM">KOM<br />km/h</th>
@@ -41,11 +41,11 @@
                     @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-info-sign'></i></a>",
                         item.Segment.SegmentID, 0, 0))
                 </td>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
-                <td class="right">item.Info.Distance</td>
+                <td class="right">@item.Info.Distance</td>
+                <td class="right">@item.Info.ElevationGain</td>
+                <td class="right">@item.Info.AvgGrade</td>
+                <td class="right">@item.Info.NoRiders<td>
+                <td class="right">@item.Info.NoRidden<td>
                 <td class="right">&nbsp;</td>
                 <td class="right">&nbsp;</td>
                 <td class="right">&nbsp;</td>

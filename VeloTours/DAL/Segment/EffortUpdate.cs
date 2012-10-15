@@ -78,7 +78,7 @@ namespace VeloTours.DAL.Segment
         }
 
         /// <summary>
-        /// Update leaderboard and result set.
+        /// Update leaderboard and result set. Sorted.
         /// </summary>
         /// <param name="rideInfo">sorted list efforts</param>
         private void UpdateLeaderBoardAndResult(bool isClimb, EffortUpdateStatus rideInfo)

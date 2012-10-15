@@ -11,13 +11,25 @@
 
 <h2>@Model.Info.Name</h2>
 <p>@Model.SegmentArea.Info.Description</p>
+@*PictureUrl*@
 
-<h3>Yersey</h3>
-@RenderPage("~/Views/Area/YerseyPart.cshtml", @Model)
+@if (hasLeaderBoard) 
+{
+    <h3>Yersey</h3>
+    @RenderPage("~/Views/Area/YerseyPart.cshtml", @Model)
 
-<h3>Segments in the areas</h3>
-@RenderPage("~/Views/Area/SegmentsPart.cshtml", @Model)
+    <h3>Segments in the areas</h3>
+    @RenderPage("~/Views/Area/SegmentsPart.cshtml", @Model)
 
+    <h3>Athlete's Info</h3>@*
+    @RenderPage("~/Views/Area/AthleteInfoPart.cshtml", @Model)
+    <p>@Model.ImprovementHint</p>*@
+
+    <h3>LeaderBoard</h3>@*
+    @RenderPage("~/Views/Segment/LeaderboardPart.cshtml", @Model)
+    *@
+}
+    
 <p>
     Go back to area: 
     @Html.ActionLink(@Model.SegmentArea.Region.Info.Name, "Index", "Region", routeValues: new { region = @Model.SegmentArea.RegionID, athlete = athleteID }, htmlAttributes: null)
