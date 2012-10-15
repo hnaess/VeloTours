@@ -1,10 +1,19 @@
 ﻿@model VeloTours.Models.SegmentAreaViewModel
 @using VeloTours.Models;
+@using VeloTours.Helpers;
 
 @{
     var yellow = @Model.YellowYersey;
-    var green = @Model.YellowYersey;
-    var polkadot = @Model.YellowYersey;
+    var green = @Model.GreenYersey;
+    var polkadot = @Model.PolkaDotYersey;
+}
+
+@helper DisplayAthlete(VeloTours.Models.LeaderBoard lboard) {
+if(lboard != null)
+{
+    <b>@HtmlVeloHelpers.AtheleteNameLink(lboard)</b>
+    <br />@String.Format("Ridden: {0}", @lboard.NoRidden)
+}
 }
 
 <table>
@@ -13,10 +22,13 @@
     <tbody>
         <tr>
             <td><img src="~/Content/images/yersey/yellow.png" /></td>
-            <td style="padding-left: 50px"><img src="~/Content/images/yersey/green.png" /></td>
-            <td></td>
-            <td style="padding-left: 50px"><img src="~/Content/images/yersey/polkadot.png" /></td>
-            <td></td>
+            <td class="top">@DisplayAthlete(yellow)</td>
+
+            <td><img src="~/Content/images/yersey/polkadot.png" /></td>
+            <td class="top">@DisplayAthlete(polkadot)</td>
+
+            <td><img src="~/Content/images/yersey/green.png" /></td>
+            <td class="top">@DisplayAthlete(green)</td>
         </tr>
     </tbody>
 </table>

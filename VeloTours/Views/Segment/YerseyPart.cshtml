@@ -7,6 +7,12 @@
     var yellow = @Model.YellowYersey;
 }
 
+@helper DisplayAthlete(VeloTours.Models.LeaderBoard lboard) {
+    <b>@HtmlVeloHelpers.AtheleteNameLink(lboard)</b>
+    <br />@String.Format("Speed: {0:#0.#} km/h", @Model.CalculateSpeed(@Model.YellowYersey))
+    <br />@String.Format("Ridden: {0}", @lboard.NoRidden)
+}
+
 <table>
     <thead>
     </thead>
@@ -14,6 +20,7 @@
         <tr>
             <td>
                 <img src="~/Content/images/yersey/yellow.png" />
+
                 @if (isClimb)
                 {
                     <img src="~/Content/images/yersey/polkadot.png" />
@@ -23,10 +30,8 @@
                     <img src="~/Content/images/yersey/green.png" />
                 }
             </td>
-            <td style="vertical-align:top">
-                <b>@Html.Raw(HtmlFormatters.AthleteNameLink(yellow.Athlete.Name, yellow.AthleteID))</b><br />
-                Speed: @String.Format("{0:#0.#} km/h", @Model.CalculateSpeed(yellow))<br />
-                Ridden: @yellow.NoRidden<br />
+            <td class="top">
+                @DisplayAthlete(yellow)                
             </td>
         </tr>
     </tbody>

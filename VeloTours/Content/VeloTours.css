@@ -13,3 +13,8 @@ tr td.right {
     padding-left: 20px;
 }
 
+tr td.top {
+    vertical-align: top;
+    padding-left: 20px;
+}
+

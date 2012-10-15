@@ -33,7 +33,7 @@
         @foreach (LeaderBoard lb in leaderBoardList) {
         <tr>
             <td class="right">@lb.Rank</td>
-            <td>@Html.Raw(HtmlFormatters.AthleteIconLink(@lb.AthleteID))@lb.Athlete.Name</td>
+            <td>@HtmlVeloHelpers.AtheleteNameLink(lb.Athlete)</td>
             <td class="right">@lb.Yellow</td>
             <td class="right">@lb.GreenPoints</td>
             <td class="right">@lb.PolkaDotPoints</td>

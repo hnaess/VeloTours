@@ -222,6 +222,7 @@
     </Compile>
     <Compile Include="Helpers\HtmlFormatters.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="Helpers\HtmlVeloHelpers.cs" />
     <Compile Include="Models\Account\AccountModels.cs" />
     <Compile Include="Models\AthletePartial.cs" />
     <Compile Include="Models\Athlete.cs">
@@ -362,6 +363,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.8.1.js" />
+    <Content Include="App_Code\TourHelpers.cshtml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
