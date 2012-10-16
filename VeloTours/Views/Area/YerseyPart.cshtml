@@ -11,8 +11,8 @@
 @helper DisplayAthlete(VeloTours.Models.LeaderBoard lboard) {
 if(lboard != null)
 {
-    <b>@HtmlVeloHelpers.AtheleteNameLink(lboard)</b>
-    <br />@String.Format("Ridden: {0}", @lboard.NoRidden)
+    <b>@HtmlVeloHelpers.AtheleteNameLink(lboard)</b><br />
+    @String.Format("Ridden: {0}", @lboard.NoRidden)
 }
 }
 
@@ -22,13 +22,13 @@ if(lboard != null)
     <tbody>
         <tr>
             <td><img src="~/Content/images/yersey/yellow.png" /></td>
-            <td class="top">@DisplayAthlete(yellow)</td>
+            <td style="vertical-align:top">@DisplayAthlete(yellow)</td>
 
             <td><img src="~/Content/images/yersey/polkadot.png" /></td>
-            <td class="top">@DisplayAthlete(polkadot)</td>
+            <td style="vertical-align:top">@DisplayAthlete(polkadot)</td>
 
             <td><img src="~/Content/images/yersey/green.png" /></td>
-            <td class="top">@DisplayAthlete(green)</td>
+            <td style="vertical-align:top">@DisplayAthlete(green)</td>
         </tr>
     </tbody>
 </table>

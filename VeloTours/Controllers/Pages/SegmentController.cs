@@ -9,7 +9,6 @@ using VeloTours.DAL.Area;
 using VeloTours.DAL.Segment;
 using VeloTours.Models;
 using VeloTours.ViewModel;
-using VeloTours.Controllers.Pages.Segment;
 
 namespace VeloTours.Controllers.Pages
 {
@@ -54,7 +53,7 @@ namespace VeloTours.Controllers.Pages
                 PolkaDotYersey = (dbResult != null) ? dbResult.PolkaDotYerseyLB : null,
             };
 
-            ModelUtils.UpdateViewModel(db, athleteID, dbResult, lbPage, viewModel);
+            RideUtil.UpdateViewModel(db, athleteID, dbResult, lbPage, viewModel);
             return viewModel;
         }
     }

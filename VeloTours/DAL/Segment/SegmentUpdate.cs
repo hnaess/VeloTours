@@ -12,12 +12,16 @@ namespace VeloTours.DAL.Segment
 {
     public class SegmentUpdate
     {
+        private EffortUpdate EffortUpdater;
+
         private TourModelContainer db = new TourModelContainer();
         private Models.Segment dbSegment;
         private int segmentID;
         public Dictionary<int, AthleteShortInfo> Athletes;
 
-        public EffortUpdate EffortUpdater { get; private set; }
+        internal List<Models.LeaderBoard> LeaderBoards { get { return EffortUpdater.LeaderBoards; } }
+        internal int WorstPlacing { get { return EffortUpdater.WorstEffort; } }
+
 
         #region Singletons
 
@@ -88,10 +92,10 @@ namespace VeloTours.DAL.Segment
 
         public void UpdateEfforts(Models.Segment dbSegment)
         {
-            var result = AddResultSet(dbSegment);
+            var result = db.ResultSet.Add(new Models.Result { Segment = dbSegment, LastUpdated = DateTime.Now });
+            db.SaveChanges();
 
             var efforts = new List<Models.Effort>();
-
             EffortUpdater = new EffortUpdate(db, result, dbSegment.SegmentID, (double)dbSegment.Info.ElevationGain);
             EffortUpdater.StravaWebClientObj = StravaWebClientObj;
 
@@ -107,14 +111,6 @@ namespace VeloTours.DAL.Segment
             info.NoRidden = rideInfo.ridden;
             info.NoRiders = rideInfo.riders;
             db.SaveChanges();
-        }
-
-        private Result AddResultSet(Models.Segment dbSegment)
-        {
-            var result = new Models.Result { Segment = dbSegment, LastUpdated = DateTime.Now };
-            result = db.ResultSet.Add(result);
-            db.SaveChanges();
-            return result;
         }
    }
 }

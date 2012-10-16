@@ -39,6 +39,8 @@ namespace VeloTours.DAL.Segment
         public Dictionary<int, List<int>> AthleteEffortsList { get; private set; }
         public List<Models.LeaderBoard> LeaderBoards { get; private set; }
 
+        public int WorstEffort { get { return AthleteEffortsList.Last().Value.Last(); } }
+
         private List<Models.Effort> efforts;
 
         #region Constructors

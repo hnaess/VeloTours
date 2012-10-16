@@ -1,78 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
-using VeloTours.DAL.Area;
-using VeloTours.DAL.Segment;
-using VeloTours.Models;
-using VeloTours.ViewModel;
 using PagedList;
-using System.Diagnostics;
+using VeloTours.Models;
 
-namespace VeloTours.Controllers.Pages.Segment
+namespace VeloTours.ViewModel
 {
-    // Move to Model?
-    public static class ModelUtils
+    public class RideUtil
     {
         //private string DefaultLBoardSortOrder = "Min";
         private static int pageSize = 20;
         //string lbSortOrder = null;
-
-        internal static double SpeedInKmH(Models.Statistics stat, LeaderBoard lboard)
-        {
-            return (stat.Distance / lboard.ElapsedTimes.Min) * 3.6;
-        }
 
         internal static IPagedList<LeaderBoard> CreateBlankPagedList()
         {
             return new List<Models.LeaderBoard>().ToPagedList(1, 1);
         }
 
-        internal static bool LeaderBoardExists(Result dbResult)
-        {
-            return dbResult != null && dbResult.LeaderBoards != null && dbResult.LeaderBoards.Count > 0;
-        }
-
         internal static void UpdateViewModel(TourModelContainer db, int athleteID, Result dbResult, int? lbPage, SegmentViewModel viewModel)
         {
-            if (ModelUtils.LeaderBoardExists(dbResult))
+            if (LeaderBoardExists(dbResult))
             {
                 var lBoardsKOM = dbResult.LeaderBoards.First();
-                viewModel.KomSpeed = ModelUtils.SpeedInKmH(viewModel.Segment.Info, lBoardsKOM);
-                viewModel.LeaderBoard = ModelUtils.GetPagedLeaderBoards(db, dbResult.ResultID, lbPage);
+                viewModel.KomSpeed = viewModel.Segment.Info.SpeedInKmH(lBoardsKOM);
+                viewModel.LeaderBoard = GetPagedLeaderBoards(db, dbResult.ResultID, lbPage);
 
                 if (athleteID > 0)
                 {
-                    Models.LeaderBoard lBoard = ModelUtils.AddAthleteToViewModel(db, athleteID, viewModel.Athlete, dbResult, lBoardsKOM);
-                    viewModel.ImprovementHint = ModelUtils.CreateImprovementHint(viewModel.Athlete.ElapsedTimes.Min, dbResult.LeaderBoards, lBoard);
+                    Models.LeaderBoard lBoard = AddAthleteToViewModel(db, athleteID, viewModel.Athlete, dbResult, lBoardsKOM);
+                    viewModel.ImprovementHint = CreateImprovementHint(viewModel.Athlete.ElapsedTimes.Min, dbResult.LeaderBoards, lBoard);
                 }
             }
             else
             {
-                viewModel.LeaderBoard = ModelUtils.CreateBlankPagedList();
+                viewModel.LeaderBoard = CreateBlankPagedList();
             }
         }
 
         internal static void UpdateViewModel(TourModelContainer db, int athleteID, Result dbResult, int? lbPage, SegmentAreaViewModel viewModel)
         {
-            if (ModelUtils.LeaderBoardExists(dbResult))
+            if (LeaderBoardExists(dbResult))
             {
                 var lBoardsKOM = dbResult.LeaderBoards.First();
-                viewModel.KomSpeed = ModelUtils.SpeedInKmH(viewModel.SegmentArea.Info, lBoardsKOM);
-                viewModel.LeaderBoard = ModelUtils.GetPagedLeaderBoards(db, dbResult.ResultID, lbPage);
+                viewModel.KomSpeed = viewModel.SegmentArea.Info.SpeedInKmH(lBoardsKOM);
+                viewModel.LeaderBoard = GetPagedLeaderBoards(db, dbResult.ResultID, lbPage);
 
                 if (athleteID > 0)
                 {
-                    Models.LeaderBoard lBoard = ModelUtils.AddAthleteToViewModel(db, athleteID, viewModel.Athlete, dbResult, lBoardsKOM);
+                    Models.LeaderBoard lBoard = AddAthleteToViewModel(db, athleteID, viewModel.Athlete, dbResult, lBoardsKOM);
                 }
             }
             else
             {
-                viewModel.LeaderBoard = ModelUtils.CreateBlankPagedList();
+                viewModel.LeaderBoard = CreateBlankPagedList();
             }
         }
-
 
         internal static Models.LeaderBoard AddAthleteToViewModel(TourModelContainer db, int athlete, AthleteRideInfo athleteRideInfo, Result dbResult, Models.LeaderBoard lBoardKOM)
         {
@@ -100,7 +84,12 @@ namespace VeloTours.Controllers.Pages.Segment
             return null;
         }
 
-        internal static string CreateImprovementHint(int duration, ICollection<LeaderBoard> lBoard, Models.LeaderBoard lAthlete)
+        internal static bool LeaderBoardExists(Result dbResult)
+        {
+            return dbResult != null && dbResult.LeaderBoards != null && dbResult.LeaderBoards.Count > 0;
+        }
+
+        private static string CreateImprovementHint(int duration, ICollection<LeaderBoard> lBoard, Models.LeaderBoard lAthlete)
         {
             string hint = String.Empty;
             if (lAthlete != null)
@@ -134,7 +123,7 @@ namespace VeloTours.Controllers.Pages.Segment
                 select l;
 
             //IQueryable<Models.LeaderBoard> sortedlBoard = null;
-            var sortedlBoard = lBoard.OrderBy(s => s.ElapsedTimes.Min);
+            var sortedlBoard = lBoard.OrderBy(s => s.YellowPoints);
             //UpdateRankForCustomSortedLeaderBoards(ref sortedlBoard);
 
             return sortedlBoard.ToPagedList(lBoardPage ?? 1, pageSize);
@@ -188,8 +177,21 @@ namespace VeloTours.Controllers.Pages.Segment
         
         internal static void UpdateRankForCustomSortedLeaderBoards(ref IQueryable<Models.LeaderBoard> lBoard)
         {
-            //TODO
-            //throw new NotImplementedException();
+            int rank = 0;
+            foreach (var item in lBoard)
+            {
+                item.Rank = ++rank;
+            }
+        }
+
+        internal static void UpdateResultWithYersey(Result dbResult)
+        {
+            var lBoard =
+                (from l in dbResult.LeaderBoards
+                where l.ResultID == dbResult.ResultID
+                select l).Take(1);
+
+
         }
     }
 }

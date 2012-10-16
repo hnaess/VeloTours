@@ -193,7 +193,6 @@
     <Compile Include="Controllers\Pages\ProfileController.cs" />
     <Compile Include="Controllers\Pages\CountryController.cs" />
     <Compile Include="Controllers\Pages\SegmentController.cs" />
-    <Compile Include="Controllers\Pages\Segment\ModelUtils.cs" />
     <Compile Include="DAL\All_InitDB\InitDB.cs" />
     <Compile Include="DAL\All_InitDB\Athlete.cs" />
     <Compile Include="DAL\All_InitDB\Norway\Norway.cs" />
@@ -224,11 +223,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\HtmlFormatters.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Helpers\HtmlVeloHelpers.cs" />
     <Compile Include="Models\Account\AccountModels.cs" />
-    <Compile Include="Models\AthletePartial.cs" />
+    <Compile Include="Models\Partial\Athlete.cs" />
     <Compile Include="Models\Athlete.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
@@ -244,7 +242,9 @@
     <Compile Include="Models\LeaderBoard.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LeaderBoardPartial.cs" />
+    <Compile Include="Models\Partial\ElapsedTimes.cs" />
+    <Compile Include="Models\Partial\LeaderBoard.cs" />
+    <Compile Include="Models\Partial\SegmentArea.cs" />
     <Compile Include="Models\Region.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
@@ -260,7 +260,7 @@
     <Compile Include="Models\Statistics.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StatisticsPartial.cs" />
+    <Compile Include="Models\Partial\Statistics.cs" />
     <Compile Include="Models\TourModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -281,6 +281,7 @@
     <Compile Include="ViewModel\Segment\AthleteRideInfo.cs" />
     <Compile Include="ViewModel\Segment\SegmentAreaViewModel.cs" />
     <Compile Include="ViewModel\Segment\SegmentViewModel.cs" />
+    <Compile Include="ViewModel\Shared\RideUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-responsive.css" />
@@ -368,7 +369,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.8.1.js" />
-    <Content Include="App_Code\TourHelpers.cshtml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -440,9 +440,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\Pages\Area\" />
-    <Folder Include="Controllers\Profile\" />
-    <Folder Include="Controllers\Segment\" />
     <Folder Include="Views\Region\" />
   </ItemGroup>
   <ItemGroup>

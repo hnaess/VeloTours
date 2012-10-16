@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using VeloTours.Controllers.Pages.Segment;
 using VeloTours.DAL.Area;
 using VeloTours.Models;
 using VeloTours.ViewModel;
@@ -14,7 +13,7 @@ namespace VeloTours.Controllers.Pages
     {
         int? lbPage = null;
 
-        public ActionResult Index(int area, int? athlete)
+        public ActionResult Index(int area, int? athlete, int? lbPage)
         {
             SegmentAreaViewModel areaViewModel = GetAreaViewModel(area, athlete ?? 0);
 
@@ -54,7 +53,7 @@ namespace VeloTours.Controllers.Pages
                 viewModel.Segments.Add(new SegmentViewModel { Segment = segment });
             }
 
-            ModelUtils.UpdateViewModel(db, athleteID, dbResult, lbPage, viewModel);
+            RideUtil.UpdateViewModel(db, athleteID, dbResult, lbPage, viewModel);
 
             return viewModel;
         }
