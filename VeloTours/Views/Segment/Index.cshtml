@@ -34,7 +34,5 @@
 </p>
 
 <h3>Admin</h3>
-<p>
-    @Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = @athleteID,segment = @segmentID, effort = false, }, htmlAttributes: null)<br />
-    @Html.ActionLink("Update from Strava w/efforts", "Update", routeValues: new { athlete = athleteID, segment = @segmentID, effort = true, }, htmlAttributes: null)<br />
-</p>
+@Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = @athleteID,segment = @segmentID, effort = false, }, htmlAttributes: null)<br />
+@Html.ActionLink("Update from Strava w/efforts", "Update", routeValues: new { athlete = athleteID, segment = @segmentID, effort = true, }, htmlAttributes: null)<br />

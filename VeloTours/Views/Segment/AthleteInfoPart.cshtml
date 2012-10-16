@@ -12,7 +12,7 @@
         <tr>
             <th class="right" title="Your position on the segment; the last time you updated.">pos</th>
             <th class="right" title="Your placing's percentile position of the total number of riders.">pos %</th>
-            @*<th style="vertical-align:top">Name</th>*@
+            @*<th class="top">Name</th>*@
             <th class="right" title="Distance, measured in kilometers">dist<br />km.</th>
             <th class="right" title="Elevation difference">elev<br />gain</th>
             <th class="right">grade<br />%</th>
@@ -36,10 +36,10 @@
         <tr>
             <td class="right">@athleteInfo.Position</td>
             <td class="right">@String.Format("{0:#0.#}", @athleteInfo.PositionPercentage )</td>
-            @*<th style="vertical-align:top">Name</th>*@
-            <td class="right">@String.Format("{0:#0.##}", @info.Distance / 1000)</td>
+            @*<th class="top">Name</th>*@
+            <td class="right">@info.DistanceInKm</td>
             <td class="right">@Math.Round(info.ElevationGain ?? 0)</td>
-            <td class="right">@String.Format("{0:#0.#}", info.AvgGrade)</td>
+            <td class="right">@info.AvgGradeString</td>
             <td class="right">@info.ClimbCategory</td>
             <td class="right">@info.NoRidden</td>
             <td class="right">@info.NoRiders</td>

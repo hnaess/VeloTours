@@ -146,6 +146,7 @@
     <Property Name="Info_NoRiders" Type="int" Nullable="false" />
     <Property Name="Info_NoRidden" Type="int" Nullable="false" />
     <Property Name="Info_LastUpdated" Type="datetime" Nullable="true" />
+    <Property Name="IsMtb" Type="bit" Nullable="false" />
     <Property Name="SecretKey" Type="uniqueidentifier" Nullable="true" />
   </EntityType>
   <EntityType Name="Segments">
@@ -489,6 +490,7 @@
           <Property Type="Int32" Name="SegmentAreaID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="RegionID" Nullable="false" />
           <Property Name="Info" Type="TourModel.Statistics" Nullable="false" />
+          <Property Type="Boolean" Name="IsMtb" Nullable="false" />
           <Property Type="Guid" Name="SecretKey" Nullable="true" />
           <NavigationProperty Name="Region" Relationship="TourModel.RegionSegmentArea" FromRole="SegmentAreas" ToRole="Regions" />
           <NavigationProperty Name="Segments" Relationship="TourModel.SegmentAreasSegments" FromRole="SegmentAreas" ToRole="Segments" />
@@ -746,6 +748,7 @@
             <ScalarProperty Name="NoRidden" ColumnName="Info_NoRidden" />
             <ScalarProperty Name="LastUpdated" ColumnName="Info_LastUpdated" />
           </ComplexProperty>
+          <ScalarProperty Name="IsMtb" ColumnName="IsMtb" />
           <ScalarProperty Name="SecretKey" ColumnName="SecretKey" />
         </MappingFragment>
       </EntityTypeMapping>

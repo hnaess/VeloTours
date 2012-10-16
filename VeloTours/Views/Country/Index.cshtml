@@ -18,12 +18,12 @@
     {
         <h4>
             <a href="@Url.Action("UpdateRegion", new { athlete = athleteID, region = region.RegionID, effort = true })" style='vertical-align:middle;'><i class='icon-refresh'></i></a>
-            @Html.ActionLink(region.Info.Name, "Index", "Region", new { athlete = athleteID, region = region.RegionID }, htmlAttributes: null)
+            @Html.ActionLink(region.Info.Name, "Index", "Region", new { athlete = athleteID, region = region.RegionID })
         </h4>
         
         foreach (SegmentArea area in region.SegmentAreas)
         {
-            @Html.ActionLink(area.Info.Name, "Index", "Area", new { athlete = athleteID, area = area.SegmentAreaID }, htmlAttributes: null)
+            @Html.ActionLink(area.Info.Name, "Index", "Area", new { athlete = athleteID, area = area.SegmentAreaID }, area.IsMtb ? new { @class = "MtbArea" } : null);
             @Html.DisplayText(",&nbsp;");
         }
     }

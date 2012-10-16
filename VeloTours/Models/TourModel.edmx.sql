@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 10/12/2012 21:54:10
--- Generated from EDMX file: C:\data\src\GitHub\VeloTours\VeloTours\Models\TourModel.edmx
+-- Date Created: 10/15/2012 07:35:06
+-- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -168,6 +168,7 @@ CREATE TABLE [dbo].[SegmentAreas] (
     [Info_NoRiders] int  NOT NULL,
     [Info_NoRidden] int  NOT NULL,
     [Info_LastUpdated] datetime  NULL,
+    [IsMtb] bit  NOT NULL,
     [SecretKey] uniqueidentifier  NULL
 );
 GO

@@ -86,16 +86,14 @@ namespace VeloTours.DAL
             return new Statistics() { Name = name, AvgGrade = 0, Distance = 0, NoRidden = 0, NoRiders = 0, LastUpdated = DefaultDate };
         }
 
-        internal static Models.SegmentArea NewSegmentArea(TourModelContainer context, Models.Region region, List<Models.Segment> segments, string name)
+        internal static Models.SegmentArea NewSegmentArea(TourModelContainer context, Models.Region region, List<Models.Segment> segments, string name, bool isMountainBike = false)
         {
-            //var result = new Models.Result { LastUpdated = DefaultDate };
             Models.Result result = null;
-            return new SegmentArea { Region = region, Segments = segments, Result = result, Info = NewStatistics(context, name), };
+            return new SegmentArea { Region = region, Segments = segments, Result = result, Info = NewStatistics(context, name), IsMtb = (bool)isMountainBike};
         }
 
         internal static Models.Segment NewSegment(TourModelContainer context, int segmentID, string name)
         {
-            //var result = new Models.Result { LastUpdated = DefaultDate };
             Models.Result result = null;
             return new Models.Segment { SegmentID = segmentID, Result = result, Info = NewStatistics(context, name), };
         }

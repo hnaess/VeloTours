@@ -78,7 +78,7 @@
       <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="Stravan">
-      <HintPath>..\..\Stravan-\Stravan\Stravan\bin\Debug\Stravan.dll</HintPath>
+      <HintPath>..\..\StravaTools\Stravan\Stravan\bin\Debug\Stravan.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -256,6 +256,7 @@
     <Compile Include="Models\Statistics.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StatisticsPartial.cs" />
     <Compile Include="Models\TourModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

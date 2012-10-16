@@ -36,11 +36,8 @@
 </p>
 
 <h3>Admin</h3>
-<p>
-    @Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = athleteID, area = areaID, effort = false })<br />
-    @Html.ActionLink("Update from Strava w/efforts", "Update", routeValues: new { athlete = athleteID, area = areaID, effort = true, }, htmlAttributes: null)<br />
-    @Html.ActionLink("Go back to overview", "Index", "Home", routeValues: new { athlete = athleteID }, htmlAttributes: null)
-</p>
+@Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = athleteID, area = areaID, effort = false })<br />
+@Html.ActionLink("Update from Strava w/efforts", "Update", routeValues: new { athlete = athleteID, area = areaID, effort = true, }, htmlAttributes: null)<br />
 
 
 <script>

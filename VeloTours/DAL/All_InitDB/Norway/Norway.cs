@@ -35,6 +35,9 @@ namespace VeloTours.DAL.IntilizeDB.Norway
                 InitDB.NewSegmentArea(context, region, null, "Kirkerud-Sollihøgda"),
                 //InitDB.NewSegmentArea(context, region, null, "Bærums Verk"),
                 InitDB.NewSegmentArea(context, region, null, "Lommedalen"),
+                InitDB.NewSegmentArea(context, region, null, "Krogskogen", isMountainBike: true),
+                InitDB.NewSegmentArea(context, region, null, "Bærumsmarka", isMountainBike: true),
+                InitDB.NewSegmentArea(context, region, null, "Vestmarka", isMountainBike: true),
             };
             segmentAreas.ForEach(s => context.SegmentAreas.Add(s));
             context.SaveChanges();
@@ -128,6 +131,9 @@ namespace VeloTours.DAL.IntilizeDB.Norway
             var segmentAreas = new List<SegmentArea>
             {
                 InitDB.NewSegmentArea(context, region, segments, "Oslo klatrekonge"),
+                InitDB.NewSegmentArea(context, region, null, "Nordmarka syd", isMountainBike: true),
+                InitDB.NewSegmentArea(context, region, null, "Nordmarka nord", isMountainBike: true),
+                InitDB.NewSegmentArea(context, region, null, "Østmarka", isMountainBike: true),
             };
             segmentAreas.ForEach(s => context.SegmentAreas.Add(s));
             context.SaveChanges();

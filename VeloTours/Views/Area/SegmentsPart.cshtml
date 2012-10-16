@@ -15,9 +15,9 @@
         <tr>
             <th class="right" title="Your position on the segment; the last time you updated.">pos</th>
             <th class="right" title="Your placing's percentile position of the total number of riders.">pos %</th>
-            <th style="vertical-align:top">Name</th>
+            <th class="top">Name</th>
             <th class="right" title="Distance, measured in kilometers">dist<br />km.</th>
-            <th class="right" title="Elevation difference">elev<br />gain</th>
+            <th class="right" title="Elevation gained">elev<br />gain</th>
             <th class="right">grade<br />%</th>
             <th class="right" title="Total number of riders that have completed this segment">riders</th>
             <th class="right" title="Total number the segments has been ridden">ridden</th>
@@ -33,20 +33,19 @@
         {
             string segmentName = item.Info.Name;
             <tr>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
-                <td>
+                <td class="right">?</td>
+                <td class="right">@String.Format("{0:#0.#}", 0)</td>
+                <td class="top">
                     @Html.ActionLink(segmentName, "Index", "Segment", routeValues: new { athlete = athleteID, segment = item.Segment.SegmentID, }, htmlAttributes: null)
 
                     @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-info-sign'></i></a>",
                         item.Segment.SegmentID, 0, 0))
                 </td>
-                <td class="right">@item.Info.Distance</td>
+                <td class="right">@item.Info.DistanceInKm</td>
                 <td class="right">@item.Info.ElevationGain</td>
-                <td class="right">@item.Info.AvgGrade</td>
-                <td class="right">@item.Info.NoRiders<td>
-                <td class="right">@item.Info.NoRidden<td>
-                <td class="right">&nbsp;</td>
+                <td class="right">@item.Info.AvgGradeString</td>
+                <td class="right">@item.Info.NoRiders</td>
+                <td class="right">@item.Info.NoRidden</td>
                 <td class="right">&nbsp;</td>
                 <td class="right">&nbsp;</td>
                 <td class="right">&nbsp;</td>
