@@ -17,17 +17,19 @@
 {
     <h3>Yersey</h3>
     @RenderPage("~/Views/Area/YerseyPart.cshtml", @Model)
+}
 
-    <h3>Segments in the areas</h3>
-    @RenderPage("~/Views/Area/SegmentsPart.cshtml", @Model)
+<h3>Segments in the areas</h3>
+@RenderPage("~/Views/Area/SegmentsPart.cshtml", @Model)
 
+@if (hasLeaderBoard) 
+{
     <h3>Athlete's Info</h3>@*
     @RenderPage("~/Views/Area/AthleteInfoPart.cshtml", @Model)
     <p>@Model.ImprovementHint</p>*@
 
-    <h3>LeaderBoard</h3>@*
+    <h3>LeaderBoard</h3>
     @RenderPage("~/Views/Segment/LeaderboardPart.cshtml", @Model)
-    *@
 }
     
 <p>

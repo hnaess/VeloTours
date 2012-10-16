@@ -131,6 +131,7 @@ namespace VeloTours.DAL.IntilizeDB.Norway
             var segmentAreas = new List<SegmentArea>
             {
                 InitDB.NewSegmentArea(context, region, segments, "Oslo klatrekonge"),
+                InitDB.NewSegmentArea(context, region, null, "Lillomarka", isMountainBike: true),
                 InitDB.NewSegmentArea(context, region, null, "Nordmarka syd", isMountainBike: true),
                 InitDB.NewSegmentArea(context, region, null, "Nordmarka nord", isMountainBike: true),
                 InitDB.NewSegmentArea(context, region, null, "Østmarka", isMountainBike: true),

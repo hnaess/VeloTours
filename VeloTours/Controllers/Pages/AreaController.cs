@@ -3,33 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VeloTours.Controllers.Pages.Segment;
 using VeloTours.DAL.Area;
 using VeloTours.Models;
 using VeloTours.ViewModel;
+
 namespace VeloTours.Controllers.Pages
 {
     public class AreaController : Controller
     {
+        int? lbPage = null;
+
         public ActionResult Index(int area, int? athlete)
         {
-            TourModelContainer db = new TourModelContainer();
-            Models.SegmentArea dbArea = db.SegmentAreas.Find(area);
-
-            SegmentAreaViewModel viewModel = new SegmentAreaViewModel() { 
-                SegmentArea = dbArea, 
-                KomSpeed = 0, // TODO
-                Athlete = new AthleteRideInfo(), // TODO
-            };
-            viewModel.Athlete.ElapsedTimes = new ElapsedTimes(); //TODO;
-            viewModel.Segments = new List<SegmentViewModel>();
-            foreach (Models.Segment segment in dbArea.Segments)
-            {
-                viewModel.Segments.Add(new SegmentViewModel { Segment = segment });
-            }
+            SegmentAreaViewModel areaViewModel = GetAreaViewModel(area, athlete ?? 0);
 
             ViewBag.Area = area;
             ViewBag.Athlete = athlete;
-            return View(viewModel);
+            return View(areaViewModel);
         }
 
         public ActionResult Update(int area, int athlete, bool? effort = false)
@@ -38,6 +29,34 @@ namespace VeloTours.Controllers.Pages
             areaUpdate.UpdateArea((bool)effort);
 
             return RedirectToAction("Index", "Area", new { athlete = athlete, area = area });
+        }
+
+        private SegmentAreaViewModel GetAreaViewModel(int areaID, int athleteID)
+        {
+            var db = new TourModelContainer();
+            var dbArea = db.SegmentAreas.Find(areaID);
+            var dbResult = dbArea.Result;
+
+            SegmentAreaViewModel viewModel = new SegmentAreaViewModel()
+            {
+                Athlete = new AthleteRideInfo() { ElapsedTimes = new ElapsedTimes() },       //TODO: Can we drop this new ElapsedTimes?
+                KomSpeed = 0, // TODO
+                SegmentArea = dbArea,
+                Segments = new List<SegmentViewModel>(),
+
+                YellowYersey = (dbResult != null) ? dbResult.YellowYerseyLB : null,
+                GreenYersey = (dbResult != null) ? dbResult.GreenYerseyLB : null,
+                PolkaDotYersey = (dbResult != null) ? dbResult.PolkaDotYerseyLB : null,
+            };
+            
+            foreach (Models.Segment segment in dbArea.Segments)
+            {
+                viewModel.Segments.Add(new SegmentViewModel { Segment = segment });
+            }
+
+            ModelUtils.UpdateViewModel(db, athleteID, dbResult, lbPage, viewModel);
+
+            return viewModel;
         }
     }
 }

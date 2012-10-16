@@ -44,11 +44,11 @@ public partial class Result
 
     public virtual ICollection<LeaderBoard> LeaderBoards { get; set; }
 
-    public virtual LeaderBoard YellowYersey { get; set; }
+    public virtual LeaderBoard YellowYerseyLB { get; set; }
 
-    public virtual LeaderBoard GreenYersey { get; set; }
+    public virtual LeaderBoard GreenYerseyLB { get; set; }
 
-    public virtual LeaderBoard PolkaDotYersey { get; set; }
+    public virtual LeaderBoard PolkaDotYerseyLB { get; set; }
 
 }
 

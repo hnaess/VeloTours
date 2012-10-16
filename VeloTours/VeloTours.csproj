@@ -63,6 +63,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.0.12182\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -190,6 +193,7 @@
     <Compile Include="Controllers\Pages\ProfileController.cs" />
     <Compile Include="Controllers\Pages\CountryController.cs" />
     <Compile Include="Controllers\Pages\SegmentController.cs" />
+    <Compile Include="Controllers\Pages\Segment\ModelUtils.cs" />
     <Compile Include="DAL\All_InitDB\InitDB.cs" />
     <Compile Include="DAL\All_InitDB\Athlete.cs" />
     <Compile Include="DAL\All_InitDB\Norway\Norway.cs" />
@@ -437,7 +441,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\Pages\Area\" />
-    <Folder Include="Controllers\Pages\Segment\" />
     <Folder Include="Controllers\Profile\" />
     <Folder Include="Controllers\Segment\" />
     <Folder Include="Views\Region\" />

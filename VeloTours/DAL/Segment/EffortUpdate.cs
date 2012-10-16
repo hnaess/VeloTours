@@ -14,6 +14,12 @@ namespace VeloTours.DAL.Segment
 {
     public class EffortUpdate
     {
+
+        const int BreakAtOffset = 175; // TODO: Remove this when go in production
+
+
+
+
         #region Singletons
 
         private StravaWebClient _stravaWebClient;
@@ -118,11 +124,11 @@ namespace VeloTours.DAL.Segment
 
         private void SetSegmentYerseys(bool isClimb, List<LeaderBoard> leaderBoards)
         {
-            dbResult.YellowYersey = leaderBoards.First();
+            dbResult.YellowYerseyLB = leaderBoards.First();
             if (isClimb)
-                dbResult.PolkaDotYersey = leaderBoards.First();
+                dbResult.PolkaDotYerseyLB = leaderBoards.First();
             else
-                dbResult.GreenYersey = leaderBoards.First();
+                dbResult.GreenYerseyLB = leaderBoards.First();
         }
 
         private EffortUpdateStatus SortAthleteEfforts()
@@ -189,6 +195,10 @@ namespace VeloTours.DAL.Segment
             do
             {
                 stravaEfforts = serv.Efforts(segmentID, offset: offset);
+
+                if (offset > BreakAtOffset)
+                    break;
+
             } while (GetEffortsLoop(ref stravaEfforts, ref offset));
         }
 

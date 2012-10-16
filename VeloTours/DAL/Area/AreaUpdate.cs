@@ -90,10 +90,17 @@ namespace VeloTours.DAL.Area
             var dbResult = AddResultSet(dbArea);
             db.SaveChanges();
 
-            // TODO
             UpdateLeaderBoardForArea(dbArea, dbResult.ResultID, ridesInScope, athletesLeaderBoards);
             db.SaveChanges();
-            
+
+            // TODO
+            UpdateResultWithYersey(dbResult);
+            db.SaveChanges();
+        }
+
+        private void UpdateResultWithYersey(Result dbResult)
+        {
+            //throw new NotImplementedException();
         }
 
         private void UpdateLeaderBoardForArea(SegmentArea dbArea, int resultID, 
