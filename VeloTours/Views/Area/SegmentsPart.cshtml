@@ -42,7 +42,7 @@
                         item.Segment.SegmentID, 0, 0))
                 </td>
                 <td class="right">@item.Info.DistanceInKm</td>
-                <td class="right">@item.Info.ElevationGain</td>
+                <td class="right">@Math.Round(@item.Info.ElevationGain ?? 0)</td>
                 <td class="right">@item.Info.AvgGradeString</td>
                 <td class="right">@item.Info.NoRiders</td>
                 <td class="right">@item.Info.NoRidden</td>

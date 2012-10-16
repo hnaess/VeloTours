@@ -8,7 +8,6 @@
 @{
     int athleteID = ViewBag.Athlete;
     var leaderBoardList = @Model.LeaderBoard;
-    var style = "";
 }
 
 @*tablesorter*@
@@ -16,7 +15,7 @@
     <thead>
         <tr>
             <th class="right" title="Rank">rank</th>
-            <th style="vertical-align:top" title="Athlete name">name</th>
+            <th class="top" title="Athlete name">name</th>
             <th class="right" title="Athlete's yellow points">yellow</th>
             <th class="right" title="Athlete's green points">green</th>
             <th class="right" title="Athlete's polka-dot points">polka-<br />dot</th>
@@ -33,7 +32,7 @@
         @foreach (LeaderBoard lb in leaderBoardList) {
         <tr>
             <td class="right">@lb.Rank</td>
-            <td>@HtmlVeloHelpers.AtheleteNameLink(lb.Athlete)</td>
+            <td class="top">@HtmlVeloHelpers.AtheleteNameLink(lb.Athlete)</td>
             <td class="right">@lb.Yellow</td>
             <td class="right">@lb.GreenPoints</td>
             <td class="right">@lb.PolkaDotPoints</td>
@@ -48,6 +47,7 @@
         }
     </tbody>
 </table>
+
 @Html.PagedListPager((IPagedList)@Model.LeaderBoard, 
     page => Url.Action("Index", new { lbPage = page, athlete = ViewBag.Athlete, area = ViewBag.Area, segment = ViewBag.Segment }), 
     PagedListRenderOptions.DefaultPlusFirstAndLast)

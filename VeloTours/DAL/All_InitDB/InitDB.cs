@@ -14,13 +14,18 @@ namespace VeloTours.DAL
 
         public static void CreateAndInitIfEmpty(TourModelContainer context)
         {
-            //context.Database.Delete();
+            //DeleteDB(context);
             if (!context.Database.Exists())
             {
                 context.Database.Create();
                 Init(context);
                 CreateIndexes(context);
             }
+        }
+
+        private static bool DeleteDB(TourModelContainer context)
+        {
+            return context.Database.Delete();
         }
 
         private static void CreateIndexes(TourModelContainer context)
