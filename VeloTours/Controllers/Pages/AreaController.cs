@@ -15,6 +15,7 @@ namespace VeloTours.Controllers.Pages
 
         public ActionResult Index(int area, int? athlete, int? lbPage)
         {
+            this.lbPage = lbPage;
             SegmentAreaViewModel areaViewModel = GetAreaViewModel(area, athlete ?? 0);
 
             ViewBag.Area = area;
@@ -50,7 +51,18 @@ namespace VeloTours.Controllers.Pages
             
             foreach (Models.Segment segment in dbArea.Segments)
             {
-                viewModel.Segments.Add(new SegmentViewModel { Segment = segment });
+                var segmentViewModel = new SegmentViewModel() { Segment = segment, };
+                viewModel.Segments.Add(segmentViewModel);
+
+                if (athleteID > 0 && segment.Result != null)
+                {
+                    var athlete = segment.Result.LeaderBoards.SingleOrDefault(x => x.AthleteID == athleteID);
+                    if(athlete != null)
+                    {
+                        segmentViewModel.AthletePos = athlete.Rank;
+                        segmentViewModel.AthletePosPercentage = ((double)athlete.Rank / (double)segmentViewModel.Info.NoRiders * 100);
+                    }
+                }
             }
 
             RideUtil.UpdateViewModel(db, athleteID, dbResult, lbPage, viewModel);

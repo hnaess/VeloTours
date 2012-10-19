@@ -1,5 +1,14 @@
-﻿.table td{
+﻿#body {
+    font-size: 0.9em;
+}
+
+.table td{
 	white-space: nowrap;
+}
+
+tr th.top {
+    vertical-align: top;
+    padding-left: 20px;
 }
 
 tr th.right {

@@ -14,9 +14,7 @@ namespace VeloTours.DAL.Segment
 {
     public class EffortUpdate
     {
-
-        const int BreakAtOffset = 175; // TODO: Remove this when go in production
-
+        const int BreakAtOffset = 0; //175; // TODO: Remove this when go in production
 
 
 
@@ -198,7 +196,7 @@ namespace VeloTours.DAL.Segment
             {
                 stravaEfforts = serv.Efforts(segmentID, offset: offset);
 
-                if (offset > BreakAtOffset)
+                if (BreakAtOffset > 0 && offset > BreakAtOffset)
                     break;
 
             } while (GetEffortsLoop(ref stravaEfforts, ref offset));

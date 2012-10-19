@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PagedList;
-using VeloTours.DAL.Area;
 using VeloTours.DAL.Segment;
 using VeloTours.Models;
 using VeloTours.ViewModel;
@@ -16,10 +13,10 @@ namespace VeloTours.Controllers.Pages
     {
         int? lbPage = null;
 
-        public ActionResult Index(int segment, int athlete, int? lbPage, string lbSortBy)
+        public ActionResult Index(int segment, int? athlete, int? lbPage)
         {
             this.lbPage = lbPage;
-            SegmentViewModel segmentViewModel = GetSegmentViewModel(segment, athlete); //, lbSortBy ?? DefaultLBoardSortOrder);
+            SegmentViewModel segmentViewModel = GetSegmentViewModel(segment, athlete ?? 0);
 
             ViewBag.Segment = segment;
             ViewBag.Athlete = athlete;

@@ -12,7 +12,8 @@
 if(lboard != null)
 {
     <b>@HtmlVeloHelpers.AtheleteNameLink(lboard)</b><br />
-    @String.Format("Ridden: {0}", @lboard.NoRidden)
+    @String.Format("Ridden: {0}", @lboard.NoRidden)<br />
+    @String.Format("Rank: {0}", @lboard.Rank)
 }
 }
 
@@ -24,11 +25,17 @@ if(lboard != null)
             <td><img src="~/Content/images/yersey/yellow.png" /></td>
             <td style="vertical-align:top">@DisplayAthlete(yellow)</td>
 
-            <td><img src="~/Content/images/yersey/polkadot.png" /></td>
-            <td style="vertical-align:top">@DisplayAthlete(polkadot)</td>
+            @if(polkadot.PolkaDotPoints > 0 )
+            {
+                <td><img src="~/Content/images/yersey/polkadot.png" /></td>
+                <td style="vertical-align:top">@DisplayAthlete(polkadot)</td>
+            }
 
-            <td><img src="~/Content/images/yersey/green.png" /></td>
-            <td style="vertical-align:top">@DisplayAthlete(green)</td>
+            @if(green.GreenPoints > 0 )
+            {
+                <td><img src="~/Content/images/yersey/green.png" /></td>
+                <td style="vertical-align:top">@DisplayAthlete(green)</td>
+            }
         </tr>
     </tbody>
 </table>

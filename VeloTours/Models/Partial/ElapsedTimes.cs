@@ -16,5 +16,15 @@ namespace VeloTours.Models
             Percentile90 += leaderBoard.ElapsedTimes.Percentile90;
             Stdev += leaderBoard.ElapsedTimes.Stdev;
         }
+
+        public void AddElapsedTimes(int time)
+        {
+            Min += time;
+            Max += time;
+            Median += time;
+            Average += time;
+            Percentile90 += time;
+            Stdev += 0;
+        }
     }
 }

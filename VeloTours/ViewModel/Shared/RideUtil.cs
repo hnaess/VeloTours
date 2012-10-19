@@ -122,14 +122,22 @@ namespace VeloTours.ViewModel
                 where l.ResultID == resultID
                 select l;
 
-            //IQueryable<Models.LeaderBoard> sortedlBoard = null;
             var sortedlBoard = lBoard.OrderBy(s => s.YellowPoints);
-            //UpdateRankForCustomSortedLeaderBoards(ref sortedlBoard);
+            UpdateRankForCustomSortedLeaderBoards(ref sortedlBoard);
 
             return sortedlBoard.ToPagedList(lBoardPage ?? 1, pageSize);
         }
 
-        //private IPagedList<Models.LeaderBoard> GetSortedAndPagedLeaderBoards(int resultID, string sortBy)
+        internal static void UpdateRankForCustomSortedLeaderBoards(ref IOrderedQueryable<LeaderBoard> sortedlBoard)
+        {
+            int rank = 0;
+            foreach (var item in sortedlBoard)
+            {
+                item.Rank = ++rank;
+            }
+        }
+
+        #region //private IPagedList<Models.LeaderBoard> GetSortedAndPagedLeaderBoards(int resultID, string sortBy)
         //{
         //    var lBoard =
         //        from l in db.LeaderBoards
@@ -174,24 +182,14 @@ namespace VeloTours.ViewModel
         //    }
         //    return sortBy;
         //}
-        
-        internal static void UpdateRankForCustomSortedLeaderBoards(ref IQueryable<Models.LeaderBoard> lBoard)
-        {
-            int rank = 0;
-            foreach (var item in lBoard)
-            {
-                item.Rank = ++rank;
-            }
-        }
+        #endregion
 
-        internal static void UpdateResultWithYersey(Result dbResult)
-        {
-            var lBoard =
-                (from l in dbResult.LeaderBoards
-                where l.ResultID == dbResult.ResultID
-                select l).Take(1);
-
-
-        }
+        //internal static void UpdateResultWithYersey(Result dbResult)
+        //{
+        //    var lBoard =
+        //        (from l in dbResult.LeaderBoards
+        //        where l.ResultID == dbResult.ResultID
+        //        select l).Take(1);
+        //}
     }
 }

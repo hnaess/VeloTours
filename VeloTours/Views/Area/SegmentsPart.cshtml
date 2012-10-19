@@ -33,8 +33,8 @@
         {
             string segmentName = item.Info.Name;
             <tr>
-                <td class="right">?</td>
-                <td class="right">@String.Format("{0:#0.#}", 0)</td>
+                <td class="right">@item.AthletePos</td>
+                <td class="right">@String.Format("{0:#0.0}", item.AthletePosPercentage)</td>
                 <td class="top">
                     @Html.ActionLink(segmentName, "Index", "Segment", routeValues: new { athlete = athleteID, segment = item.Segment.SegmentID, }, htmlAttributes: null)
 

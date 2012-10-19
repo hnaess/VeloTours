@@ -19,6 +19,9 @@ namespace VeloTours.Models
         public LeaderBoard GreenYersey { get; set; }
         public LeaderBoard PolkaDotYersey { get; set; }
 
+        public int AthletePos { get; set; }
+        public double AthletePosPercentage { get; set; }
+
         public ICollection<SegmentArea> SegmentAreas { get; set; }
 
 

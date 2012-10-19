@@ -49,5 +49,5 @@
 </table>
 
 @Html.PagedListPager((IPagedList)@Model.LeaderBoard, 
-    page => Url.Action("Index", new { lbPage = page, athlete = ViewBag.Athlete, area = ViewBag.Area, segment = ViewBag.Segment }), 
+    page => Url.Action("Index", new { athlete = ViewBag.Athlete, area = ViewBag.Area, segment = ViewBag.Segment, lbPage = page, }), 
     PagedListRenderOptions.DefaultPlusFirstAndLast)
