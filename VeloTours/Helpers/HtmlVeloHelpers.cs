@@ -33,7 +33,7 @@ namespace VeloTours.Helpers
 
         public static MvcHtmlString AthleteIconLink(Models.Athlete athlete)
         {
-            return CreateAthletePopover(athlete, athlete.Name);
+            return CreateAthletePopover(athlete, "<i class='icon-user'/>");
         }
 
         private static MvcHtmlString CreateAthletePopover(Models.Athlete athlete, string innerHtml)
