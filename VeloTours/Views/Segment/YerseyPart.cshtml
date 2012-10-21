@@ -8,7 +8,7 @@
 }
 
 @helper DisplayAthlete(VeloTours.Models.LeaderBoard lboard) {
-    <b>@HtmlVeloHelpers.AtheleteNameLink(lboard)</b>
+    <b>@HtmlVeloHelpers.AthleteNameLink(lboard)</b>
     <br />@String.Format("Speed: {0:#0.#} km/h", @Model.CalculateSpeed(@Model.YellowYersey))
     <br />@String.Format("Ridden: {0}", @lboard.NoRidden)
 }

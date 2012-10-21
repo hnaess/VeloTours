@@ -6,11 +6,28 @@
 @using VeloTours.Models.Extensions;
 
 @{
-    int athleteID = ViewBag.Athlete;
+    var routeValues = new RouteValueDictionary();
+    if (ViewBag.Athlete > 0)
+    {
+        routeValues.Add("athlete", ViewBag.Athlete);
+    }
+    if (ViewBag.Segment != null)
+    {
+        routeValues.Add("segment", ViewBag.Segment);
+    }
+    if (ViewBag.Area > 0)
+    {
+        routeValues.Add("area", ViewBag.Area);
+    }
+    if (ViewBag.Region > 0)
+    {
+        routeValues.Add("region", ViewBag.Region);
+    }
+    
     var leaderBoardList = @Model.LeaderBoard;
 }
 
-@*tablesorter*@
+
 <table class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
     <thead>
         <tr>
@@ -32,7 +49,10 @@
         @foreach (LeaderBoard lb in leaderBoardList) {
         <tr>
             <td class="right">@lb.Rank</td>
-            <td class="top">@HtmlVeloHelpers.AtheleteNameLink(lb.Athlete)</td>
+            @*<td class="top">@HtmlVeloHelpers.AthleteNameLink(lb.Athlete)</td>*@
+            <td class="top">
+                @Html.ActionLink(lb.Athlete.Name, "Index", new { athlete = 352657 } )
+                @HtmlVeloHelpers.AthleteIconLink(lb.Athlete)</td>
             <td class="right">@lb.Yellow</td>
             <td class="right">@lb.GreenPoints</td>
             <td class="right">@lb.PolkaDotPoints</td>
@@ -49,5 +69,5 @@
 </table>
 
 @Html.PagedListPager((IPagedList)@Model.LeaderBoard, 
-    page => Url.Action("Index", new { athlete = ViewBag.Athlete, area = ViewBag.Area, segment = ViewBag.Segment, lbPage = page, }), 
+    page => Url.Action("Index", new { athlete = ViewBag.Athlete, area = ViewBag.Area, segment = ViewBag.Segment, region = ViewBag.Region, lbPage = page, }), 
     PagedListRenderOptions.DefaultPlusFirstAndLast)

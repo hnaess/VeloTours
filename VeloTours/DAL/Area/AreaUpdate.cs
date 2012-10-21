@@ -215,7 +215,7 @@ namespace VeloTours.DAL.Area
 
         private void SetYerseys(Result dbResult)
         {
-            dbResult.YellowYerseyLB = db.LeaderBoards.OrderByDescending(x => x.ElapsedTimes.Min).First();
+            dbResult.YellowYerseyLB = db.LeaderBoards.OrderBy(x => x.ElapsedTimes.Min).First();
             dbResult.GreenYerseyLB = db.LeaderBoards.OrderByDescending(x => x.GreenPoints).First();
             dbResult.PolkaDotYerseyLB = db.LeaderBoards.OrderByDescending(x => x.PolkaDotPoints).First();
         }

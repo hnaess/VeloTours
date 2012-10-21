@@ -11,7 +11,7 @@
 @helper DisplayAthlete(VeloTours.Models.LeaderBoard lboard) {
 if(lboard != null)
 {
-    <b>@HtmlVeloHelpers.AtheleteNameLink(lboard)</b><br />
+    <b>@HtmlVeloHelpers.AthleteNameLink(lboard)</b><br />
     @String.Format("Ridden: {0}", @lboard.NoRidden)<br />
     @String.Format("Rank: {0}", @lboard.Rank)
 }

@@ -433,7 +433,7 @@
     <Content Include="Views\Country\Index.cshtml" />
     <Content Include="Views\Segment\AthleteInfoPart.cshtml" />
     <Content Include="Views\Segment\YerseyPart.cshtml" />
-    <Content Include="Views\Segment\LeaderboardPart.cshtml" />
+    <Content Include="Views\Ride\LeaderboardPart.cshtml" />
     <Content Include="Views\Area\YerseyPart.cshtml" />
     <Content Include="Views\Area\SegmentsPart.cshtml" />
     <Content Include="Views\Area\AthleteInfoPart.cshtml" />
