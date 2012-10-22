@@ -29,15 +29,15 @@ namespace VeloTours.ViewModels
             AthleteRideInfo athleteRideInfo = new AthleteRideInfo();
             if (lBoardAthlete != null)
             {
-                athleteRideInfo.Position = lBoardAthlete.Rank;
-                athleteRideInfo.PositionPercentage = ((double)lBoardAthlete.Rank / (double)noRiders * 100);
-
                 athleteRideInfo.BehindKom = lBoardAthlete.ElapsedTimes.Min - lBoardKOM.ElapsedTimes.Min;
                 athleteRideInfo.BehindKomPercentage = ((double)lBoardAthlete.ElapsedTimes.Min / (double)lBoardKOM.ElapsedTimes.Min - 1) * 100;
                 athleteRideInfo.ElapsedTimes = lBoardAthlete.ElapsedTimes;
                 athleteRideInfo.NoRidden = lBoardAthlete.NoRidden;
                 athleteRideInfo.Position = lBoardAthlete.Rank;
-                athleteRideInfo.PositionPercentage = (double)lBoardAthlete.Rank / (double)leaderBoards.Count() * 100;
+                athleteRideInfo.PositionPercentage = ((double)lBoardAthlete.Rank / (double)noRiders * 100);
+
+                athleteRideInfo.Green = lBoardAthlete.GreenPoints;
+                athleteRideInfo.PolkaDot = lBoardAthlete.PolkaDotPoints;
             }
             return athleteRideInfo;
         }
@@ -83,6 +83,7 @@ namespace VeloTours.ViewModels
 
         private static void UpdateRankForCustomSortedLeaderBoards(ref IOrderedEnumerable<LeaderBoard> sortedlBoard)
         {
+            // TODO: Fix rank if same as previous row.
             int rank = 0;
             foreach (var item in sortedlBoard)
             {
