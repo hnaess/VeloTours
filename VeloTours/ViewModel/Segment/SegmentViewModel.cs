@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PagedList;
+using VeloTours.Models;
 
-namespace VeloTours.Models
+namespace VeloTours.ViewModels
 {
     public class SegmentViewModel
     {
+        #region Properties
+
         public Models.Segment Segment { get; set; }
         public Nullable<double> KomSpeed { get; set; }
         public AthleteRideInfo Athlete { get; set; }
@@ -34,5 +38,51 @@ namespace VeloTours.Models
         }
 
         public String KomSpeedString { get { return (KomSpeed == null) ? null : String.Format("{0:#0.0}", KomSpeed); } }
+        
+        #endregion
+        
+        #region Constructors
+
+        public SegmentViewModel(int athleteID, Models.Segment dbSegment, int? leaderBoardPageNo)
+        {
+            var dbResult = dbSegment.Result;
+
+            Segment = dbSegment;
+            SegmentAreas = dbSegment.SegmentAreas;
+
+            SetYersey(dbResult);
+
+            if (RideUtil.LeaderBoardExists(dbResult))
+            {
+                var leaderBoards = dbResult.LeaderBoards;
+                var lBoardKOM = leaderBoards.OrderBy(x => x.ElapsedTimes.Min).First();
+                var lBoardAthlete = leaderBoards.SingleOrDefault(x => x.AthleteID == athleteID);
+
+                KomSpeed = Info.SpeedInKmH(lBoardKOM);
+                Athlete = RideUtil.AddAthleteToViewModel(athleteID, leaderBoards, lBoardKOM, lBoardAthlete, Info.NoRiders);
+                ImprovementHint = RideUtil.CreateImprovementHint(Athlete.ElapsedTimes.Min, dbResult.LeaderBoards, lBoardAthlete);
+
+                if (leaderBoardPageNo > 0)
+                {
+                    LeaderBoard = RideUtil.GetPagedLeaderBoards(leaderBoards, leaderBoardPageNo);
+                }
+            }
+            else
+            {
+                LeaderBoard = RideUtil.CreateBlankPagedList();
+                Athlete = RideUtil.CreateBlankAthleteInfo();
+            }
+        }
+
+        private void SetYersey(Result dbResult)
+        {
+            YellowYersey = (dbResult != null) ? dbResult.YellowYerseyLB : null;
+            GreenYersey = (dbResult != null) ? dbResult.GreenYerseyLB : null;
+            PolkaDotYersey = (dbResult != null) ? dbResult.PolkaDotYerseyLB : null;
+        }
+
+        #endregion
+
+
     }
 }

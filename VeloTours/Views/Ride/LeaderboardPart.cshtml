@@ -5,64 +5,65 @@
 @using VeloTours.Models;
 @using VeloTours.Models.Extensions;
 
-@{
-    var routeValues = new RouteValueDictionary();
-    if (ViewBag.Athlete > 0)
+@functions{
+    public RouteValueDictionary GetRoutes(int athleteID)
     {
-        routeValues.Add("athlete", ViewBag.Athlete);
+        var routeValues = new RouteValueDictionary();
+        if (ViewBag.Athlete > 0)
+        {
+            routeValues.Add("athlete", athleteID);
+        }
+        if (ViewBag.Segment != null)
+        {
+            routeValues.Add("segment", ViewBag.Segment);
+        }
+        if (ViewBag.Area > 0)
+        {
+            routeValues.Add("area", ViewBag.Area);
+        }
+        if (ViewBag.Region > 0)
+        {
+            routeValues.Add("region", ViewBag.Region);
+        }
+        return routeValues;
     }
-    if (ViewBag.Segment != null)
-    {
-        routeValues.Add("segment", ViewBag.Segment);
-    }
-    if (ViewBag.Area > 0)
-    {
-        routeValues.Add("area", ViewBag.Area);
-    }
-    if (ViewBag.Region > 0)
-    {
-        routeValues.Add("region", ViewBag.Region);
-    }
-    
-    var leaderBoardList = @Model.LeaderBoard;
 }
-
 
 <table class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
     <thead>
         <tr>
-            <th class="right" title="Rank">rank</th>
-            <th class="top" title="Athlete name">name</th>
-            <th class="right" title="Athlete's yellow points">yellow</th>
-            <th class="right" title="Athlete's green points">green</th>
-            <th class="right" title="Athlete's polka-dot points">polka-<br />dot</th>
-            <th class="right" title="Total number the segments has been ridden by uou">#</th>
-            <th class="right" title="Your minimum time on the segment">time<br />min</th>
-            <th class="right" title="Your percentil-90 time on the segment">time<br />p-90</th>
-            <th class="right" title="Your max on the segment">time<br />max</th>
-            <th class="right" title="Your median on the segment">time<br />med</th>
-            <th class="right" title="Your average on the segment">time<br />avg</th>
-            <th class="right" title="Your standard deviation on the segment">time<br />stdev</th>
+            <th class="r" title="Rank">rank</th>
+            <th class="t" title="Athlete name">name</th>
+            <th class="r" title="Athlete's yellow points">yellow</th>
+            <th class="r" title="Athlete's green points">green</th>
+            <th class="r" title="Athlete's polka-dot points">polka-<br />dot</th>
+            <th class="r" title="Total number the segments has been ridden by uou">#</th>
+            <th class="r" title="Your minimum time on the segment">time<br />min</th>
+            <th class="r" title="Your percentil-90 time on the segment">time<br />p-90</th>
+            <th class="r" title="Your max on the segment">time<br />max</th>
+            <th class="r" title="Your median on the segment">time<br />med</th>
+            <th class="r" title="Your average on the segment">time<br />avg</th>
+            <th class="r" title="Your standard deviation on the segment">time<br />stdev</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (LeaderBoard lb in leaderBoardList) {
+        @foreach (LeaderBoard lb in Model.LeaderBoard) {
         <tr>
-            <td class="right">@lb.Rank</td>
-            <td class="top">
-                @Html.ActionLink(lb.Athlete.Name, "Index", new { athlete = 352657 } )
+            <td class="r">@lb.Rank</td>
+            <td class="t" style="padding-left: 2px">
                 @HtmlVeloHelpers.AthleteIconLink(lb.Athlete)
+                @Html.ActionLink(lb.Athlete.Name, "Index", GetRoutes(lb.AthleteID))
             </td>
-            <td class="right">@lb.Yellow</td>
-            <td class="right">@lb.GreenPoints</td>
-            <td class="right">@lb.PolkaDotPoints</td>
-            <td class="right">@lb.NoRidden</td>
-            <td class="right">@lb.Min</td>
-            <td class="right">@lb.Percentile90</td>
-            <td class="right">@lb.Max</td>
-            <td class="right">@lb.Median</td>
-            <td class="right">@lb.Average</td>
-            <td class="right">@lb.Stdev</td>
+            <td class="r">@lb.Yellow</td>
+            <td class="r">@lb.GreenPoints</td>
+            <td class="r">@lb.PolkaDotPoints</td>
+            <td class="r">@lb.NoRidden</td>
+            <td class="r">@lb.Min</td>
+            <td class="r">@lb.Percentile90</td>
+            <td class="r">@lb.Max</td>
+            <td class="r">@lb.Median</td>
+            <td class="r">@lb.Average</td>
+            <td class="r">@lb.Stdev</td>
         </tr>
         }
     </tbody>

@@ -1,4 +1,5 @@
 ﻿@using VeloTours.Models;
+@using VeloTours.ViewModels;
 @{
     Statistics info = @Model.Info;
     AthleteRideInfo athleteInfo = @Model.Athlete;
@@ -10,16 +11,16 @@
 <table class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
     <thead>
         <tr>
-            <td class="right">Yellow Points</td>
-            <td class="right">Green Points</td>
-            <td class="right">Polkadot Points</td>
+            <td class="r">Yellow Points</td>
+            <td class="r">Green Points</td>
+            <td class="r">Polkadot Points</td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td class="right">@athleteInfo.UsersChangePos</td>
-            <td class="right">@athleteInfo.UsersChangePos</td>
-            <td class="right">@athleteInfo.UsersChangePos</td>
+            <td class="r">@athleteInfo.UsersChangePos</td>
+            <td class="r">@athleteInfo.UsersChangePos</td>
+            <td class="r">@athleteInfo.UsersChangePos</td>
         </tr>
     </tbody>
 </table>

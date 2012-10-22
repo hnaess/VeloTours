@@ -5,18 +5,15 @@ using System.Web;
 using System.Web.Mvc;
 using VeloTours.DAL.Segment;
 using VeloTours.Models;
-using VeloTours.ViewModel;
+using VeloTours.ViewModels;
 
 namespace VeloTours.Controllers.Pages
 {
     public class SegmentController : Controller
     {
-        int? lbPage = null;
-
         public ActionResult Index(int segment, int? athlete, int? lbPage)
         {
-            this.lbPage = lbPage;
-            SegmentViewModel segmentViewModel = GetSegmentViewModel(segment, athlete ?? 0);
+            SegmentViewModel segmentViewModel = GetSegmentViewModel(segment, athlete ?? 0, lbPage);
 
             ViewBag.Segment = segment;
             ViewBag.Athlete = athlete;
@@ -33,25 +30,12 @@ namespace VeloTours.Controllers.Pages
             return RedirectToAction("Index", new { athlete = athlete, segment = segment });
         }
 
-        private SegmentViewModel GetSegmentViewModel(int segmentID, int athleteID) //, string sortBy)
+        private SegmentViewModel GetSegmentViewModel(int segmentID, int athleteID, int? lbPage) //, string sortBy)
         {
             var db = new TourModelContainer();
             var dbSegment = db.Segments.Find(segmentID);
-            var dbResult = dbSegment.Result;
-            
-            var viewModel = new SegmentViewModel
-            {
-                Athlete = new AthleteRideInfo(),
-                Segment = dbSegment, 
-                SegmentAreas = dbSegment.SegmentAreas,
 
-                YellowYersey = (dbResult != null) ? dbResult.YellowYerseyLB : null,
-                GreenYersey = (dbResult != null) ? dbResult.GreenYerseyLB : null,
-                PolkaDotYersey = (dbResult != null) ? dbResult.PolkaDotYerseyLB : null,
-            };
-
-            RideUtil.UpdateViewModel(athleteID, dbResult, viewModel, lbPage);
-            return viewModel;
+            return new SegmentViewModel(athleteID, dbSegment, lbPage ?? 1);
         }
     }
 }

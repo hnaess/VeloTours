@@ -10,50 +10,50 @@
 <table class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
     <thead>
         <tr>
-            <th class="right" title="Your position on the segment; the last time you updated.">pos</th>
-            <th class="right" title="Your placing's percentile position of the total number of riders.">pos %</th>
-            @*<th class="top">Name</th>*@
-            <th class="right" title="Distance, measured in kilometers">dist<br />km.</th>
-            <th class="right" title="Elevation difference">elev<br />gain</th>
-            <th class="right">grade<br />%</th>
-            <th class="right" title="Grade category. This influence the Yersey calculations.">grade<br />cat</th>
-            <th class="right" title="Total number of riders that have completed this segment">riders</th>
-            <th class="right" title="Total number the segments has been ridden">ridden<br />total</th>
-            <th class="right" title="Speed on segment, ridden by KOM">KOM<br />km/h</th>
-            <th class="right" title="The time your personal best is currently behind the current KOM.">behind<br />KOM s.</th>
-            <th class="right" title="Percentage of time your personal best is currently behind the current KOM.">behind<br />KOM %</th>
-            <th class="right" title="Total number the segments has been ridden by uou">ridden<br />you</th>
-            <th class="right" title="Your minimum time on the segment">time<br />min</th>
-            <th class="right" title="Your percentil-90 time on the segment">time<br />p-90</th>
-            <th class="right" title="Your max on the segment">time<br />max</th>
-            <th class="right" title="Your median on the segment">time<br />med</th>
-            <th class="right" title="Your average on the segment">time<br />avg</th>
-            <th class="right" title="Your standard deviation on the segment">time<br />stdev</th>
-            <th class="right" title="Position change on the leaderboard">change</th>
+            <th class="r" title="Your position on the segment; the last time you updated.">pos</th>
+            <th class="r" title="Your placing's percentile position of the total number of riders.">pos %</th>
+            @*<th class="t">Name</th>*@
+            <th class="r" title="Distance, measured in kilometers">dist<br />km.</th>
+            <th class="r" title="Elevation difference">elev<br />gain</th>
+            <th class="r">grade<br />%</th>
+            <th class="r" title="Grade category. This influence the Yersey calculations.">grade<br />cat</th>
+            <th class="r" title="Total number of riders that have completed this segment">riders</th>
+            <th class="r" title="Total number the segments has been ridden">ridden<br />total</th>
+            <th class="r" title="Speed on segment, ridden by KOM">KOM<br />km/h</th>
+            <th class="r" title="The time your personal best is currently behind the current KOM.">behind<br />KOM s.</th>
+            <th class="r" title="Percentage of time your personal best is currently behind the current KOM.">behind<br />KOM %</th>
+            <th class="r" title="Total number the segments has been ridden by uou">ridden<br />you</th>
+            <th class="r" title="Your minimum time on the segment">time<br />min</th>
+            <th class="r" title="Your percentil-90 time on the segment">time<br />p-90</th>
+            <th class="r" title="Your max on the segment">time<br />max</th>
+            <th class="r" title="Your median on the segment">time<br />med</th>
+            <th class="r" title="Your average on the segment">time<br />avg</th>
+            <th class="r" title="Your standard deviation on the segment">time<br />stdev</th>
+            <th class="r" title="Position change on the leaderboard">change</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td class="right">@athleteInfo.Position</td>
-            <td class="right">@String.Format("{0:#0.#}", @athleteInfo.PositionPercentage )</td>
-            @*<th class="top">Name</th>*@
-            <td class="right">@info.DistanceInKm</td>
-            <td class="right">@Math.Round(info.ElevationGain ?? 0)</td>
-            <td class="right">@info.AvgGradeString</td>
-            <td class="right">@info.ClimbCategory</td>
-            <td class="right">@info.NoRidden</td>
-            <td class="right">@info.NoRiders</td>
-            <td class="right">@String.Format("{0:#0.#}", Model.KomSpeed ?? 0)</td>
-            <td class="right">@athleteInfo.BehindKom</td>
-            <td class="right">@String.Format("{0:#0.#}", athleteInfo.BehindKomPercentage)</td>
-            <td class="right">@athleteInfo.NoRidden</td>
-            <td class="right">@athleteInfo.Min<br />@athleteInfo.UsersTimePrevious</td>
-            <td class="right">@athleteInfo.Percentile90</td>
-            <td class="right">@athleteInfo.Max</td>
-            <td class="right">@athleteInfo.Median</td>
-            <td class="right">@athleteInfo.Average</td>
-            <td class="right">@athleteInfo.Stdev</td>
-            <td class="right">@athleteInfo.UsersChangePos</td>
+            <td class="r">@athleteInfo.Position</td>
+            <td class="r">@String.Format("{0:#0.#}", @athleteInfo.PositionPercentage )</td>
+            @*<th class="t">Name</th>*@
+            <td class="r">@info.DistanceInKm</td>
+            <td class="r">@Math.Round(info.ElevationGain ?? 0)</td>
+            <td class="r">@info.AvgGradeString</td>
+            <td class="r">@info.ClimbCategory</td>
+            <td class="r">@info.NoRidden</td>
+            <td class="r">@info.NoRiders</td>
+            <td class="r">@String.Format("{0:#0.#}", Model.KomSpeed ?? 0)</td>
+            <td class="r">@athleteInfo.BehindKom</td>
+            <td class="r">@String.Format("{0:#0.#}", athleteInfo.BehindKomPercentage)</td>
+            <td class="r">@athleteInfo.NoRidden</td>
+            <td class="r">@athleteInfo.Min<br />@athleteInfo.UsersTimePrevious</td>
+            <td class="r">@athleteInfo.Percentile90</td>
+            <td class="r">@athleteInfo.Max</td>
+            <td class="r">@athleteInfo.Median</td>
+            <td class="r">@athleteInfo.Average</td>
+            <td class="r">@athleteInfo.Stdev</td>
+            <td class="r">@athleteInfo.UsersChangePos</td>
         </tr>
     </tbody>
 </table>

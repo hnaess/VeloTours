@@ -1,7 +1,6 @@
-﻿@model VeloTours.Models.SegmentAreaViewModel
+﻿@model VeloTours.ViewModels.SegmentAreaViewModel
 @using System.Collections;
 @using VeloTours.Helpers;
-@using VeloTours.Models;
 @using VeloTours.Models.Extensions;
 
 @{
@@ -9,23 +8,22 @@
     var segmentList = @Model.Segments;
 }
 
-
 <table id="SegmentsTable" class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
     <thead>
         <tr>
-            <th class="right" title="Your position on the segment; the last time you updated.">pos</th>
-            <th class="right" title="Your placing's percentile position of the total number of riders.">pos %</th>
-            <th class="top">Name</th>
-            <th class="right" title="Distance, measured in kilometers">dist<br />km.</th>
-            <th class="right" title="Elevation gained">elev<br />gain</th>
-            <th class="right">grade<br />%</th>
-            <th class="right" title="Total number of riders that have completed this segment">riders</th>
-            <th class="right" title="Total number the segments has been ridden">ridden</th>
-            <th class="right" title="Speed on segment, ridden by KOM">KOM<br />km/h</th>
-            <th class="right" title="Your time on the segment">time</th>
-            <th class="right" title="The time your personal best is currently behind the current KOM.">behind<br />KOM s.</th>
-            <th class="right" title="Percentage of time your personal best is currently behind the current KOM.">behind<br />KOM %</th>
-            @*<th class="right" title="Position change on the leaderboard">change</th>*@
+            <th class="r" title="Your position on the segment; the last time you updated.">pos</th>
+            <th class="r" title="Your placing's percentile position of the total number of riders.">pos %</th>
+            <th class="t">name</th>
+            <th class="r" title="Distance, measured in kilometers">dist<br />km.</th>
+            <th class="r" title="Elevation gained">elev<br />gain</th>
+            <th class="r">grade<br />%</th>
+            <th class="r" title="Total number of riders that have completed this segment">riders</th>
+            <th class="r" title="Total number the segments has been ridden">ridden</th>
+            <th class="r" title="Speed on segment, ridden by KOM">KOM<br />km/h</th>
+            <th class="r" title="Your time on the segment">time</th>
+            <th class="r" title="The time your personal best is currently behind the current KOM.">behind<br />KOM s.</th>
+            <th class="r" title="Percentage of time your personal best is currently behind the current KOM.">behind<br />KOM %</th>
+            @*<th class="r" title="Position change on the leaderboard">change</th>*@
         </tr>
     </thead>
     <tbody>
@@ -33,23 +31,23 @@
         {
             string segmentName = item.Info.Name;
             <tr>
-                <td class="right">@item.Athlete.Position</td>
-                <td class="right">@item.Athlete.PositionPercentageF</td>
-                <td class="top">
-                    @Html.ActionLink(segmentName, "Index", "Segment", routeValues: new { athlete = athleteID, segment = item.Segment.SegmentID, }, htmlAttributes: null)
-
+                <td class="r">@item.Athlete.Position</td>
+                <td class="r">@item.Athlete.PositionPercentageF</td>
+                <td class="t" style="padding-left: 2px">
                     @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-info-sign'></i></a>",
                         item.Segment.SegmentID, 0, 0))
+
+                    @Html.ActionLink(segmentName, "Index", "Segment", routeValues: new { athlete = athleteID, segment = item.Segment.SegmentID, }, htmlAttributes: null)
                 </td>
-                <td class="right">@item.Info.DistanceInKm</td>
-                <td class="right">@Math.Round(@item.Info.ElevationGain ?? 0)</td>
-                <td class="right">@item.Info.AvgGradeString</td>
-                <td class="right">@item.Info.NoRiders</td>
-                <td class="right">@item.Info.NoRidden</td>
-                <td class="right">@item.KomSpeedString</td>
-                <td class="right">@item.Athlete.Min</td>
-                <td class="right">@item.Athlete.BehindKom</td>
-                <td class="right">@item.Athlete.BehindKomPercentageF</td>
+                <td class="r">@item.Info.DistanceInKm</td>
+                <td class="r">@Math.Round(@item.Info.ElevationGain ?? 0)</td>
+                <td class="r">@item.Info.AvgGradeString</td>
+                <td class="r">@item.Info.NoRiders</td>
+                <td class="r">@item.Info.NoRidden</td>
+                <td class="r">@item.KomSpeedString</td>
+                <td class="r">@item.Athlete.Min</td>
+                <td class="r">@item.Athlete.BehindKom</td>
+                <td class="r">@item.Athlete.BehindKomPercentageF</td>
             </tr>
         }
     </tbody>

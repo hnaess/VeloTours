@@ -7,7 +7,7 @@ using Stravan;
 using Stravan.Json;
 using VeloTours.Models;
 using VeloTours.DAL.Segment;
-using VeloTours.ViewModel;
+using VeloTours.ViewModels;
 
 namespace VeloTours.DAL.Area
 {

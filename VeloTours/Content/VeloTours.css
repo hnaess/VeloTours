@@ -6,27 +6,31 @@
 	white-space: nowrap;
 }
 
-tr th.top {
+tr th.t {
     vertical-align: top;
     padding-left: 20px;
 }
 
-tr th.right {
+tr th.r {
     text-align: right;
     vertical-align: top;
 }
 
-tr td.right {
+tr td.r {
     text-align: right;
     vertical-align: top;
     padding-left: 20px;
 }
 
-tr td.top {
+tr td.t {
     vertical-align: top;
     padding-left: 20px;
 }
 
 a.MtbArea {
     color: darkolivegreen;
+}
+
+.athleteLink {
+    vertical-align: top;
 }

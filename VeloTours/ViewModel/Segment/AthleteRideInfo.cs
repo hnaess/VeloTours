@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using VeloTours.Models;
 using VeloTours.Models.Extensions;
 
-namespace VeloTours.Models
+namespace VeloTours.ViewModels
 {
     public partial class AthleteRideInfo
     {

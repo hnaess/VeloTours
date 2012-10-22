@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using VeloTours.Models;
-using VeloTours.ViewModel;
+using VeloTours.ViewModels;
 
 namespace VeloTours.Controllers
 {

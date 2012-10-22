@@ -8,6 +8,7 @@ using Stravan;
 using Stravan.Json;
 using VeloTours.DAL.Athlete;
 using VeloTours.Models;
+using VeloTours.ViewModels;
 using LinqStatistics;
 
 namespace VeloTours.DAL.Segment
