@@ -33,8 +33,8 @@
         {
             string segmentName = item.Info.Name;
             <tr>
-                <td class="right">@item.AthletePos</td>
-                <td class="right">@String.Format("{0:#0.0}", item.AthletePosPercentage)</td>
+                <td class="right">@item.Athlete.Position</td>
+                <td class="right">@item.Athlete.PositionPercentageF</td>
                 <td class="top">
                     @Html.ActionLink(segmentName, "Index", "Segment", routeValues: new { athlete = athleteID, segment = item.Segment.SegmentID, }, htmlAttributes: null)
 
@@ -46,10 +46,10 @@
                 <td class="right">@item.Info.AvgGradeString</td>
                 <td class="right">@item.Info.NoRiders</td>
                 <td class="right">@item.Info.NoRidden</td>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
-                <td class="right">&nbsp;</td>
+                <td class="right">@item.KomSpeedString</td>
+                <td class="right">@item.Athlete.Min</td>
+                <td class="right">@item.Athlete.BehindKom</td>
+                <td class="right">@item.Athlete.BehindKomPercentageF</td>
             </tr>
         }
     </tbody>

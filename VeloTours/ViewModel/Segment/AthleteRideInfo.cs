@@ -8,6 +8,11 @@ namespace VeloTours.Models
 {
     public partial class AthleteRideInfo
     {
+        public AthleteRideInfo()
+        {
+            ElapsedTimes = new ElapsedTimes();
+        }
+        
         // Others
         public Nullable<int> BehindKom { get; set; }
         public Nullable<double> BehindKomPercentage { get; set; }
@@ -18,6 +23,7 @@ namespace VeloTours.Models
 
         public Nullable<int> Position { get; set; }
         public Nullable<double> PositionPercentage { get; set; }
+        public string PositionPercentageF { get { return String.Format("{0:#0.#}", BehindKomPercentage); } }
 
         public Nullable<int> UsersTimePrevious { get; set; }    // TODO: Map field
         public Nullable<int> UsersChangePos { get; set; }       // TODO:Map field

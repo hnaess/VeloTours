@@ -7,13 +7,9 @@ namespace VeloTours.Models
 {
     public partial class Statistics
     {
-        public string AvgGradeString { get { return String.Format("{0:#0.#}", AvgGrade); } }
-        public string DistanceInKm { get { return String.Format("{0:#0.##}", Distance / 1000); } }
+        public string AvgGradeString { get { return String.Format("{0:#0.0}", AvgGrade); } }
+        public string DistanceInKm { get { return String.Format("{0:#0.00}", Distance / 1000); } }
 
-        public double SpeedInKmH(LeaderBoard lboard)
-        {
-            return (Distance / lboard.ElapsedTimes.Min) * 3.6;
-        }
-
+        public double SpeedInKmH(LeaderBoard lboard) { return (Distance / lboard.ElapsedTimes.Min) * 3.6; }
     }
 }

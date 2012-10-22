@@ -41,7 +41,7 @@ namespace VeloTours.Controllers.Pages
             
             var viewModel = new SegmentViewModel
             {
-                Athlete = new AthleteRideInfo() { ElapsedTimes = new ElapsedTimes() },       //TODO: Can we drop this new ElapsedTimes?
+                Athlete = new AthleteRideInfo(),
                 Segment = dbSegment, 
                 SegmentAreas = dbSegment.SegmentAreas,
 
@@ -50,7 +50,7 @@ namespace VeloTours.Controllers.Pages
                 PolkaDotYersey = (dbResult != null) ? dbResult.PolkaDotYerseyLB : null,
             };
 
-            RideUtil.UpdateViewModel(db, athleteID, dbResult, lbPage, viewModel);
+            RideUtil.UpdateViewModel(athleteID, dbResult, viewModel, lbPage);
             return viewModel;
         }
     }

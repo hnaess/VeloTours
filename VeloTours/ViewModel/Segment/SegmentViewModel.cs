@@ -19,11 +19,7 @@ namespace VeloTours.Models
         public LeaderBoard GreenYersey { get; set; }
         public LeaderBoard PolkaDotYersey { get; set; }
 
-        public int AthletePos { get; set; }
-        public double AthletePosPercentage { get; set; }
-
         public ICollection<SegmentArea> SegmentAreas { get; set; }
-
 
         public double CalculateSpeed(Models.LeaderBoard leaderBoard)
         {
@@ -36,5 +32,7 @@ namespace VeloTours.Models
         {
             return climbCategory != "NC";
         }
+
+        public String KomSpeedString { get { return (KomSpeed == null) ? null : String.Format("{0:#0.0}", KomSpeed); } }
     }
 }
