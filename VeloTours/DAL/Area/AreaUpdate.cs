@@ -8,6 +8,7 @@ using Stravan.Json;
 using VeloTours.Models;
 using VeloTours.DAL.Segment;
 using VeloTours.ViewModels;
+using System.Diagnostics;
 
 namespace VeloTours.DAL.Area
 {
@@ -88,18 +89,34 @@ namespace VeloTours.DAL.Area
             db.SaveChanges();
 
             var lBoardModels = GetLeaderBoardForArea(dbResult);
-            UpdateYellowPointsAndDefaultRank(lBoardModels);           
-            lBoardModels.ForEach(x => db.LeaderBoards.Add(x));            
-            db.SaveChanges();
+            UpdateYerseysAndDefaultRank(dbResult, lBoardModels);
 
-            SetYerseys(dbResult);
+            lBoardModels.ForEach(x => db.LeaderBoards.Add(x));
             db.SaveChanges();
         }
 
-        private void UpdateYellowPointsAndDefaultRank(List<LeaderBoard> lBoardModels)
+        //private void SetYerseys(Result dbResult, List<LeaderBoard> lBoardModels)
+        //{
+        //    var yellow = lBoardModels.OrderBy(x => x.ElapsedTimes.Min);
+        //    foreach (var y in yellow)
+        //    {
+        //        Debug.WriteLine(y.Athlete.Name + " - " + y.ElapsedTimes.Min + " - " + y.YellowPoints);
+        //    }
+        //    dbResult.YellowYerseyLB = yellow.First();
+
+        //    dbResult.GreenYerseyLB = lBoardModels.OrderByDescending(x => x.GreenPoints).First();
+        //    dbResult.PolkaDotYerseyLB = lBoardModels.OrderByDescending(x => x.PolkaDotPoints).First();
+        //}
+
+        private void UpdateYerseysAndDefaultRank(Result dbResult, List<LeaderBoard> lBoardModels)
         {
             var sortedlBoardModels = lBoardModels.OrderBy(x => x.ElapsedTimes.Min);
-            int elapsedTimeKom = sortedlBoardModels.First().ElapsedTimes.Min;
+            var lBoardKOM = sortedlBoardModels.First();
+            int elapsedTimeKom = lBoardKOM.ElapsedTimes.Min;
+
+            dbResult.YellowYerseyLB = lBoardKOM;
+            dbResult.GreenYerseyLB = lBoardModels.OrderByDescending(x => x.GreenPoints).First();
+            dbResult.PolkaDotYerseyLB = lBoardModels.OrderByDescending(x => x.PolkaDotPoints).First();
 
             int rank = 0;            
             int prevDuration = 0;
@@ -154,6 +171,8 @@ namespace VeloTours.DAL.Area
             var lBoardModels = new List<LeaderBoard>(athletesSegmentsLBoards.Count);
             var yellowPtsWhenNotRidden = new Dictionary<int, int>();                        // Dictionary, to reduce performance bottel necks
 
+            var debugAdded = new Dictionary<int, bool>();
+
             foreach (var athleteLBoards in athletesSegmentsLBoards)
             {
                 int athleteID = athleteLBoards.Key;
@@ -198,6 +217,14 @@ namespace VeloTours.DAL.Area
                     ridersRiddenAll++;
                 }
 
+                #region debug
+                if (debugAdded.ContainsKey(athleteID))
+                    Debug.Fail("Shouldn't happem");
+                else
+                    debugAdded.Add(athleteID, true);
+
+                #endregion
+
                 lBoardModels.Add(new LeaderBoard()
                 {
                     ResultID = dbResult.ResultID,
@@ -213,11 +240,6 @@ namespace VeloTours.DAL.Area
             return lBoardModels;
         }
 
-        private void SetYerseys(Result dbResult)
-        {
-            dbResult.YellowYerseyLB = db.LeaderBoards.OrderBy(x => x.ElapsedTimes.Min).First();
-            dbResult.GreenYerseyLB = db.LeaderBoards.OrderByDescending(x => x.GreenPoints).First();
-            dbResult.PolkaDotYerseyLB = db.LeaderBoards.OrderByDescending(x => x.PolkaDotPoints).First();
-        }
+
     }
 }
