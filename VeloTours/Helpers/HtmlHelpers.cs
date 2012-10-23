@@ -24,6 +24,15 @@ namespace VeloTours.Helpers
             return MvcHtmlString.Create(tb.ToString(TagRenderMode.Normal));
         }
 
+        public static MvcHtmlString Image(this HtmlHelper helper, string url, string altText, object htmlAttributes)
+        {
+            TagBuilder builder = new TagBuilder("img");
+            builder.Attributes.Add("src", url);
+            builder.Attributes.Add("alt", altText);
+            builder.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+            return MvcHtmlString.Create(builder.ToString(TagRenderMode.SelfClosing));
+        }
+
         public static String Truncate(this HtmlHelper helper, string input, int length)
         {
             if (input.Length <= length)

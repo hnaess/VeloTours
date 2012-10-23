@@ -6,23 +6,17 @@ using VeloTours.Models;
 
 namespace VeloTours.ViewModels
 {
-    public class SegmentAreaViewModel
+    public class SegmentAreaViewModel : Ride
     {
         #region Properties
 
+        // Navigators
         public Models.Region Region { get; set; }
         public Models.SegmentArea SegmentArea { get; set; }
-        public Nullable<double> KomSpeed { get; set; }
-        public AthleteRideInfo Athlete { get; set; }
-
-        public List<SegmentViewModel> Segments { get; set; }
         
-        public Statistics Info { get { return SegmentArea.Info; } }
-        public IPagedList<Models.LeaderBoard> LeaderBoard { get; set; } 
-
-        public LeaderBoard YellowYersey { get; set; }
-        public LeaderBoard GreenYersey { get; set; }
-        public LeaderBoard PolkaDotYersey { get; set; }
+        // Model
+        public List<SegmentViewModel> Segments { get; set; }
+        public override Statistics Info { get { return SegmentArea.Info; } }
 
         #endregion
 
@@ -30,37 +24,15 @@ namespace VeloTours.ViewModels
 
         public SegmentAreaViewModel(int athleteID, Models.SegmentArea dbArea, int? leaderBoardPageNo)
         {
+            Region = dbArea.Region;
+            SegmentArea = dbArea;
             var dbResult = dbArea.Result;
 
-            SegmentArea = dbArea;
-            Region = dbArea.Region;
-
-            SetYersey(dbResult);
-
-            if (RideUtil.LeaderBoardExists(dbResult)) 
-            {
-                var leaderBoards = dbResult.LeaderBoards;
-                var lBoardKOM = leaderBoards.OrderBy(x => x.ElapsedTimes.Min).First();
-                var lBoardAthlete = dbResult.LeaderBoards.SingleOrDefault(x => x.AthleteID == athleteID);
-
-                KomSpeed = Info.SpeedInKmH(lBoardKOM);
-                LeaderBoard = RideUtil.GetPagedLeaderBoards(leaderBoards, leaderBoardPageNo);
-                Athlete = RideUtil.AddAthleteToViewModel(athleteID, leaderBoards, lBoardKOM, lBoardAthlete, Info.NoRiders);
-                Segments = GetSementViewModels(athleteID);
-            }
-            else
-            {
-                LeaderBoard = RideUtil.CreateBlankPagedList();
-                Athlete = RideUtil.CreateBlankAthleteInfo();
-            }
+            SetRide(athleteID, leaderBoardPageNo, dbResult);
+            Segments = GetSementViewModels(athleteID);
         }
 
-        private void SetYersey(Result dbResult)
-        {
-            YellowYersey = (dbResult != null) ? dbResult.YellowYerseyLB : null;
-            GreenYersey = (dbResult != null) ? dbResult.GreenYerseyLB : null;
-            PolkaDotYersey = (dbResult != null) ? dbResult.PolkaDotYerseyLB : null;
-        }
+        #endregion
 
         private List<SegmentViewModel> GetSementViewModels(int athleteID)
         {
@@ -74,6 +46,5 @@ namespace VeloTours.ViewModels
             return segments;
         }
 
-        #endregion
     }
 }

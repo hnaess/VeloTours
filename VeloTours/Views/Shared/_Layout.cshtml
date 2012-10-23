@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using VeloTours.Helpers
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,7 +21,8 @@
     <header>
         <div class="content-wrapper">
             <div class="float-left">
-                <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                @Html.Image("/Content/images/logo.png", "Logo", new { _class = "site-title" })
+                @*<p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>*@
             </div>
             <div class="float-right">
                 <section id="login">

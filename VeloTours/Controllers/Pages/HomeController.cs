@@ -16,8 +16,7 @@ namespace VeloTours.Controllers
         {
             ViewBag.Message = "Strava segments made into Tours";
 
-            // TODO: Temporary
-            VeloTours.DAL.InitDB.CreateAndInitIfEmpty(db);
+            VeloTours.DAL.InitDB.CreateAndInitIfEmpty(db);  // TODO: Temporary
 
             Athlete athleteObj = db.Athletes.Find(athlete);
             return View(athleteObj);

@@ -36,6 +36,8 @@ namespace VeloTours.DAL.Region
 
         public void Update(bool updateEfforts)
         {
+            // TODO: Calculate Region
+            
             foreach (var area in dbRegion.SegmentAreas)
             {
                 AreaUpdate updater = new AreaUpdate(area.SegmentAreaID);

@@ -1,0 +1,29 @@
+﻿@model VeloTours.ViewModels.RegionViewModel
+@using VeloTours.Models;
+@using VeloTours.Helpers;
+
+@{
+    int regionID = @Model.Region.RegionID;
+    int athleteID = ViewBag.Athlete ?? 0;
+
+    bool hasLeaderBoard = (@Model.Region.Result != null && @Model.LeaderBoard != null && @Model.LeaderBoard.Count > 0);
+}
+
+<h2>@Model.Info.Name</h2>
+<p>@Model.Info.Description</p>
+
+@if (hasLeaderBoard) 
+{
+    <h3>Yersey</h3>
+    @RenderPage("~/Views/Area/YerseyPart.cshtml", @Model)
+}
+
+<h3>Segments in the areas</h3>
+@RenderPage("~/Views/Area/SegmentsPart.cshtml", @Model)
+
+@if (hasLeaderBoard) 
+{
+    <h3>LeaderBoard</h3>
+    @RenderPage("~/Views/Ride/LeaderboardPart.cshtml", @Model)
+}
+  
