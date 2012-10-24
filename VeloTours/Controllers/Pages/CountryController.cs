@@ -21,18 +21,18 @@ namespace VeloTours.Controllers.Pages
             return View(countries);
         }
 
-        public ActionResult UpdateRegion(int athlete, int region, bool? effort = false)
+        public ActionResult UpdateRegion(int athlete, int region)
         {
             RegionUpdate regionUpdate = new RegionUpdate(region);
-            regionUpdate.Update((bool)effort);
+            regionUpdate.Update();
 
             return RedirectToAction("Index", new { athlete = athlete, region = region });
         }
 
-        public ActionResult Update(int athlete, int country, bool? effort = false)
+        public ActionResult Update(int athlete, int country)
         {
             CountryUpdate regionUpdate = new CountryUpdate(country);
-            regionUpdate.Update((bool)effort);
+            regionUpdate.Update();
 
             return RedirectToAction("Index", new { athlete = athlete, country = country });
         }

@@ -12,9 +12,14 @@ namespace VeloTours.DAL
     {
         public static DateTime DefaultDate = new DateTime(1980, 1, 1);
 
+        public static int initDB = 0;
+
         public static void CreateAndInitIfEmpty(TourModelContainer context)
         {
-            //DeleteDB(context);
+            initDB++;
+            if(initDB <= 1)
+                DeleteDB(context);
+
             if (!context.Database.Exists())
             {
                 context.Database.Create();

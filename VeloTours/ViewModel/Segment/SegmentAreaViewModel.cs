@@ -12,11 +12,11 @@ namespace VeloTours.ViewModels
 
         // Navigators
         public Models.Region Region { get; set; }
-        public Models.SegmentArea SegmentArea { get; set; }
-        
         // Model
-        public List<SegmentViewModel> Segments { get; set; }
+        public Models.SegmentArea SegmentArea { get; set; }
         public override Statistics Info { get { return SegmentArea.Info; } }
+        // View Model
+        public List<SegmentViewModel> Segments { get; set; }
 
         #endregion
 
@@ -36,7 +36,7 @@ namespace VeloTours.ViewModels
 
         private List<SegmentViewModel> GetSementViewModels(int athleteID)
         {
-            List<SegmentViewModel> segments = new List<SegmentViewModel>();
+            var segments = new List<SegmentViewModel>();
             foreach (var segment in SegmentArea.Segments)
             {
                 var segmentViewModel = new SegmentViewModel(athleteID, segment, null);
@@ -45,6 +45,5 @@ namespace VeloTours.ViewModels
 
             return segments;
         }
-
     }
 }

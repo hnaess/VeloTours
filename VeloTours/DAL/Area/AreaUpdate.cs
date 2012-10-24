@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Web;
-using Stravan;
-using Stravan.Json;
 using VeloTours.Models;
 using VeloTours.DAL.Segment;
 using VeloTours.ViewModels;
@@ -12,10 +9,8 @@ using System.Diagnostics;
 
 namespace VeloTours.DAL.Area
 {
-    public class AreaUpdate
+    public class AreaUpdate : RideUpdate
     {
-        private TourModelContainer db = new TourModelContainer();
-        
         private int areaID; 
         private Models.SegmentArea dbArea;
         private Statistics info;
@@ -27,18 +22,6 @@ namespace VeloTours.DAL.Area
         /// <summary>Worst time per segment</summary>
         private Dictionary<int, int> segmentsWorstTime;
 
-
-        #region Singletons
-
-        private StravaWebClient _stravaWebClient;
-        public StravaWebClient StravaWebClientObj
-        {
-            get { return _stravaWebClient ?? (_stravaWebClient = new StravaWebClient()); }
-            set { _stravaWebClient = value; }
-        }
-        
-        #endregion
-
         public AreaUpdate(int areaID)
         {
             this.areaID = areaID;
@@ -46,7 +29,7 @@ namespace VeloTours.DAL.Area
             info = dbArea.Info;
         }
 
-        public void UpdateArea(bool updateEfforts)
+        public override void Update()
         {
             if (dbArea.Segments.Count == 0)
                 return; // TODO: Logging?
@@ -65,10 +48,7 @@ namespace VeloTours.DAL.Area
                 segmentUpdater.StravaWebClientObj = StravaWebClientObj;
 
                 var segmentInfo = segmentUpdater.UpdateSegment();
-                if (updateEfforts)
-                {
-                    UpdateEffortOnSegment(segment.SegmentID, segmentInfo, segmentUpdater);
-                }
+                UpdateEffortOnSegment(segment.SegmentID, segmentInfo, segmentUpdater);
 
                 info.Distance += segmentInfo.Info.Distance;
                 info.ElevationGain += segmentInfo.Info.ElevationGain;
@@ -77,10 +57,7 @@ namespace VeloTours.DAL.Area
             info.AvgGrade = Convert.ToDouble((avgGradeTemp / Convert.ToDecimal(info.Distance)));
             db.SaveChanges();
 
-            if (updateEfforts)
-            {
-                AddResultAndLeadboards();
-            }
+            AddResultAndLeadboards();
         }
 
         private void AddResultAndLeadboards()

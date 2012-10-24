@@ -26,7 +26,7 @@
 }
 
 <p>
-    Go back to area: 
+    Up to: 
     @foreach (var segmentArea in @Model.SegmentAreas)
     {
         @Html.ActionLink(segmentArea.Info.Name, "Index", "Area", routeValues: new { area = segmentArea.SegmentAreaID, athlete = athleteID }, htmlAttributes: null)
@@ -34,5 +34,4 @@
 </p>
 
 <h3>Admin</h3>
-@Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = @athleteID,segment = @segmentID, effort = false, }, htmlAttributes: null)<br />
-@Html.ActionLink("Update from Strava w/efforts", "Update", routeValues: new { athlete = athleteID, segment = @segmentID, effort = true, }, htmlAttributes: null)<br />
+@Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = @athleteID,segment = @segmentID, }, htmlAttributes: null)<br />

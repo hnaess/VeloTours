@@ -10,14 +10,14 @@
 @foreach (Country country in Model)
 {
     <h3>
-        <a href="@Url.Action("Update", new { athlete = athleteID, country = country.CountryID, effort = true })" style='vertical-align:middle;'><i class='icon-refresh'></i></a>
+        <a href="@Url.Action("Update", new { athlete = athleteID, country = country.CountryID })" style='vertical-align:middle;'><i class='icon-refresh'></i></a>
         @country.Name
     </h3>   
     
     foreach (Region region in country.Regions)
     {
         <h4>
-            <a href="@Url.Action("UpdateRegion", new { athlete = athleteID, region = region.RegionID, effort = true })" style='vertical-align:middle;'><i class='icon-refresh'></i></a>
+            <a href="@Url.Action("UpdateRegion", new { athlete = athleteID, region = region.RegionID})" style='vertical-align:middle;'><i class='icon-refresh'></i></a>
             @Html.ActionLink(region.Info.Name, "Index", "Region", new { athlete = athleteID, region = region.RegionID })
         </h4>
         

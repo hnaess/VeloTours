@@ -79,11 +79,6 @@ namespace VeloTours.DAL.Segment
             return dbSegment;
         }
 
-        //public void UpdateEfforts(DateTime startDate, DateTime endDate)
-        //{
-        //    throw new NotImplementedException("Update based on dates");
-        //}
-
         public void UpdateEfforts(int segmentID)
         {
             Models.Segment dbSegment = db.Segments.Find(segmentID);

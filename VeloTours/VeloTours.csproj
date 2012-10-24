@@ -203,6 +203,7 @@
     <Compile Include="DAL\Athlete\AthleteUpdate.cs" />
     <Compile Include="DAL\Country\CountryUpdate.cs" />
     <Compile Include="DAL\Region\RegionUpdate.cs" />
+    <Compile Include="DAL\RideUpdate.cs" />
     <Compile Include="DAL\Segment\EffortUpdate.cs" />
     <Compile Include="DAL\Segment\LeaderboardCalc.cs" />
     <Compile Include="DAL\Segment\SegmentUpdate.cs" />
@@ -437,7 +438,7 @@
     <Content Include="Views\Segment\AthleteInfoPart.cshtml" />
     <Content Include="Views\Segment\YerseyPart.cshtml" />
     <Content Include="Views\Ride\LeaderboardPart.cshtml" />
-    <Content Include="Views\Area\YerseyPart.cshtml" />
+    <Content Include="Views\Ride\YerseyPart.cshtml" />
     <Content Include="Views\Area\SegmentsPart.cshtml" />
     <Content Include="Views\Area\AthleteInfoPart.cshtml" />
     <Content Include="Views\Region\Index.cshtml" />

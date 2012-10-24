@@ -20,10 +20,10 @@ namespace VeloTours.Controllers.Pages
             return View(areaViewModel);
         }
 
-        public ActionResult Update(int area, int athlete, bool? effort = false)
+        public ActionResult Update(int area, int athlete)
         {
             AreaUpdate areaUpdate = new AreaUpdate(area);
-            areaUpdate.UpdateArea((bool)effort);
+            areaUpdate.Update();
 
             return RedirectToAction("Index", "Area", new { athlete = athlete, area = area });
         }

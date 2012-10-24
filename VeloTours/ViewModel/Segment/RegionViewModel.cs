@@ -12,11 +12,11 @@ namespace VeloTours.ViewModels
 
         // Navigators
         public Models.Country Country { get; set; }
-        public Models.Region Region { get; set; }
-
         // Model
-        public List<SegmentAreaViewModel> SegmentAreas { get; set; }
+        public Models.Region Region { get; set; }
         public override Statistics Info { get { return Region.Info; } }
+        // ViewModel
+        public List<SegmentAreaViewModel> SegmentAreas { get; set; }
 
         #endregion
 
@@ -28,17 +28,22 @@ namespace VeloTours.ViewModels
             Region = dbRegion;
             var dbResult = dbRegion.Result;
 
-            if (SetRide(athleteID, leaderBoardPageNo, dbResult))
-            {
-                SegmentAreas = GetSegmentAreasViewModels(athleteID);
-            }
+            SetRide(athleteID, leaderBoardPageNo, dbResult);
+            SegmentAreas = GetSegmentAreasViewModels(athleteID);
         }
 
         #endregion
 
         private List<SegmentAreaViewModel> GetSegmentAreasViewModels(int athleteID)
         {
-            throw new NotImplementedException("TODO");
+            var areas = new List<SegmentAreaViewModel>();
+            foreach (var area in Region.SegmentAreas)
+            {
+                var areaViewModel = new SegmentAreaViewModel(athleteID, area, null);
+                areas.Add(areaViewModel);
+            }
+
+            return areas;
         }
     }
 }
