@@ -198,11 +198,11 @@
     <Compile Include="DAL\All_InitDB\Athlete.cs" />
     <Compile Include="DAL\All_InitDB\Norway\Norway.cs" />
     <Compile Include="DAL\All_InitDB\TourInitializer.cs" />
-    <Compile Include="DAL\Area\AreaUpdate.cs" />
+    <Compile Include="DAL\AreaUpdate.cs" />
     <Compile Include="DAL\Athlete\AthleteShortInfo.cs" />
     <Compile Include="DAL\Athlete\AthleteUpdate.cs" />
-    <Compile Include="DAL\Country\CountryUpdate.cs" />
-    <Compile Include="DAL\Region\RegionUpdate.cs" />
+    <Compile Include="DAL\CountryUpdate.cs" />
+    <Compile Include="DAL\RegionUpdate.cs" />
     <Compile Include="DAL\RideUpdate.cs" />
     <Compile Include="DAL\Segment\EffortUpdate.cs" />
     <Compile Include="DAL\Segment\LeaderboardCalc.cs" />
@@ -279,11 +279,11 @@
       <DependentUpon>TourModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\Segment\AthleteRideInfo.cs" />
-    <Compile Include="ViewModel\Segment\RegionViewModel.cs" />
-    <Compile Include="ViewModel\Segment\SegmentAreaViewModel.cs" />
-    <Compile Include="ViewModel\Segment\SegmentViewModel.cs" />
-    <Compile Include="ViewModel\Segment\Shared\Ride.cs" />
+    <Compile Include="ViewModel\AthleteRideInfo.cs" />
+    <Compile Include="ViewModel\RegionViewModel.cs" />
+    <Compile Include="ViewModel\SegmentAreaViewModel.cs" />
+    <Compile Include="ViewModel\SegmentViewModel.cs" />
+    <Compile Include="ViewModel\Shared\RideViewModel.cs" />
     <Compile Include="ViewModel\Shared\RideUtil.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -437,10 +437,9 @@
     <Content Include="Views\Country\Index.cshtml" />
     <Content Include="Views\Segment\AthleteInfoPart.cshtml" />
     <Content Include="Views\Segment\YerseyPart.cshtml" />
-    <Content Include="Views\Ride\LeaderboardPart.cshtml" />
+    <None Include="Views\Ride\LeaderBoardPart.cshtml" />
     <Content Include="Views\Ride\YerseyPart.cshtml" />
-    <Content Include="Views\Area\SegmentsPart.cshtml" />
-    <Content Include="Views\Area\AthleteInfoPart.cshtml" />
+    <Content Include="Views\Ride\RidesTablePart.cshtml" />
     <Content Include="Views\Region\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

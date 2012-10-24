@@ -15,15 +15,16 @@ namespace VeloTours.Controllers.Pages
         {
             RegionViewModel regionViewModel = GetRegionViewModel(region, athlete ?? 0, lbPage);
 
-            ViewBag.Region = region;
             ViewBag.Athlete = athlete;
+            ViewBag.Region = region;
+            ViewBag.RideListType = "area";
             return View(regionViewModel);
         }
 
         public ActionResult Update(int region, int athlete)
         {
-            RegionUpdate updater = new RegionUpdate(region);
-            updater.Update();
+            RegionUpdate regionUpdater = new RegionUpdate(region);
+            regionUpdater.Update();
 
             return RedirectToAction("Index", "Region", new { athlete = athlete, region = region });
         }

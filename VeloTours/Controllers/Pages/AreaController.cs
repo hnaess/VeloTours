@@ -15,8 +15,9 @@ namespace VeloTours.Controllers.Pages
         {
             SegmentAreaViewModel areaViewModel = GetAreaViewModel(area, athlete ?? 0, lbPage);
 
-            ViewBag.Area = area;
             ViewBag.Athlete = athlete;
+            ViewBag.Area = area;
+            ViewBag.RideListType = "segment";
             return View(areaViewModel);
         }
 

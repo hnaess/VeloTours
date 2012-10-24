@@ -2,11 +2,10 @@
 @using VeloTours.Models;
 
 @{
-    ViewBag.Title = "Segment Area Overview";
     int athleteID = ViewBag.Athlete ?? 0;
 }
 
-<h2>Segment Area Overview</h2>
+@*<h2>Segment Area Overview</h2>*@
 @foreach (Country country in Model)
 {
     <h3>

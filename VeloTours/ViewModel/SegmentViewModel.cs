@@ -6,7 +6,7 @@ using VeloTours.Models;
 
 namespace VeloTours.ViewModels
 {
-    public class SegmentViewModel : Ride
+    public class SegmentViewModel : RideViewModel
     {
         #region Properties
 
@@ -16,6 +16,7 @@ namespace VeloTours.ViewModels
         // Model
         public Models.Segment Segment { get; set; }
         public override Statistics Info { get { return Segment.Info; } }
+        public override int RideID { get { return Segment.SegmentID; } }
         public string ImprovementHint { get; set; }
         
         #endregion

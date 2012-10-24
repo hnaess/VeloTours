@@ -6,7 +6,7 @@ using VeloTours.Models;
 
 namespace VeloTours.ViewModels
 {
-    public abstract class Ride
+    public abstract class RideViewModel
     {
         #region Module
 
@@ -20,18 +20,18 @@ namespace VeloTours.ViewModels
         public LeaderBoard PolkaDotYersey { get; set; }
 
         public virtual Statistics Info { get; private set; }
+        public virtual int RideID { get; private set; }
 
         #endregion
 
         #region
 
         protected Models.LeaderBoard lBoardAthlete = null;
+        public virtual IEnumerable<RideViewModel> RideList { get; protected set; }
 
         #endregion
 
-
         public String KomSpeedString { get { return (KomSpeed == null) ? null : String.Format("{0:#0.0}", KomSpeed); } }
-
         public double CalculateSpeed(Models.LeaderBoard leaderBoard) { return (this.Info.Distance / leaderBoard.ElapsedTimes.Min) * 3.6; }
 
         protected bool SetRide(int athleteID, int? leaderBoardPageNo, Result dbResult)

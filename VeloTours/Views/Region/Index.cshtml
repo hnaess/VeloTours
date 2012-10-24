@@ -12,21 +12,16 @@
 <h2>@Model.Info.Name</h2>
 <p>@Model.Info.Description</p>
 
+<h3>Segments in the areas</h3>
+@RenderPage("~/Views/Ride/RidesTablePart.cshtml", @Model)
+
 @if (hasLeaderBoard) 
 {
     <h3>Yersey</h3>
     @RenderPage("~/Views/Ride/YerseyPart.cshtml", @Model)
-}
 
-<h3>Segments in the areas</h3>
-@RenderPage("~/Views/Region/AreasPart.cshtml", @Model)
-
-@if (hasLeaderBoard) 
-{
     <h3>LeaderBoard</h3>
     @RenderPage("~/Views/Ride/LeaderboardPart.cshtml", @Model)
 }
   
-<p>
-    Up to: @Html.ActionLink(@Model.Region.Country.Name, "Index", "Region", routeValues: new { country = @Model.Region.CountryID, athlete = athleteID }, htmlAttributes: null)
-</p>
+<p>Up to: @Html.ActionLink(@Model.Region.Country.Name, "Index", "Country", routeValues: new { country = @Model.Region.CountryID, athlete = athleteID }, htmlAttributes: null)</p>

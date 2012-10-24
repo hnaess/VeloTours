@@ -12,35 +12,25 @@
 <h2>@Model.Info.Name</h2>
 <p>@Model.Info.Description</p>
 
+<h3>Segments in the areas</h3>
+@RenderPage("~/Views/Ride/RidesTablePart.cshtml", @Model)
+
 @if (hasLeaderBoard) 
 {
     <h3>Yersey</h3>
     @RenderPage("~/Views/Ride/YerseyPart.cshtml", @Model)
-}
-
-<h3>Segments in the areas</h3>
-@RenderPage("~/Views/Area/SegmentsPart.cshtml", @Model)
-
-@if (hasLeaderBoard) 
-{
-    <h3>Athlete's Info</h3>@*
-    @RenderPage("~/Views/Area/AthleteInfoPart.cshtml", @Model)
-    <p>@Model.ImprovementHint</p>*@
 
     <h3>LeaderBoard</h3>
     @RenderPage("~/Views/Ride/LeaderboardPart.cshtml", @Model)
 }
     
-<p>
-    Up to: @Html.ActionLink(@Model.SegmentArea.Region.Info.Name, "Index", "Region", routeValues: new { region = @Model.SegmentArea.RegionID, athlete = athleteID }, htmlAttributes: null)
-</p>
+<p>Up to: @Html.ActionLink(@Model.SegmentArea.Region.Info.Name, "Index", "Region", routeValues: new { region = @Model.SegmentArea.RegionID, athlete = athleteID }, htmlAttributes: null)</p>
 
 <h3>Admin</h3>
 @Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = athleteID, area = areaID})
 
 
 <script>
-
     var athleteId = @athleteID
     $('.segmentLink').each(function () {
         var links = '<a target="_blank" data-parentid="segment' + $(this).data("segmentid") + '" class="popoverLink" href="http://www.strava.com/segments/' + $(this).data("segmentid") + '" title="View segment on Strava (external link)">View on Strava</a><br/>';
@@ -65,6 +55,4 @@
         });
         return false;
     });
-
-
 </script>
