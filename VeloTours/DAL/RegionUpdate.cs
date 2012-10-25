@@ -15,7 +15,7 @@ namespace VeloTours.DAL.Region
         {
             this.regionID = regionID;
             dbRegion = db.Regions.Find(regionID);
-            info = dbRegion.Info;
+            Info = dbRegion.Info;
             rideType = RideType.Region;
         }
 
@@ -37,7 +37,7 @@ namespace VeloTours.DAL.Region
                         AddToAthleteRidesLBoards(athleteRidesLBoard.Key, athleteRidesLBoard.Value);
                     }
 
-                    AddStatData(area.Info);
+                    AddStatData(areaUpdate.Info);
                 }
             }
             return base.Update();

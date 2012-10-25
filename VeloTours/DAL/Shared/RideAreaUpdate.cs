@@ -18,15 +18,15 @@ namespace VeloTours.DAL.Shared
         /// <summary>Leadboard per Ride per Athlete</summary>
         public Dictionary<int, Dictionary<int, LeaderBoard>> AthletesRidesLBoards { get; protected set; }
 
-        protected Statistics info;
+        public Statistics Info { get; protected set; }
         protected decimal avgGradeTemp;
         protected RideType rideType;
 
-        protected double AverageGrade { get { return Convert.ToDouble((avgGradeTemp / Convert.ToDecimal(info.Distance))); } }
+        protected double AverageGrade { get { return Info.Distance > 0 ? Convert.ToDouble((avgGradeTemp / Convert.ToDecimal(Info.Distance))) : 0; } }
 
         public override bool Update()
         {
-            info.AvgGrade = AverageGrade;
+            Info.AvgGrade = AverageGrade;
             db.SaveChanges();
 
             AddResultAndLeadboards();
@@ -43,15 +43,15 @@ namespace VeloTours.DAL.Shared
             AthletesRidesLBoards = new Dictionary<int, Dictionary<int, LeaderBoard>>();
             RidesWorstTime = new Dictionary<int, int>();
 
-            info.Distance = 0;
-            info.ElevationGain = 0;
+            Info.Distance = 0;
+            Info.ElevationGain = 0;
             avgGradeTemp = 0;
         }
 
         protected void AddStatData(Models.Statistics rideStatistic)
         {
-            info.Distance += rideStatistic.Distance;
-            info.ElevationGain += rideStatistic.ElevationGain;
+            Info.Distance += rideStatistic.Distance;
+            Info.ElevationGain += rideStatistic.ElevationGain;
             avgGradeTemp += Convert.ToDecimal(rideStatistic.Distance) * Convert.ToDecimal(rideStatistic.AvgGrade);
         }
 

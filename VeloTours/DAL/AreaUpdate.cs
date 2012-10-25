@@ -18,7 +18,7 @@ namespace VeloTours.DAL.Area
         {
             this.areaID = areaID;
             dbArea = db.SegmentAreas.Find(areaID);
-            info = dbArea.Info;
+            Info = dbArea.Info;
             rideType = RideType.Area;
         }
 
@@ -61,7 +61,7 @@ namespace VeloTours.DAL.Area
             }
 
             // Update Info
-            info.NoRidden += segmentLBoards.Count(); // verify it works as expected
+            Info.NoRidden += segmentLBoards.Count(); // verify it works as expected
             //info.NoRiders =
         }
     }
