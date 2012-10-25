@@ -16,26 +16,31 @@ namespace VeloTours.DAL.Region
             this.regionID = regionID;
             dbRegion = db.Regions.Find(regionID);
             info = dbRegion.Info;
+            rideType = RideType.Region;
         }
 
-        public override void Update()
+        public override bool Update()
         {
+            if (dbRegion.SegmentAreas.Count == 0)
+                return false;           
+            
             ResetCalcValues();
             foreach (var area in dbRegion.SegmentAreas)
             {
                 AreaUpdate areaUpdate = new AreaUpdate(area.SegmentAreaID) { StravaWebClientObj = StravaWebClientObj };
-                areaUpdate.Update();
-
-                RidesWorstTime = RidesWorstTime.Concat(areaUpdate.RidesWorstTime).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-
-                foreach(var athleteRidesLBoard in areaUpdate.AthletesRidesLBoards)
+                if (areaUpdate.Update())
                 {
-                    AddToAthleteRidesLBoards(athleteRidesLBoard.Key, athleteRidesLBoard.Value);
+                    RidesWorstTime = RidesWorstTime.Concat(areaUpdate.RidesWorstTime).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+                    foreach (var athleteRidesLBoard in areaUpdate.AthletesRidesLBoards)
+                    {
+                        AddToAthleteRidesLBoards(athleteRidesLBoard.Key, athleteRidesLBoard.Value);
+                    }
+
+                    AddStatData(area.Info);
                 }
-                
-                AddStatData(area.Info);
             }
-            base.Update();
+            return base.Update();
         }
 
         protected override void AddResultAndLeadboards()

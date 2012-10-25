@@ -8,9 +8,10 @@
     bool hasLeaderBoard = (@Model.LeaderBoard != null && @Model.LeaderBoard.Count > 0);
 }
 
-<h2>@Model.Info.Name</h2>
+<h2>@Model.Info.Name
+    <a href="@Url.Action("Update", new { athlete = athleteID, segment = segmentID})"><i class='icon-refresh' style='vertical-align:middle;'></i></a>
+</h2>
 <p>@Model.Segment.Info.Description</p>
-@*PictureUrl*@
 
 @if (hasLeaderBoard) 
 {
@@ -32,6 +33,3 @@
         @Html.ActionLink(segmentArea.Info.Name, "Index", "Area", routeValues: new { area = segmentArea.SegmentAreaID, athlete = athleteID }, htmlAttributes: null)
     }    
 </p>
-
-<h3>Admin</h3>
-@Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = @athleteID,segment = @segmentID, }, htmlAttributes: null)<br />

@@ -9,7 +9,9 @@
     bool hasLeaderBoard = (@Model.SegmentArea.Result != null && @Model.LeaderBoard != null && @Model.LeaderBoard.Count > 0);
 }
 
-<h2>@Model.Info.Name</h2>
+<h2>@Model.Info.Name
+    <a href="@Url.Action("Update", new { athlete = athleteID, area = areaID})"><i class='icon-refresh' style='vertical-align:middle;'></i></a>
+</h2>
 <p>@Model.Info.Description</p>
 
 <h3>Segments in the areas</h3>
@@ -26,8 +28,6 @@
     
 <p>Up to: @Html.ActionLink(@Model.SegmentArea.Region.Info.Name, "Index", "Region", routeValues: new { region = @Model.SegmentArea.RegionID, athlete = athleteID }, htmlAttributes: null)</p>
 
-<h3>Admin</h3>
-@Html.ActionLink("Update from Strava", "Update", routeValues: new { athlete = athleteID, area = areaID})
 
 
 <script>

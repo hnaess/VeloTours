@@ -19,12 +19,13 @@ namespace VeloTours.DAL.Area
             this.areaID = areaID;
             dbArea = db.SegmentAreas.Find(areaID);
             info = dbArea.Info;
+            rideType = RideType.Area;
         }
 
-        public override void Update()
+        public override bool Update()
         {
-            //if (dbArea.Segments.Count == 0)
-            //    return; // TODO: Logging?
+            if (dbArea.Segments.Count == 0)
+                return false;
 
             ResetCalcValues();
             foreach (var segment in dbArea.Segments)
@@ -36,7 +37,7 @@ namespace VeloTours.DAL.Area
 
                 AddStatData(segmentStat.Info);
             }
-            base.Update();
+            return base.Update();
         }
 
         protected override void AddResultAndLeadboards()

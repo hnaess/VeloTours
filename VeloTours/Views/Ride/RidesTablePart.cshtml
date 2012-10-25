@@ -42,7 +42,7 @@
                             item.RideID, 0, 0))
                     }
 
-                    @Html.ActionLink(segmentName, "Index", rideListType, routeValues: new { athlete = athleteID, segment = item.RideID, area = item.RideID }, htmlAttributes: null)
+                    @Html.ActionLink(segmentName, "Index", rideListType, routeValues: new { athlete = athleteID, segment = item.RideID, area = item.RideID }, htmlAttributes: (item.IsMTB ? new { @class = "MtbArea" } : null))
                 </td>
                 <td class="r">@item.Info.DistanceInKm</td>
                 <td class="r">@Math.Round(@item.Info.ElevationGain ?? 0)</td>

@@ -285,7 +285,6 @@
     <Compile Include="ViewModel\SegmentAreaViewModel.cs" />
     <Compile Include="ViewModel\SegmentViewModel.cs" />
     <Compile Include="ViewModel\Shared\RideViewModel.cs" />
-    <Compile Include="ViewModel\Shared\RideUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-responsive.css" />

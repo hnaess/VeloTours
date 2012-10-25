@@ -23,8 +23,9 @@ namespace VeloTours.DAL
 
         #endregion
 
-        public virtual void Update()
+        public virtual bool Update()
         {
+            throw new NotImplementedException();
         }
     }
 }

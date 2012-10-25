@@ -19,6 +19,7 @@ namespace VeloTours.ViewModels
         // View Model
         public List<SegmentViewModel> Segments { get; set; }
         public override IEnumerable<RideViewModel> RideList { get { return Segments; } }
+        public override bool IsMTB { get { return SegmentArea.IsMtb; } }
 
         #endregion
 
@@ -29,6 +30,7 @@ namespace VeloTours.ViewModels
             Region = dbArea.Region;
             SegmentArea = dbArea;
             var dbResult = dbArea.Result;
+            rideType = RideType.Area;
 
             SetRide(athleteID, leaderBoardPageNo, dbResult);
             Segments = GetSementViewModels(athleteID);

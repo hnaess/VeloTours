@@ -17,7 +17,7 @@ namespace VeloTours.DAL.Country
             dbcountry = db.Countries.Find(countryID);
         }
 
-        public override void Update()
+        public override bool Update()
         {
             foreach (var region in dbcountry.Regions)
             {
@@ -26,6 +26,7 @@ namespace VeloTours.DAL.Country
 
                 countryUpdate.Update();
             }
+            return true;
         }
     }
 }

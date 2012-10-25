@@ -82,7 +82,7 @@ namespace VeloTours.DAL.IntilizeDB.Norway
                 InitDB.NewSegment(context, 1797698, "Steinshøgda Vest"),
             };
             segments.ForEach(s => context.Segments.Add(s));
-            context.SegmentAreas.Add( InitDB.NewSegmentArea(context, region, segments, "Bærums Verk") );
+            context.SegmentAreas.Add(InitDB.NewSegmentArea(context, region, segments, "Bærums Verk") );
             context.SaveChanges();
         }
 

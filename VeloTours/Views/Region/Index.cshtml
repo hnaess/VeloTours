@@ -1,4 +1,5 @@
-﻿@model VeloTours.ViewModels.RegionViewModel
+﻿
+@model VeloTours.ViewModels.RegionViewModel
 @using VeloTours.Models;
 @using VeloTours.Helpers;
 
@@ -9,7 +10,9 @@
     bool hasLeaderBoard = (@Model.Region.Result != null && @Model.LeaderBoard != null && @Model.LeaderBoard.Count > 0);
 }
 
-<h2>@Model.Info.Name</h2>
+<h2>@Model.Info.Name
+    <a href="@Url.Action("Update", new { athlete = athleteID, region = regionID})"><i class='icon-refresh' style='vertical-align:middle;'></i></a>
+</h2>
 <p>@Model.Info.Description</p>
 
 <h3>Segments in the areas</h3>

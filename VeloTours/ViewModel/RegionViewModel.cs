@@ -8,7 +8,7 @@ namespace VeloTours.ViewModels
 {
     public class RegionViewModel : RideViewModel
     {
-        #region Properties 
+        #region Properties
 
         // Navigators
         public Models.Country Country { get; set; }
@@ -19,6 +19,7 @@ namespace VeloTours.ViewModels
         // ViewModel
         public List<SegmentAreaViewModel> SegmentAreas { get; set; }
         public override IEnumerable<RideViewModel> RideList { get { return SegmentAreas; } }
+        public override bool IsMTB { get { return false; } }
 
         #endregion
 
@@ -29,6 +30,7 @@ namespace VeloTours.ViewModels
             Country = dbRegion.Country;
             Region = dbRegion;
             var dbResult = dbRegion.Result;
+            rideType = RideType.Region;
 
             SetRide(athleteID, leaderBoardPageNo, dbResult);
             SegmentAreas = GetSegmentAreasViewModels(athleteID);

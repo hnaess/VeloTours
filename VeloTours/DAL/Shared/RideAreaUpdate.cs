@@ -10,6 +10,8 @@ namespace VeloTours.DAL.Shared
 {
     public class RideAreaUpdate : RideUpdate
     {
+        public enum RideType { Area, Region };
+        
         /// <summary>Worst time per ride</summary>
         public Dictionary<int, int> RidesWorstTime { get; protected set; }
 
@@ -18,15 +20,17 @@ namespace VeloTours.DAL.Shared
 
         protected Statistics info;
         protected decimal avgGradeTemp;
+        protected RideType rideType;
 
         protected double AverageGrade { get { return Convert.ToDouble((avgGradeTemp / Convert.ToDecimal(info.Distance))); } }
 
-        public override void Update()
+        public override bool Update()
         {
             info.AvgGrade = AverageGrade;
             db.SaveChanges();
 
             AddResultAndLeadboards();
+            return true;
         }
 
         protected virtual void AddResultAndLeadboards()
@@ -171,9 +175,9 @@ namespace VeloTours.DAL.Shared
                     ridersRiddenAll++;
                 }
 
-
+                // Added to Leaderboard, but skip if only 1 ride at Region level. (but on on area - because then then to calc problem)
                 bool enoughRidesToBeAdded = (rideCount > 1);
-                if (enoughRidesToBeAdded)
+                if (rideType == RideType.Area || (rideType == RideType.Region && enoughRidesToBeAdded))
                 {
                     lBoardModels.Add(new LeaderBoard()
                     {
