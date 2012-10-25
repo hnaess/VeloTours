@@ -20,12 +20,11 @@ namespace VeloTours.Controllers.Pages
             return View(segmentViewModel);
         }
 
-        public ActionResult Update(int segment, int athlete, bool? effort = false)
+        public ActionResult Update(int segment, int athlete)
         {
             SegmentUpdate segmentUpdate = new SegmentUpdate(segment);
             segmentUpdate.UpdateSegment();
-            if ((bool)effort)
-                segmentUpdate.UpdateEfforts(segment);
+            segmentUpdate.UpdateEfforts(segment);
 
             return RedirectToAction("Index", new { athlete = athlete, segment = segment });
         }

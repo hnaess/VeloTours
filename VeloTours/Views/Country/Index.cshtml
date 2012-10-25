@@ -6,21 +6,21 @@
 }
 
 @*<h2>Segment Area Overview</h2>*@
-@foreach (Country country in Model)
+@foreach (Country country in Model.OrderBy(x => x.Name))
 {
     <h3>
         <a href="@Url.Action("Update", new { athlete = athleteID, country = country.CountryID })" style='vertical-align:middle;'><i class='icon-refresh'></i></a>
         @country.Name
     </h3>   
     
-    foreach (Region region in country.Regions)
+    foreach (Region region in country.Regions.OrderBy( x => x.Info.Name))
     {
         <h4>
             <a href="@Url.Action("UpdateRegion", new { athlete = athleteID, region = region.RegionID})" style='vertical-align:middle;'><i class='icon-refresh'></i></a>
-            @Html.ActionLink(region.Info.Name, "Index", "Region", new { athlete = athleteID, region = region.RegionID })
+            @Html.ActionLink(region.Info.Name, "Index", "Region", new { athlete = athleteID, region = region.RegionID }, null)
         </h4>
         
-        foreach (SegmentArea area in region.SegmentAreas)
+        foreach (SegmentArea area in region.SegmentAreas.OrderBy(x => x.Info.Name)) // TODO: In ViewModel (& MountainBike seperate)
         {
             @Html.ActionLink(area.Info.Name, "Index", "Area", new { athlete = athleteID, area = area.SegmentAreaID }, area.IsMtb ? new { @class = "MtbArea" } : null);
             @Html.DisplayText(",&nbsp;");

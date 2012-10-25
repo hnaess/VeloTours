@@ -203,7 +203,8 @@
     <Compile Include="DAL\Athlete\AthleteUpdate.cs" />
     <Compile Include="DAL\CountryUpdate.cs" />
     <Compile Include="DAL\RegionUpdate.cs" />
-    <Compile Include="DAL\RideUpdate.cs" />
+    <Compile Include="DAL\Shared\RideAreaUpdate.cs" />
+    <Compile Include="DAL\Shared\RideUpdate.cs" />
     <Compile Include="DAL\Segment\EffortUpdate.cs" />
     <Compile Include="DAL\Segment\LeaderboardCalc.cs" />
     <Compile Include="DAL\Segment\SegmentUpdate.cs" />

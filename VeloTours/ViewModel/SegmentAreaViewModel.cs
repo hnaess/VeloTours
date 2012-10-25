@@ -39,7 +39,7 @@ namespace VeloTours.ViewModels
         private List<SegmentViewModel> GetSementViewModels(int athleteID)
         {
             var segments = new List<SegmentViewModel>();
-            foreach (var segment in SegmentArea.Segments)
+            foreach (var segment in SegmentArea.Segments.OrderBy( x => x.Info.Name))
             {
                 var segmentViewModel = new SegmentViewModel(athleteID, segment, null);
                 segments.Add(segmentViewModel);

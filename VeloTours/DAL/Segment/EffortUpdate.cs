@@ -143,23 +143,23 @@ namespace VeloTours.DAL.Segment
             int rank = 0;
             int rides = 0;
             int prevDuration = 0;
-            foreach (var e in sortedEfforts)
+            foreach (var effort in sortedEfforts)
             {
                 rides++;
                 List<int> athleteEfforts;
-                AthleteEffortsList.TryGetValue(e.AthleteID, out athleteEfforts);
+                AthleteEffortsList.TryGetValue(effort.AthleteID, out athleteEfforts);
                 if (athleteEfforts == null)
                 {
-                    if (prevDuration != e.ElapsedTime)
+                    if (prevDuration != effort.ElapsedTime)
                         rank = AthleteEffortsList.Count + 1;
 
                     athleteEfforts = new List<int>();
-                    AthleteEffortsList[e.AthleteID] = athleteEfforts;
+                    AthleteEffortsList[effort.AthleteID] = athleteEfforts;
 
-                    LeaderBoards.Add(new Models.LeaderBoard() { AthleteID = e.AthleteID, Rank = rank, Result = dbResult });
-                    prevDuration = e.ElapsedTime;
+                    LeaderBoards.Add(new Models.LeaderBoard() { AthleteID = effort.AthleteID, Rank = rank, Result = dbResult });
+                    prevDuration = effort.ElapsedTime;
                 }
-                athleteEfforts.Add(e.ElapsedTime);
+                athleteEfforts.Add(effort.ElapsedTime);
             }
             return new EffortUpdateStatus(AthleteEffortsList.Count, rides);
         }

@@ -23,6 +23,8 @@ namespace VeloTours.DAL
 
         #endregion
 
-        public abstract void Update();
+        public virtual void Update()
+        {
+        }
     }
 }
