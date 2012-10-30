@@ -32,7 +32,7 @@ public partial class SegmentArea
 
     public int RegionID { get; set; }
 
-    public bool IsMtb { get; set; }
+    public int AreaType { get; set; }
 
     public Nullable<System.Guid> SecretKey { get; set; }
 

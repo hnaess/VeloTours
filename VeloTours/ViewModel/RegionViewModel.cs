@@ -19,7 +19,6 @@ namespace VeloTours.ViewModels
         // ViewModel
         public List<SegmentAreaViewModel> SegmentAreas { get; set; }
         public override IEnumerable<RideViewModel> RideList { get { return SegmentAreas; } }
-        public override bool IsMTB { get { return false; } }
 
         #endregion
 
@@ -41,10 +40,11 @@ namespace VeloTours.ViewModels
         private List<SegmentAreaViewModel> GetSegmentAreasViewModels(int athleteID)
         {
             var areas = new List<SegmentAreaViewModel>();
-            foreach (var area in Region.SegmentAreas.OrderBy(x => x.Info.Name))
+            foreach (var area in Region.SegmentAreas.OrderBy(x => x.AreaType).ThenBy(x => x.Info.Name))
             {
                 var areaViewModel = new SegmentAreaViewModel(athleteID, area, null);
                 areas.Add(areaViewModel);
+                //TODO: May be optimised not to receive Segments at Area, when getting Region
             }
 
             return areas;

@@ -89,6 +89,9 @@ namespace VeloTours.DAL.Shared
 
         protected void UpdateYerseysAndDefaultRank(Result dbResult, List<LeaderBoard> lBoardModels)
         {
+            if (lBoardModels.Count == 0)
+                return;
+
             var sortedlBoardModels = lBoardModels.OrderBy(x => x.ElapsedTimes.Min);
             var lBoardKOM = sortedlBoardModels.First();
             int elapsedTimeKom = lBoardKOM.ElapsedTimes.Min;

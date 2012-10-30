@@ -23,7 +23,6 @@ namespace VeloTours.ViewModels
 
         public bool IsClimb { get { return IsClimbCat(Info.ClimbCategory); } }
         public static bool IsClimbCat(string climbCategory) { return climbCategory != "NC"; }
-        public override bool IsMTB { get { return false; } }
 
         #region Constructors
 

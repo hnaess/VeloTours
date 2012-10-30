@@ -18,7 +18,13 @@ namespace VeloTours.Controllers.Pages
             ViewBag.Athlete = athlete;
             ViewBag.Region = region;
             ViewBag.RideListType = "area";
+            ViewBag.HasLeaderBoard = (regionViewModel.Region.Result != null && regionViewModel.LeaderBoard != null && regionViewModel.LeaderBoard.Count > 0);
             return View(regionViewModel);
+        }
+
+        public ActionResult Test()
+        {
+            return View();
         }
 
         public ActionResult Update(int region, int athlete)

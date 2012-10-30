@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 10/16/2012 13:48:48
+-- Date Created: 10/26/2012 19:24:09
 -- Generated from EDMX file: C:\Users\hna\Documents\Visual Studio 2012\Projects\VeloTours\VeloTours\Models\TourModel.edmx
 -- --------------------------------------------------
 
@@ -166,7 +166,7 @@ CREATE TABLE [dbo].[SegmentAreas] (
     [Info_NoRiders] int  NOT NULL,
     [Info_NoRidden] int  NOT NULL,
     [Info_LastUpdated] datetime  NULL,
-    [IsMtb] bit  NOT NULL,
+    [AreaType] int  NOT NULL,
     [SecretKey] uniqueidentifier  NULL
 );
 GO

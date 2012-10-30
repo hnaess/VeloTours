@@ -25,81 +25,44 @@ namespace VeloTours.DAL.IntilizeDB.Norway
                 InitDB.NewSegmentArea(context, region, null, "Høvik"),
                 InitDB.NewSegmentArea(context, region, null, "Løkeberg-Blommenholm"),
                 InitDB.NewSegmentArea(context, region, null, "Haslum"),
-                InitDB.NewSegmentArea(context, region, null, "Østre Bærumsmarka"),
+                ////InitDB.NewSegmentArea(context, region, null, "Østre Bærumsmarka"),
                 InitDB.NewSegmentArea(context, region, null, "Sandvika-Valler"),
                 InitDB.NewSegmentArea(context, region, null, "Jong"),
-                InitDB.NewSegmentArea(context, region, null, "Slependen-Tanum"),
+                InitDB.NewSegmentArea(context, region, null, "Kirkerud-Sollihøgda"),
+                //InitDB.NewSegmentArea(context, region, null, "Slependen-Tanum"),
                 //InitDB.NewSegmentArea(context, region, null, "Dønski-Rud"),
                 //InitDB.NewSegmentArea(context, region, null, "Kolsås"),
                 //InitDB.NewSegmentArea(context, region, null, "Rykkinn"),
-                InitDB.NewSegmentArea(context, region, null, "Kirkerud-Sollihøgda"),
                 //InitDB.NewSegmentArea(context, region, null, "Bærums Verk"),
                 InitDB.NewSegmentArea(context, region, null, "Lommedalen"),
-                InitDB.NewSegmentArea(context, region, null, "Krogskogen", isMountainBike: true),
-                InitDB.NewSegmentArea(context, region, null, "Bærumsmarka", isMountainBike: true),
-                InitDB.NewSegmentArea(context, region, null, "Vestmarka", isMountainBike: true),
+                // øst-vest, nord/syd
+                InitDB.NewSegmentArea(context, region, null, "Krogskogen", SegmentArea.AreaTypeEnum.MountainBike),
+                InitDB.NewSegmentArea(context, region, null, "Bærumsmarka", SegmentArea.AreaTypeEnum.MountainBike),
+                InitDB.NewSegmentArea(context, region, null, "Vestmarka", SegmentArea.AreaTypeEnum.MountainBike),
             };
             segmentAreas.ForEach(s => context.SegmentAreas.Add(s));
             context.SaveChanges();
 
-            InitDonskiRud(context, region);
-            InitKolsos(context, region);
-            InitRykkinn(context, region);
-            InitBVerk(context, region);
+            InitArea(context, region, "Slependen-Tanum", new List<int>() { 1355742, 1108129, 1489331, 1128542 });
+            InitArea(context, region, "Kolsås", new List<int>() { 1433727, 1225116, 2173825 });
+            InitArea(context, region, "Dønski/Rud", new List<int>() { 1518560, 1596245, 1353132 });
+            InitArea(context, region, "Rykkinn", new List<int>() { 1637189, 1382813, 1524861, 1354941, 1242445 });
+            InitArea(context, region, "Bærums Verk", new List<int>() { 730928, 1797698 });
         }
 
-        private static void InitKolsos(TourModelContainer context, Models.Region region)
+        private static void InitArea(TourModelContainer context, Models.Region region, string name, List<int> segmentList)
         {
-            var segments = new List<Models.Segment>
+            var segments = new List<Models.Segment>();
+            for (int i = 0; i < segmentList.Count; i++ )
             {
-                InitDB.NewSegment(context, 1433727, "Alpe de Kolsåslia"),
-                InitDB.NewSegment(context, 1225116, "Brynsveien (Bærumsvn. - Kolsås)"),
-                InitDB.NewSegment(context, 2173825, "Brynsveien-spurten"),
-            };
+                segments.Add(InitDB.NewSegment(context, segmentList[i], name + " #" + i));
+            }
             segments.ForEach(s => context.Segments.Add(s));
-            context.SegmentAreas.Add(InitDB.NewSegmentArea(context, region, segments, "Kolsås"));
+
+            context.SegmentAreas.Add(InitDB.NewSegmentArea(context, region, segments, name));
             context.SaveChanges();
         }
 
-        private static void InitDonskiRud(TourModelContainer context, Models.Region region)
-        {
-            var segments = new List<Models.Segment>
-            {
-                InitDB.NewSegment(context, 1518560, "Bærumsveien (Brynsvn. - Johs. Haugeruds vei)"),
-                InitDB.NewSegment(context, 1596245, "Sogneprest M.K. - Rudsveien"),
-                InitDB.NewSegment(context, 1353132, "Rud industriområde"),
-            };
-            segments.ForEach(s => context.Segments.Add(s));
-            context.SegmentAreas.Add(InitDB.NewSegmentArea(context, region, segments, "Dønski-Rud"));
-            context.SaveChanges();
-        }
-
-        private static void InitBVerk(TourModelContainer context, Models.Region region)
-        {
-            var segments = new List<Models.Segment>
-            {
-                InitDB.NewSegment(context, 730928, "Bærums Verk - Belset"),
-                InitDB.NewSegment(context, 1797698, "Steinshøgda Vest"),
-            };
-            segments.ForEach(s => context.Segments.Add(s));
-            context.SegmentAreas.Add(InitDB.NewSegmentArea(context, region, segments, "Bærums Verk") );
-            context.SaveChanges();
-        }
-
-        private static void InitRykkinn(TourModelContainer context, Models.Region region)
-        {
-            var segments = new List<Models.Segment>
-            {
-                InitDB.NewSegment(context, 1637189, "Nybrua - Bryn kirke"),
-                InitDB.NewSegment(context, 1382813, "Rykkinn round (counter clockwise)"),
-                InitDB.NewSegment(context, 1524861, "Paal Bergs vei"),
-                InitDB.NewSegment(context, 1354941, "Belset-strekket"),
-                InitDB.NewSegment(context, 1242445, "Gamle Lommedalsvei (Brynsvn - Lommedalsveien)"),
-            };
-            segments.ForEach(s => context.Segments.Add(s));
-            context.SegmentAreas.Add(InitDB.NewSegmentArea(context, region, segments, "Rykkinn"));
-            context.SaveChanges();
-        }
 
         internal static void Asker(TourModelContainer context, Models.Region region)
         {
@@ -177,10 +140,10 @@ namespace VeloTours.DAL.IntilizeDB.Norway
                 InitDB.NewSegmentArea(context, region, null, "Søndre Nordstrand"),
                 InitDB.NewSegmentArea(context, region, null, "Sentrum"),
 
-                InitDB.NewSegmentArea(context, region, null, "Lillomarka", isMountainBike: true),
-                InitDB.NewSegmentArea(context, region, null, "Nordmarka syd", isMountainBike: true),
-                InitDB.NewSegmentArea(context, region, null, "Nordmarka nord", isMountainBike: true),
-                InitDB.NewSegmentArea(context, region, null, "Østmarka", isMountainBike: true),
+                InitDB.NewSegmentArea(context, region, null, "Lillomarka", SegmentArea.AreaTypeEnum.MountainBike),
+                InitDB.NewSegmentArea(context, region, null, "Nordmarka syd", SegmentArea.AreaTypeEnum.MountainBike),
+                InitDB.NewSegmentArea(context, region, null, "Nordmarka nord", SegmentArea.AreaTypeEnum.MountainBike),
+                InitDB.NewSegmentArea(context, region, null, "Østmarka", SegmentArea.AreaTypeEnum.MountainBike),
             };
             segmentAreas.ForEach(s => context.SegmentAreas.Add(s));
             context.SaveChanges();

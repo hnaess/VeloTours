@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using VeloTours.DAL.Area;
 using VeloTours.Models;
@@ -13,11 +10,14 @@ namespace VeloTours.Controllers.Pages
     {
         public ActionResult Index(int area, int? athlete, int? lbPage)
         {
-            SegmentAreaViewModel areaViewModel = GetAreaViewModel(area, athlete ?? 0, lbPage);
+            int athleteID = athlete ?? 0;
+            SegmentAreaViewModel areaViewModel = GetAreaViewModel(area, athleteID, lbPage);
 
-            ViewBag.Athlete = athlete;
-            ViewBag.Area = area;
+            ViewBag.Athlete = athleteID;
+            ViewBag.RideID = area;
             ViewBag.RideListType = "segment";
+            ViewBag.HasLeaderBoard = (areaViewModel.SegmentArea.Result != null && areaViewModel.LeaderBoard != null && areaViewModel.LeaderBoard.Count > 0);
+            
             return View(areaViewModel);
         }
 

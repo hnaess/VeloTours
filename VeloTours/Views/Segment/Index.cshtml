@@ -1,19 +1,12 @@
 ﻿@model VeloTours.ViewModels.SegmentViewModel
 @using VeloTours.Models;
 
-@{
-    int segmentID = @Model.Segment.SegmentID;
-    int athleteID = ViewBag.Athlete;
-
-    bool hasLeaderBoard = (@Model.LeaderBoard != null && @Model.LeaderBoard.Count > 0);
-}
-
 <h2>@Model.Info.Name
-    <a href="@Url.Action("Update", new { athlete = athleteID, segment = segmentID})"><i class='icon-refresh' style='vertical-align:middle;'></i></a>
+    <a href="@Url.Action("Update", new { athlete = ViewBag.Athlete, segment = ViewBag.RideID })"><i class='icon-refresh' style='vertical-align:middle;'></i></a>
 </h2>
 <p>@Model.Segment.Info.Description</p>
 
-@if (hasLeaderBoard) 
+@if (ViewBag.HasLeaderBoard) 
 {
     <h3>Yersey</h3>
     @RenderPage("~/Views/Segment/YerseyPart.cshtml", @Model)
@@ -30,6 +23,6 @@
     Up to: 
     @foreach (var segmentArea in @Model.SegmentAreas)
     {
-        @Html.ActionLink(segmentArea.Info.Name, "Index", "Area", routeValues: new { area = segmentArea.SegmentAreaID, athlete = athleteID }, htmlAttributes: null)
+        @Html.ActionLink(segmentArea.Info.Name, "Index", "Area", routeValues: new { area = segmentArea.SegmentAreaID, athlete = ViewBag.Athlete }, htmlAttributes: null)
     }    
 </p>

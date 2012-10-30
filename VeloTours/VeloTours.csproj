@@ -372,7 +372,6 @@
     <Content Include="Images\velo_64x.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-1.8.1.js" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -391,7 +390,9 @@
     <Content Include="Content\VeloTours.css" />
     <Content Include="Scripts\VeloTours\velotours.js" />
     <Content Include="Scripts\webGrid.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -437,6 +438,8 @@
     <Content Include="Views\Country\Index.cshtml" />
     <Content Include="Views\Segment\AthleteInfoPart.cshtml" />
     <Content Include="Views\Segment\YerseyPart.cshtml" />
+    <Content Include="Views\Region\Test.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
     <None Include="Views\Ride\LeaderBoardPart.cshtml" />
     <Content Include="Views\Ride\YerseyPart.cshtml" />
     <Content Include="Views\Ride\RidesTablePart.cshtml" />
@@ -444,6 +447,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Temp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

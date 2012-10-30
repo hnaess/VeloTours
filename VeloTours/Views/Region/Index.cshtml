@@ -1,24 +1,16 @@
-﻿
-@model VeloTours.ViewModels.RegionViewModel
+﻿@model VeloTours.ViewModels.RegionViewModel
 @using VeloTours.Models;
 @using VeloTours.Helpers;
 
-@{
-    int regionID = @Model.Region.RegionID;
-    int athleteID = ViewBag.Athlete ?? 0;
-
-    bool hasLeaderBoard = (@Model.Region.Result != null && @Model.LeaderBoard != null && @Model.LeaderBoard.Count > 0);
-}
-
 <h2>@Model.Info.Name
-    <a href="@Url.Action("Update", new { athlete = athleteID, region = regionID})"><i class='icon-refresh' style='vertical-align:middle;'></i></a>
+    <a href="@Url.Action("Update", new { athlete = ViewBag.Athlete, region = ViewBag.RideID})"><i class='icon-refresh' style='vertical-align:middle;'></i></a>
 </h2>
 <p>@Model.Info.Description</p>
 
 <h3>Segments in the areas</h3>
 @RenderPage("~/Views/Ride/RidesTablePart.cshtml", @Model)
 
-@if (hasLeaderBoard) 
+@if (ViewBag.HasLeaderBoard) 
 {
     <h3>Yersey</h3>
     @RenderPage("~/Views/Ride/YerseyPart.cshtml", @Model)
@@ -27,4 +19,4 @@
     @RenderPage("~/Views/Ride/LeaderboardPart.cshtml", @Model)
 }
   
-<p>Up to: @Html.ActionLink(@Model.Region.Country.Name, "Index", "Country", routeValues: new { country = @Model.Region.CountryID, athlete = athleteID }, htmlAttributes: null)</p>
+<p>Up to: @Html.ActionLink(@Model.Region.Country.Name, "Index", "Country", routeValues: new { country = @Model.Region.CountryID, athlete = ViewBag.Athlete }, htmlAttributes: null)</p>

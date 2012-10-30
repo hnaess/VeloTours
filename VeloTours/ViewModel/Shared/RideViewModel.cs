@@ -24,7 +24,8 @@ namespace VeloTours.ViewModels
 
         public virtual Statistics Info { get; private set; }
         public virtual int RideID { get; private set; }
-        public virtual bool IsMTB { get; protected set; }
+        
+        public virtual int AreaType { get { return (int)SegmentArea.AreaTypeEnum.Default; }  }
 
         #endregion
 

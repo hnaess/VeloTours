@@ -17,7 +17,7 @@ namespace VeloTours.DAL
         public static void CreateAndInitIfEmpty(TourModelContainer context)
         {
             initDB++;
-            //if(initDB <= 1)
+            //if (initDB <= 1)
             //    DeleteDB(context);
 
             if (!context.Database.Exists())
@@ -96,10 +96,10 @@ namespace VeloTours.DAL
             return new Statistics() { Name = name, AvgGrade = 0, Distance = 0, NoRidden = 0, NoRiders = 0, LastUpdated = DefaultDate };
         }
 
-        internal static Models.SegmentArea NewSegmentArea(TourModelContainer context, Models.Region region, List<Models.Segment> segments, string name, bool isMountainBike = false)
+        internal static Models.SegmentArea NewSegmentArea(TourModelContainer context, Models.Region region, List<Models.Segment> segments, string name, SegmentArea.AreaTypeEnum areaType = SegmentArea.AreaTypeEnum.Default)
         {
             Models.Result result = null;
-            return new SegmentArea { Region = region, Segments = segments, Result = result, Info = NewStatistics(context, name), IsMtb = (bool)isMountainBike};
+            return new SegmentArea { Region = region, Segments = segments, Result = result, Info = NewStatistics(context, name), AreaType = (int)areaType};
         }
 
         internal static Models.Segment NewSegment(TourModelContainer context, int segmentID, string name)

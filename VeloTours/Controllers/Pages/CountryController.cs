@@ -16,7 +16,7 @@ namespace VeloTours.Controllers.Pages
         public ActionResult Index(int? athlete)
         {
             List<Models.Country> countries = db.Countries.ToList();
-            ViewBag.Athlete = athlete;
+            ViewBag.Athlete = athlete ?? 0;
 
             return View(countries);
         }

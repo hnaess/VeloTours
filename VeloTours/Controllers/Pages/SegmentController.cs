@@ -13,10 +13,9 @@ namespace VeloTours.Controllers.Pages
     {
         public ActionResult Index(int segment, int? athlete, int? lbPage)
         {
-            SegmentViewModel segmentViewModel = GetSegmentViewModel(segment, athlete ?? 0, lbPage);
-
             ViewBag.Segment = segment;
-            ViewBag.Athlete = athlete;
+            ViewBag.Athlete = athlete ?? 0;
+            SegmentViewModel segmentViewModel = GetSegmentViewModel(segment, athlete ?? 0, lbPage);
             return View(segmentViewModel);
         }
 

@@ -3,11 +3,6 @@
 @using VeloTours.Helpers;
 @using VeloTours.Models.Extensions;
 
-@{
-    int athleteID = ViewBag.Athlete;
-    string rideListType = ViewBag.RideListType;
-}
-
 <table id="SegmentsTable" class="hidden-phone table-striped table-bordered table-condensed" style="table-layout: fixed; overflow: hidden;">
     <thead>
         <tr>
@@ -32,17 +27,18 @@
         @foreach (var item in Model.RideList)
         {
             string segmentName = item.Info.Name;
+            string rideListType = ViewBag.RideListType;
             <tr>
                 <td class="r">@item.Athlete.Position</td>
                 <td class="r">@item.Athlete.PositionPercentageF</td>
                 <td class="t" style="padding-left: 2px">
-                    @if (rideListType.Equals("segment"))
+                    @if (ViewBag.RideListType.Equals("segment"))
                     {
                         @Html.Raw(String.Format("<a id='segment{0}' data-effortid='{1}' data-segmentid='{0}' data-komid='{2}' class='segmentLink' href='#' rel='popover' data-original-title=''><i class='icon-info-sign'></i></a>",
                             item.RideID, 0, 0))
                     }
 
-                    @Html.ActionLink(segmentName, "Index", rideListType, routeValues: new { athlete = athleteID, segment = item.RideID, area = item.RideID }, htmlAttributes: (item.IsMTB ? new { @class = "MtbArea" } : null))
+                    @Html.ActionLink(segmentName, "Index", rideListType, new { athlete = ViewBag.Athlete, segment = item.RideID, area = item.RideID }, null)
                 </td>
                 <td class="r">@item.Info.DistanceInKm</td>
                 <td class="r">@Math.Round(@item.Info.ElevationGain ?? 0)</td>

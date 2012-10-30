@@ -2,8 +2,8 @@
 @using VeloTours.Helpers;
 
 @{
-    ViewBag.Title = "VeloTours";
-
+    ViewBag.Title = "King of KOMs";
+    
     int athlete = (@Model != null) ? @Model.AthleteID : 0;
 }
 
@@ -11,7 +11,7 @@
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
-                <h1>@ViewBag.Title.</h1>
+                @*<h1>@ViewBag.Title.</h1>*@
                 <h2>@ViewBag.Message</h2>
             </hgroup>
             <p>

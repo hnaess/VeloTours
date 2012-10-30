@@ -59,5 +59,10 @@ namespace VeloTours.Controllers
             ViewBag.Athlete = athlete;
             return RedirectToAction("Index", "Segment", new { Athlete = athlete });
         }
+
+        public ActionResult Test()
+        {
+            return View();
+        }
     }
 }

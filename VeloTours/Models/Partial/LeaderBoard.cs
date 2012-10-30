@@ -16,7 +16,7 @@ namespace VeloTours.Models
         public string Yellow { get { return YellowPoints.ToTime(); } }
 
         public string GreenPointsF { get { return GreenPoints > 0 ? GreenPoints.ToString() : ""; } }
-        public string PolkaDotPointsF { get { return GreenPoints > 0 ? GreenPoints.ToString() : ""; } }
+        public string PolkaDotPointsF { get { return PolkaDotPoints > 0 ? PolkaDotPoints.ToString() : ""; } }
 
         private string ValueOrBlankIfSameMin(int seconds)
         {
