@@ -13,7 +13,14 @@
 @if (ViewBag.HasLeaderBoard) 
 {
     <h3>Yersey</h3>
-    @RenderPage("~/Views/Ride/YerseyPart.cshtml", @Model)
+    if(@String.IsNullOrEmpty(Model.Info.PictureUri))
+    {
+        @RenderPage("~/Views/Ride/HeadingsPart.cshtml", @Model)
+    }
+    else
+    {
+        @RenderPage("~/Views/Ride/YerseyPart.cshtml", @Model)
+    }
 
     <h3>LeaderBoard</h3>
     @RenderPage("~/Views/Ride/LeaderboardPart.cshtml", @Model)
