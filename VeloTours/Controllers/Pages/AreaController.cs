@@ -14,6 +14,7 @@ namespace VeloTours.Controllers.Pages
             SegmentAreaViewModel areaViewModel = GetAreaViewModel(area, athleteID, lbPage);
 
             ViewBag.Athlete = athleteID;
+            ViewBag.Area = area;
             ViewBag.RideID = area;
             ViewBag.RideListType = "segment";
             ViewBag.HasLeaderBoard = (areaViewModel.SegmentArea.Result != null && areaViewModel.LeaderBoard != null && areaViewModel.LeaderBoard.Count > 0);

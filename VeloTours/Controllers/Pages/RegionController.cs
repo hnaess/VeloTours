@@ -16,7 +16,8 @@ namespace VeloTours.Controllers.Pages
             RegionViewModel regionViewModel = GetRegionViewModel(region, athlete ?? 0, lbPage);
 
             ViewBag.Athlete = athlete;
-            ViewBag.Region = region;
+            ViewBag.Region = region;       //?
+            ViewBag.Ride = region; 
             ViewBag.RideListType = "area";
             ViewBag.HasLeaderBoard = (regionViewModel.Region.Result != null && regionViewModel.LeaderBoard != null && regionViewModel.LeaderBoard.Count > 0);
             return View(regionViewModel);
