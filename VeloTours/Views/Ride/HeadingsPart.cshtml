@@ -1,0 +1,57 @@
+﻿@model VeloTours.ViewModels.RideViewModel
+@using VeloTours.Helpers;
+
+@{
+    var yellow = @Model.YellowYersey;
+    var green = @Model.GreenYersey;
+    var polkadot = @Model.PolkaDotYersey;
+}
+
+@helper DisplayAthlete(VeloTours.Models.LeaderBoard lboard)
+{
+    if (lboard != null)
+    {
+    <b>@HtmlVeloHelpers.AthleteNameLink(lboard)</b><br />
+    @String.Format("Ridden: {0}", @lboard.NoRidden)<br />
+    @String.Format("Rank: {0}", @lboard.Rank)
+    }
+}
+
+<table>
+    <thead>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="3">
+                @Html.Image("~/Content/images/gpx/" + @Model.Info.PictureUri, "Ride picture", null)
+                @Model.Info.Description
+            </td>
+            <td><img src="~/Content/images/yersey/yellow.png" /></td>
+            <td class="t">@DisplayAthlete(yellow)</td>
+        </tr>
+        <tr>
+            @if (polkadot.PolkaDotPoints > 0)
+            {
+                <td><img src="~/Content/images/yersey/polkadot.png" /></td>
+                <td class="t">@DisplayAthlete(polkadot)</td>
+            }
+            else
+            {
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            }
+        </tr>
+        <tr>
+            @if (green.GreenPoints > 0)
+            {
+                <td><img src="~/Content/images/yersey/green.png" /></td>
+                <td class="t">@DisplayAthlete(green)</td>
+            }
+            else
+            {
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            }
+        </tr>
+    </tbody>
+</table>

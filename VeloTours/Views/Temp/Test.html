@@ -1,0 +1,76 @@
+﻿<html>
+<head>
+	<title>Simple OSM GPX Track</title>
+	<!-- bring in the OpenLayers javascript library
+		 (here we bring it from the remote site, but you could
+		 easily serve up this javascript yourself) -->
+	<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+	<!-- bring in the OpenStreetMap OpenLayers layers.
+		 Using this hosted file will make sure we are kept up
+		 to date with any necessary changes -->
+	<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+ 
+	<script type="text/javascript">
+		// Start position for the map (hardcoded here for simplicity,
+		// but maybe you want to get this from the URL params)
+		var lat=59.88933
+		var lon=10.76901
+		var zoom=12
+ 
+		var map; //complex object of type OpenLayers.Map
+ 
+		function addmap(map, trackColor, filename) {
+			// Add the Layer with the GPX Track
+			var lgpx = new OpenLayers.Layer.Vector("Lakeside cycle ride", {
+				strategies: [new OpenLayers.Strategy.Fixed()],
+				protocol: new OpenLayers.Protocol.HTTP({
+					url: filename,
+					format: new OpenLayers.Format.GPX()
+				}),
+				style: {strokeColor: trackColor, strokeWidth: 6, strokeOpacity: 0.9},
+				projection: new OpenLayers.Projection("EPSG:4326")
+			});
+			map.addLayer(lgpx);	
+		}	
+ 
+		function init() {
+			map = new OpenLayers.Map ("map", {
+				controls:[
+					new OpenLayers.Control.Navigation(),
+					new OpenLayers.Control.PanZoomBar(),
+					new OpenLayers.Control.LayerSwitcher(),
+					new OpenLayers.Control.Attribution()],
+				numZoomLevels: 19,
+				units: 'm',
+				projection: new OpenLayers.Projection("EPSG:900913"),
+				displayProjection: new OpenLayers.Projection("EPSG:4326")
+			} );
+ 
+			// Define the map layer
+			// Here we use a predefined layer that will be kept up to date with URL changes
+			layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
+			map.addLayer(layerMapnik);
+			layerCycleMap = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
+			map.addLayer(layerCycleMap);
+ 
+			addmap(map, "#0099FF", "660072.gpx.png")
+			addmap(map, "#00CCFF", "1942901.gpx.png")
+			addmap(map, "#00FFFF", "632847.gpx.png")
+			
+			var lonLat = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+			map.setCenter(lonLat, zoom); 
+		}
+	</script>
+ 
+</head>
+<!-- body.onload is called once the page is loaded (call the 'init' function) -->
+<body onload="init();">
+	<!-- define a DIV into which the map will appear. Make it take up the whole window -->
+	<div style="width:90%; height:90%" id="map"></div>
+	
+	Register mime-type
+<br/>	http://www.hosting.com/support/dedicated/IIS/newmime/
+<br/>	http://strava-tools.raceshape.com/exporter/getfile.php?url=http%3A//app.strava.com/segments/1354941&type=GPX
+
+</body>
+</html>

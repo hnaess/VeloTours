@@ -1,0 +1,66 @@
+﻿	<!--  OpenLayers javascript library
+	 	 Wir binden die  Bibliothek direkt aus dem Internet ein, 
+	 	 die Datei kann bei Bedarf aber auch lokal abgespeichert werden)
+	 -->
+	<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+	<!-- OpenStreetMap OpenLayers layers.
+		Diese Datei bevorzugt aus dem Internet laden um sie aktuell zu halten 
+	 -->
+	<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+
+@*	<script type="text/javascript">
+		function init(filename, lat, long, zoom, color) {
+
+		}
+	</script>*@
+ 	
+    <script type="text/javascript">
+		// Startposition auf der Karte
+		var map; //complex object of type OpenLayers.Map
+ 
+		function init(filename, lat, long, zoom, color) {
+		    map = new OpenLayers.Map("map", {
+				controls:[
+					new OpenLayers.Control.Navigation(),
+					new OpenLayers.Control.PanZoomBar(),
+					new OpenLayers.Control.LayerSwitcher(),
+					new OpenLayers.Control.Attribution()],
+				numZoomLevels: 19,
+				units: 'm',
+				projection: new OpenLayers.Projection("EPSG:900913"),
+				displayProjection: new OpenLayers.Projection("EPSG:4326")
+			} );
+ 
+			// Define the map layer
+			// Here we use a predefined layer that will be kept up to date with URL changes
+			layerMapnik = new OpenLayers.Layer.OSM.Mapnik("Mapnik");
+			map.addLayer(layerMapnik);
+			layerCycleMap = new OpenLayers.Layer.OSM.CycleMap("CycleMap");
+			map.addLayer(layerCycleMap);
+ 
+            // *********************************************************************
+			// Block "Layer mit GPX-Track" - Start
+			var GPXVariable_1 = new OpenLayers.Layer.Vector("Beispielstrecke", {
+				strategies: [new OpenLayers.Strategy.Fixed()],
+				protocol: new OpenLayers.Protocol.HTTP({
+				    url: filename,
+					format: new OpenLayers.Format.GPX()
+				}),
+				style: {strokeColor: color, strokeWidth: 15, strokeOpacity: 0.5},
+				projection: new OpenLayers.Projection("EPSG:4326")
+			});
+			map.addLayer(GPXVariable_1);
+            // Block "Layer mit GPX-Track" - Ende
+            // *********************************************************************
+ 
+			var lonLat = new OpenLayers.LonLat(long, lat).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+			map.setCenter(lonLat, zoom);
+		}
+	</script>
+
+ 
+<!-- body.onload is called once the page is loaded (call the 'init' function) -->
+<body onload="init('/Content/gpx/632847.gpx.png', 47.496792, 7.571726, 14, 'green');">
+	<!-- define a DIV into which the map will appear. Make it take up the whole window -->
+    <div style="width:90%; height:90%" id="map"></div>
+</body>
